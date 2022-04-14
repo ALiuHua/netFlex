@@ -7,8 +7,8 @@ import {
   AnimationImg,
   AnimationDescription,
   Video,
-} from "./UIComponentStyles";
-const ImgCard = (props) => {
+} from "./FeatureStyles";
+const ImgAnimation = (props) => {
   const { id, image, post, video } = props;
   return (
     <ImgContainer>
@@ -38,4 +38,4 @@ const ImgCard = (props) => {
   );
 };
 
-export default ImgCard;
+export default ImgAnimation;

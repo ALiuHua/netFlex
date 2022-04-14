@@ -1,22 +1,21 @@
 import {
   SectionContainer,
   ContentContainer,
-  ImgContainer,
   DescriptionContainer,
-} from "./UIComponentStyles";
+} from "./FeatureStyles";
 import React from "react";
-import ImgCard from "./ImgCard";
+import ImgAnimation from "./ImgAnimation";
 
-export const FeatureCard = (props) => {
-  const { title, description, layout } = props;
+export const FeatureSection = (props) => {
+  const { id, title, description, layout } = props;
   return (
     <SectionContainer>
       <ContentContainer layout={layout}>
-        <DescriptionContainer>
+        <DescriptionContainer id={id}>
           <h2>{title}</h2>
           <p>{description}</p>
         </DescriptionContainer>
-        <ImgCard {...props} />
+        <ImgAnimation {...props} />
       </ContentContainer>
     </SectionContainer>
   );

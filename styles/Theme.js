@@ -4,4 +4,6 @@ export const theme = {
   accentColor: "#e50914",
   accentColorLight: "#f40612",
   borderBottomColor: "#222",
+  mediaLarge: "90.5em",
+  mediaMedium: "59.5em",
 };

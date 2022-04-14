@@ -26,13 +26,29 @@ export const GlobalStyles = createGlobalStyle`
 html{
 
     font-size: 62.5%;
+    @media only screen and (max-width:${({ theme }) => theme.mediaLarge}) {
+        font-size: 56.25%;
+    }
 }
 body{
+    font-family: 'Netflix Sans';
+    font-weight: 400;
+    line-height:1.1;
+    font-size:1.6rem;
     box-sizing: border-box;
     background-color:${({ theme }) => theme.backGroundColor};
     min-width:32rem;
     color:${({ theme }) => theme.greyColor}
 }
 /* h1,h2{margin-bottom:0.4em} */
-
+a{
+    color:inherit;
+    text-decoration: none;
+}
+button{
+    border:none;
+    background:none;
+    color:inherit;
+font-family: inherit;
+}
 `;

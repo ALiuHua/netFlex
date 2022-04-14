@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <header>Header</header>
+
       <main>{children}</main>
       <footer>footer</footer>
     </ThemeProvider>

@@ -7,18 +7,28 @@ export const SectionContainer = styled.section`
 export const ContentContainer = styled.div`
   max-width: 110rem;
   margin: 0 auto;
-
   display: flex;
   flex-direction: ${({ layout }) => layout};
   gap: ${gap}rem;
   align-items: center;
   justify-content: space-between;
+  @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+    flex-direction: column;
+  }
 `;
 export const ImgContainer = styled.div`
   width: calc(48% - ${gap}rem);
+  @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+    width: 60rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    margin-top: 1.6rem;
+  }
 `;
 export const DeviceImgContainer = styled.div`
-  width: 100%;
+  width: ${({ id }) => (id === "2" ? "100%" : "auto")};
   position: relative;
 
   margin: ${({ id }) =>
@@ -27,6 +37,13 @@ export const DeviceImgContainer = styled.div`
       : id === "2"
       ? "-8% 0 -4% -15%"
       : "-5% -10% 0 0"}; // i don't understand why this can have this effect on image.
+
+  @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+    width: 100%;
+
+    margin: ${({ id }) =>
+      id === "1" ? "-10% 0 0 0" : id === "2" ? "-8% 0 0 0" : "-5% -10% 0 0"};
+  }
 `;
 export const DeviceImg = styled.img`
   position: relative;
@@ -40,6 +57,14 @@ export const AnimationContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+  ${({ id }) =>
+    id === "1" &&
+    css`
+      width: 73%;
+      bottom: -3%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    `};
   ${({ id }) =>
     id === "2" &&
     css`
@@ -92,7 +117,9 @@ export const AnimationDescription = styled.div`
 `;
 export const DescriptionContainer = styled.div`
   width: 52%;
-
+  padding: ${({ id }) =>
+    id === "2" ? "0 0 0 3rem" : id === "4" ? "0 0 0 4.8rem" : "0 4.8rem 0 0"};
+  /* display: flex; */
   h2 {
     font-size: 5rem;
     line-height: 1.1;
@@ -102,6 +129,11 @@ export const DescriptionContainer = styled.div`
     font-size: 2.6rem;
     font-weight: 400;
     margin: 1.95rem 0 0.65rem 0;
+  }
+  @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+    z-index: 2;
+    width: 100%;
+    text-align: center;
   }
 `;
 export const Video = styled.video`

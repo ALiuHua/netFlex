@@ -44,7 +44,9 @@ export const HeroText = styled.div`
 
 export const CTAForm = styled.form`
   max-width: 95rem;
-  margin-top: 1.36rem;
+  text-align: center;
+  /* margin-top: 1.36rem; */
+  margin: 1.36rem auto 0 auto;
   h3 {
     font-size: 1.92rem;
     padding: 0 4.75rem 2rem 4.75rem;
@@ -53,6 +55,11 @@ export const CTAForm = styled.form`
 export const FormContent = styled.div`
   display: flex;
   justify-content: center;
+  @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
   /* max-width: ; */
 `;
 export const InputFiled = styled.div`
@@ -73,4 +80,10 @@ export const FormButton = styled.button`
   height: 7rem;
   padding: 0 3rem;
   border-radius: 0 1px 1px 0;
+  @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+    font-size: 16px;
+    padding: 10px 14px;
+    height: auto;
+    border-radius: 1px;
+  }
 `;

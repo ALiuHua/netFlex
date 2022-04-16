@@ -30,7 +30,7 @@ export const ImgContainer = styled.div`
 export const DeviceImgContainer = styled.div`
   width: ${({ id }) => (id === "2" ? "100%" : "auto")};
   position: relative;
-
+  z-index: 1;
   margin: ${({ id }) =>
     id === "1"
       ? "-10% -5% -5% 0"
@@ -48,7 +48,7 @@ export const DeviceImgContainer = styled.div`
 export const DeviceImg = styled.img`
   position: relative;
   width: 100%;
-  z-index: 3;
+  z-index: 1;
 `;
 export const AnimationContainer = styled.div`
   position: absolute;
@@ -104,6 +104,7 @@ export const AnimationImg = styled.div`
 `;
 export const AnimationDescription = styled.div`
   margin-right: auto;
+
   span {
     display: block;
     &:nth-child(1) {
@@ -116,6 +117,8 @@ export const AnimationDescription = styled.div`
   }
 `;
 export const DescriptionContainer = styled.div`
+  position: relative;
+  z-index: 2;
   width: 52%;
   padding: ${({ id }) =>
     id === "2" ? "0 0 0 3rem" : id === "4" ? "0 0 0 4.8rem" : "0 4.8rem 0 0"};
@@ -131,9 +134,9 @@ export const DescriptionContainer = styled.div`
     margin: 1.95rem 0 0.65rem 0;
   }
   @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
-    z-index: 2;
     width: 100%;
     text-align: center;
+    z-index: 2;
   }
 `;
 export const Video = styled.video`

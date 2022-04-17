@@ -49,6 +49,6 @@ button{
     border:none;
     background:none;
     color:inherit;
-font-family: inherit;
+    font-family: inherit;
 }
 `;

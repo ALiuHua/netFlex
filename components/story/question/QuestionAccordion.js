@@ -8,6 +8,7 @@ const QuestionAccordion = ({ title, text, onClose, qState }) => {
   return (
     <AccordionWrapper>
       <AccordionHeader onClick={onClose}>
+       
         <h3>{title}</h3>
         <button>x</button>
       </AccordionHeader>

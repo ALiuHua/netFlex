@@ -9,7 +9,6 @@ const Layout = ({ children }) => {
       <GlobalStyles />
 
       <main>{children}</main>
-      <footer>footer</footer>
     </ThemeProvider>
   );
 };

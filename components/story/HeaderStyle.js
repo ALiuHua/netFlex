@@ -34,6 +34,12 @@ const LinkN = ({ href, className, children }) => {
 };
 
 export const StyledLink = styled(LinkN)``;
+export const FooterLink = styled(LinkN)`
+  color: inherit;
+  a {
+    font-family: inherit;
+  }
+`;
 export const ButtonLink = styled(LinkN)`
   background-color: ${({ theme }) => theme.accentColor};
   padding: 0.7rem 1.7rem;

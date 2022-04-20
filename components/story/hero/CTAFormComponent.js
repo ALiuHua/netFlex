@@ -8,8 +8,9 @@ const CTAFormComponent = () => {
         membership.
       </h3>
       <FormContent>
-        <InputFiled>
-          <input type="email"></input>
+        <InputFiled onClick={() => {}}>
+          <input type="email" id="email"></input>
+          <label htmlFor="email">Email address</label>
         </InputFiled>
         <FormButton>Get started</FormButton>
       </FormContent>
@@ -18,3 +19,5 @@ const CTAFormComponent = () => {
 };
 
 export default CTAFormComponent;
+
+

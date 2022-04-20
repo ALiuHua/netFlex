@@ -21,14 +21,17 @@ export const GlobalStyles = createGlobalStyle`
     margin:0;
     padding:0;
     box-sizing: inherit;
+   
 }
 
 html{
-
-    font-size: 62.5%;
-    @media only screen and (max-width:${({ theme }) => theme.mediaLarge}) {
-        font-size: 56.25%;
+/* display: block; */
+    font-size: 62.5%; //10px
+    /* -webkit-text-size-adjust: 100%; */
+    @media only screen and (max-width:${({ theme }) => theme.mediaSmall}) {
+        font-size: 50%;
     }
+    overflow-x: hidden;
 }
 body{
     font-family: 'Netflix Sans';

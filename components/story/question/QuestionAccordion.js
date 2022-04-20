@@ -1,4 +1,5 @@
 import React from "react";
+import { StyledCloseIcon } from "./CloseIcon";
 import {
   AccordionWrapper,
   AccordionHeader,
@@ -8,11 +9,14 @@ const QuestionAccordion = ({ title, text, onClose, qState }) => {
   return (
     <AccordionWrapper>
       <AccordionHeader onClick={onClose}>
-       
         <h3>{title}</h3>
-        <button>x</button>
+        <button>
+          <StyledCloseIcon qState={qState} />
+        </button>
       </AccordionHeader>
-      <ContentWrapper qState={qState}>{text}</ContentWrapper>
+      <ContentWrapper qState={qState}>
+        <p>{text}</p>
+      </ContentWrapper>
     </AccordionWrapper>
   );
 };

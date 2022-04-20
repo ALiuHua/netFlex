@@ -3,6 +3,12 @@ const gap = 0; //unit "rem"
 export const SectionContainer = styled.section`
   padding: 7rem 4.5rem;
   border-bottom: 0.8rem solid ${({ theme }) => theme.borderBottomColor};
+  @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+    padding: 7.5rem 5rem;
+  }
+  @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
+    padding: 6.25rem 5%;
+  }
 `;
 export const ContentContainer = styled.div`
   max-width: 110rem;
@@ -19,7 +25,8 @@ export const ContentContainer = styled.div`
 export const ImgContainer = styled.div`
   width: calc(48% - ${gap}rem);
   @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
-    width: 60rem;
+    max-width: 60rem;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,9 +47,8 @@ export const DeviceImgContainer = styled.div`
 
   @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
     width: 100%;
-
     margin: ${({ id }) =>
-      id === "1" ? "-10% 0 0 0" : id === "2" ? "-8% 0 0 0" : "-5% -10% 0 0"};
+      id === "1" ? "-10% 0 0 0" : id === "2" ? "-8% 0 0 0" : "-5% 0 0 0"};
   }
 `;
 export const DeviceImg = styled.img`
@@ -56,7 +62,7 @@ export const AnimationContainer = styled.div`
   bottom: 18%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  z-index: -1;
   ${({ id }) =>
     id === "1" &&
     css`
@@ -79,9 +85,18 @@ export const AnimationContainer = styled.div`
       left: 50%;
       transform: translate(-50%, 0);
       width: 60%;
+      min-width: 27rem;
       background-color: ${({ theme }) => theme.backGroundColor};
       box-shadow: 0 0 3.2rem 0 #000;
-      z-index: 4;
+      z-index: 2;
+
+      @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+        padding: 0.56rem 1.2rem;
+      }
+      @media only screen and (max-width: ${({ theme }) => theme.mediaSmall}) {
+        padding: 0.7rem 1.5rem;
+        min-width: 34rem;
+      }
       &::after {
         width: 4.8rem;
         height: 6rem;
@@ -127,16 +142,36 @@ export const DescriptionContainer = styled.div`
     font-size: 5rem;
     line-height: 1.1;
     margin-bottom: 0.8rem;
+    @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+      font-size: 4rem;
+    }
+    @media only screen and (max-width: ${({ theme }) => theme.mediaSmall}) {
+      font-size: 5rem;
+    }
+    @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
+      font-size: 3.25rem;
+    }
   }
   p {
     font-size: 2.6rem;
     font-weight: 400;
     margin: 1.95rem 0 0.65rem 0;
+    @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+      font-size: 2rem;
+    }
+    @media only screen and (max-width: ${({ theme }) => theme.mediaSmall}) {
+      font-size: 2.5rem;
+    }
+    @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
+      font-size: 2.25rem;
+    }
   }
+
   @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
     width: 100%;
     text-align: center;
     z-index: 2;
+    padding: 0 0 0 0;
   }
 `;
 export const Video = styled.video`

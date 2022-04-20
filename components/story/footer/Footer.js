@@ -3,16 +3,22 @@ import styled from "styled-components";
 import { FooterLink } from "../HeaderStyle";
 const FooterWrapper = styled.footer`
   padding: 7rem 4.5rem;
+  font-size: 13px;
+  @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
+    padding: 6.25rem 5%;
+  }
 `;
 const FooterContent = styled.div`
   max-width: 100rem;
   margin: 0 auto;
-  padding: 0rem 4.5rem;
-  font-size: 1.6rem;
+  padding: 0rem 3.5rem;
+  /* font-size: 1.6rem; */
+
   color: #757575;
 `;
 const FooterTop = styled.p`
   margin-bottom: 3rem;
+  font-size: 16px;
 `;
 const FooterLinksWrapper = styled.div`
   ul {
@@ -22,19 +28,23 @@ const FooterLinksWrapper = styled.div`
       width: 21.3rem; */
     /* } */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
-      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    grid-template-columns: repeat(4, minmax(18.5rem, 1fr));
+
+    @media only screen and (max-width: ${({ theme }) => theme.mediaSmall}) {
+      grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    }
+    @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
     }
     li {
       list-style: none;
       padding-right: 1.2rem;
       margin-bottom: 1.6rem;
-      font-size: 1.3rem;
+      /* font-size: 13px; */
       a {
-        &:link,
+        /* &:link,
         &:visited {
-        }
+        } */
         &:hover,
         &:active {
           /* border-bottom: 1px soild red; */

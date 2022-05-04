@@ -34,6 +34,7 @@ html{
     overflow-x: hidden;
 }
 body{
+    position:relative;
     font-family: 'Netflix Sans';
     font-weight: 400;
     line-height:1.1;
@@ -41,7 +42,7 @@ body{
     box-sizing: border-box;
     background-color:${({ theme }) => theme.backGroundColor};
     min-width:32rem;
-    color:${({ theme }) => theme.greyColor}
+    color:${({ theme }) => theme.greyColor};
 }
 /* h1,h2{margin-bottom:0.4em} */
 a{
@@ -54,4 +55,5 @@ button{
     color:inherit;
     font-family: inherit;
 }
+li{list-style:none}
 `;

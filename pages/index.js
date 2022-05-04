@@ -9,11 +9,10 @@ export default function Home() {
     <>
       {/* <HeroSection /> */}
       {console.log("re-runing")}
-      <Header />
+
       <Hero />
       <Feature />
       <Question />
-      <Footer />
     </>
   );
 }

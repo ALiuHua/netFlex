@@ -5,25 +5,54 @@ import {
   LogoWrapper,
   StyledLink,
   ButtonLink,
+  MenuList,
+  AccountTool,
 } from "./HeaderStyle";
 
-const Header = () => {
+const Header = ({ pathname }) => {
   return (
     <HeaderWrapper>
-      <HeaderContent>
-        <LogoWrapper>
-          {1 === 2 ? (
+      <HeaderContent pathname={pathname}>
+        <LogoWrapper pathname={pathname}>
+          {pathname === "/" ? (
+            <img src="/images/misc/logo.png" />
+          ) : (
             <StyledLink href="/">
               <img src="/images/misc/logo.png" />
             </StyledLink>
-          ) : (
-            <img src="/images/misc/logo.png" />
           )}
         </LogoWrapper>
         <nav>
-          <ButtonLink href="/">
-            <span>Sign in</span>
-          </ButtonLink>
+          {pathname === "/browse" && (
+            <>
+              <MenuList>
+                <ul>
+                  <li>
+                    <StyledLink href="#">Home</StyledLink>
+                  </li>
+                  <li>
+                    <StyledLink href="#">Series</StyledLink>
+                  </li>
+                  <li>
+                    <StyledLink href="#">Films</StyledLink>
+                  </li>
+                  <li>
+                    <StyledLink href="#">New & Popular</StyledLink>
+                  </li>
+                  <li>
+                    <StyledLink href="#">My List</StyledLink>
+                  </li>
+                </ul>
+              </MenuList>
+              <AccountTool>tool box</AccountTool>
+            </>
+          )}
+
+          {pathname === "/" && (
+            <ButtonLink href="/login">
+              <span>Sign in</span>
+            </ButtonLink>
+          )}
         </nav>
       </HeaderContent>
     </HeaderWrapper>

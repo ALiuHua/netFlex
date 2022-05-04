@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.27.0",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

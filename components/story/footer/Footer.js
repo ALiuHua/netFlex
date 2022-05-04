@@ -1,12 +1,19 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FooterLink } from "../HeaderStyle";
+import { useRouter } from "next/router";
 const FooterWrapper = styled.footer`
   padding: 7rem 4.5rem;
   font-size: 13px;
   @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
     padding: 6.25rem 5%;
   }
+  ${({ pathname }) =>
+    pathname === "/login" &&
+    css`
+      padding: 3rem 4.5rem;
+      background-color: rgba(0, 0, 0, 0.75);
+    `}
 `;
 const FooterContent = styled.div`
   max-width: 100rem;
@@ -56,7 +63,7 @@ const FooterLinksWrapper = styled.div`
     }
   }
 `;
-const content = [
+const fullContent = [
   { id: "1", content: "FAQ", href: "#" },
   { id: "2", content: "Help Centre", href: "#" },
   { id: "3", content: "Account", href: "#" },
@@ -75,12 +82,23 @@ const content = [
   { id: "16", content: "Legal notices", href: "#" },
   { id: "17", content: "Only on NetFlex", href: "#" },
 ];
+const loginContent = [
+  { id: "1", content: "FAQ", href: "#" },
+  { id: "2", content: "Help Centre", href: "#" },
+  { id: "3", content: "Terms of Use", href: "#" },
+  { id: "4", content: "Pravicy", href: "#" },
+  { id: "5", content: "Cookie preferences", href: "#" },
+  { id: "6", content: "Corporate information", href: "#" },
+];
 const FooterCountry = styled.p`
   margin: 2.4rem 0 1.3rem 0;
 `;
 const Footer = () => {
+  const { pathname } = useRouter();
+  const content = pathname === "/login" ? loginContent : fullContent;
+
   return (
-    <FooterWrapper>
+    <FooterWrapper pathname={pathname}>
       <FooterContent>
         <FooterTop>Questions? Phone 1800 875 462</FooterTop>
         <FooterLinksWrapper>
@@ -92,7 +110,9 @@ const Footer = () => {
             ))}
           </ul>
         </FooterLinksWrapper>
-        <FooterCountry>NetFlex Australia</FooterCountry>
+        {pathname !== "/login" && (
+          <FooterCountry>NetFlex Australia</FooterCountry>
+        )}
       </FooterContent>
     </FooterWrapper>
   );

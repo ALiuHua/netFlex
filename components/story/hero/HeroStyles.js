@@ -1,6 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const BackgroundImage = styled.div`
+  /* min-height: 100%;
+  min-width: 100%; */
   position: absolute;
   top: -110px;
   left: 0;
@@ -127,20 +129,7 @@ export const InputFiled = styled.div`
     transform: translateY(-50%);
     font-size: 16px;
   }
-  input {
-    width: 100%;
-    height: 100%;
-    border: 1px solid #8c8c8c;
-    padding: 10px 10px 0 10px;
-    outline: none;
-    /* font-size: 3rem;   this will decide what font size of input text */
-    &:focus {
-      border-color: #0071eb;
-    }
-    /* @media only screen and (max-width: ${({ theme }) => theme.mediaLarge}) {
-      padding: 0;
-    } */
-  }
+
   input:focus + label {
     top: 6px;
     left: 10px;
@@ -151,6 +140,34 @@ export const InputFiled = styled.div`
   /* bug   when it's not focused, the label will fall down;
   hotFlix solution: when input has value, we still need transition.
   */
+  // still need to add transition and transform in small screen.
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  height: 100%;
+  border: 1px solid #8c8c8c;
+  padding: 10px 10px 0 10px;
+  outline: none;
+  font-size: 1.6rem; /*this will decide what font size of input text */
+  &:focus {
+    border-color: #0071eb;
+  }
+  /* @media only screen and (max-width: ${({ theme }) => theme.mediaLarge}) {
+    padding: 0;
+  } */
+  ${({ value }) =>
+    value &&
+    css`
+      & + label {
+        top: 6px;
+        left: 10px;
+        font-size: 13px;
+        transform: translateY(0);
+        font-weight: 700;
+      }
+    `}// styled props only works with styled component. even if inside of styled component won't 
+    //work as well.
 `;
 export const FormButton = styled.button`
   /* background: none; */

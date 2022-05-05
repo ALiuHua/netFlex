@@ -5,11 +5,18 @@ import Slider from "react-slick";
 
 export const CarouselWrapper = styled.div`
   /* width: 85vw;
-  margin: 25px auto; */
+  /* margin: 25px auto; */
   /* width: 100%; */
   /* width: 100vw; */
   // this make scroll bar width added in. why?
+  margin: 3vw 0;
   padding: 0 60px;
+  h2 {
+    font-size: 1.4vw;
+    font-weight: 700;
+    color: #e5e5e5;
+    margin-bottom: 1rem;
+  }
   &:hover {
     .slick-prev {
       opacity: 1;
@@ -57,7 +64,7 @@ export const Carousel = styled(Slider)`
   margin: 0 auto;
   /* background-color: red; */
 
-  ul {
+  .slick-dots {
     position: absolute;
     top: -25px;
     right: 0;
@@ -65,10 +72,10 @@ export const Carousel = styled(Slider)`
 
     /* background-color: green; */
     width: 200px;
-    /* height: 10px; */
     padding: 2px 5px;
-    display: flex;
     gap: 2px;
+    display: flex !important;
+    justify-content: flex-end;
     li {
       width: auto;
       height: auto;
@@ -90,16 +97,17 @@ export const Carousel = styled(Slider)`
   }
   .slick-list {
     overflow: visible;
+    /* height: 100%; */
   }
   .slick-track {
     display: flex;
     /* width: 500% !important; */
     & > div {
       flex: 1;
-      margin: 0 3px;
+      margin: 0 3.5px;
       /* background-color: green; */
-      height: 150px;
-      background-color: red;
+      /* height: 150px; */
+      /* background-color: red; */
       div {
         width: 100%;
         height: 100%;

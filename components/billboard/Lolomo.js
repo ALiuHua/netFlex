@@ -1,54 +1,34 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import LolomoSlider from "./LolomoSlider";
-const content = ["1", "2", "3", "4", "5", "6", "7"];
-const lolomo = () => {
-  const [itemHovered, setItemHovered] = useState(null);
-  const mouseHandler = (index) => {
-    setItemHovered(index);
-  };
-  console.log(itemHovered);
-  const mouseLeaveHandler = (index) => {
-    setItemHovered(null);
-  };
+import React, { useState, useEffect } from "react";
+import Slider from "./Slider";
+import { TMDB } from "../../data/dynamic/tmdbEndpoints";
+const Lolomo = ({ category = "TVShows" }) => {
+  const [rowNumber, setRowNumber] = useState(1);
+  useEffect(() => {
+    const onScrollHandler = () => {
+      window.innerHeight + window.scrollY + 400 >= document.body.offsetHeight &&
+        setRowNumber((prevRowNumber) => prevRowNumber + 2);
+    };
+    window.addEventListener("scroll", onScrollHandler); //添加一次，转动可用
+    return () => {
+      removeEventListener("scroll", onScrollHandler);
+    };
+  }, []);
   return (
-    <LolomoSlider>
-      {content.map((data, index) => (
-        <div
-          key={index}
-          onMouseLeave={mouseLeaveHandler.bind(null, index)}
-          onMouseOver={mouseHandler.bind(null, index)}
-        >
-          {index !== itemHovered && (
-            <div>
-              <p>{data}</p>
-            </div>
-          )}
-          {console.log("re-render")}
-          {index === itemHovered && (
-            <DivRapper>
-              <h2>{data + 1}</h2>
-            </DivRapper>
-          )}
-        </div>
-      ))}
-    </LolomoSlider>
+    <div>
+      {TMDB[category].sections.map(
+        (item, index) => rowNumber > index && <Slider key={index} item={item} />
+      )}
+    </div>
   );
 };
+export default Lolomo;
 
-export default lolomo;
-const DivRapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  background-color: green;
-  animation: scaling 1s;
-  @keyframes scaling {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(1.3);
-    }
-  }
-`;
+//   console.log(window.scrollY);
+//   console.log(window.pageYOffset);
+//above are same value, ie scroll bar scrolling distance;
+//   console.log(window.innerHeight);
+//the value of the content visibel window height
+//   console.log(document.body.offsetHeight);
+// kind of document height, if i add another div with height= 50px in the footer, this will increase 50px.
+//   window.scrollY + window.innerHeight === document.body.offsetHeight;
+// mean the document just hit the bottom of window.

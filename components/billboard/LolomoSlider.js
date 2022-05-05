@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { CarouselWrapper, Carousel } from "./LolomoStyle";
 
-const LolomoSlider = ({ children }) => {
+const LolomoSlider = ({ item, children }) => {
   const [carouselClicked, setCarouselClicked] = useState(false);
   const onArrowClickedHandler = () => {
     if (carouselClicked) return;
@@ -22,6 +22,7 @@ const LolomoSlider = ({ children }) => {
       />
     );
   };
+
   const SamplePrevArrow = ({ className, onClick }) => {
     return (
       carouselClicked && <button className={className} onClick={onClick} />
@@ -30,8 +31,8 @@ const LolomoSlider = ({ children }) => {
   const settings = {
     dots: true,
     speed: 1000,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 6,
+    slidesToScroll: 6,
     infinite: true,
     // carouselClicked,
     //not used here to prevent the re-render of carousel. cause we just want prevArrow re-render.
@@ -69,7 +70,7 @@ const LolomoSlider = ({ children }) => {
 
   return (
     <CarouselWrapper>
-      <h2>slider test</h2>
+      <h2>{item.title}</h2>
       <Carousel {...settings}>{children}</Carousel>
     </CarouselWrapper>
   );

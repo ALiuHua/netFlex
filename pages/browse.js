@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import BillboardHero from "../components/billboard/BillboardHero";
+import Lolomo from "../components/billboard/Lolomo";
 import { getBanner } from "../helpers/browseHelper";
-const browse = () => {
+
+const browse = ({ category = "TVShows" }) => {
+  
   return (
     <>
-      {console.log("billboard render")}
       <BillboardHero />
+      <Lolomo />
     </>
   );
 };

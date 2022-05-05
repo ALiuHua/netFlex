@@ -6,7 +6,6 @@ const BillboardHero = () => {
   useEffect(() => {
     const fetchBillboard = async () => {
       const bannerData = await getBanner("movies");
-      console.log(bannerData);
       setBanner(bannerData);
       // why show twice consolse????
     };

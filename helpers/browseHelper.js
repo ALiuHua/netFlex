@@ -28,3 +28,14 @@ export const getBanner = async (category) => {
   const banner = filteredResults[chooseRandomBanner(filteredResults.length)];
   return banner;
 };
+export const getRow = async (row) => {
+  const { data } = await tmdb.get(
+    row.endpoint.replace("&page=_pageNumber", "")
+  );
+  const { results: sliderItems } = data;
+  const filteredSliderItems = sliderItems.filter(
+    ({ backdrop_path, poster_path }) => backdrop_path && poster_path
+    // original_language === "en" && backdrop_path && poster_path
+  );
+  return filteredSliderItems;
+};

@@ -5,11 +5,10 @@ import Lolomo from "../components/billboard/Lolomo";
 import { getBanner } from "../helpers/browseHelper";
 
 const browse = ({ category = "TVShows" }) => {
-  
   return (
     <>
-      <BillboardHero />
-      <Lolomo />
+      <BillboardHero category={category} />
+      <Lolomo category={category} />
     </>
   );
 };

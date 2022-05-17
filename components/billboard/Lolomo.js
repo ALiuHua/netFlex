@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import Slider from "./Slider";
 import { TMDB } from "../../data/dynamic/tmdbEndpoints";
-const Lolomo = ({ category = "TVShows" }) => {
+const Lolomo = ({ category }) => {
   const [rowNumber, setRowNumber] = useState(1);
   useEffect(() => {
     const onScrollHandler = () => {
@@ -14,14 +15,19 @@ const Lolomo = ({ category = "TVShows" }) => {
     };
   }, []);
   return (
-    <div>
+    <SliderWrapper>
       {TMDB[category].sections.map(
-        (item, index) => rowNumber > index && <Slider key={index} item={item} />
+        (item, index) => rowNumber > index && <Slider category={category} key={index} item={item} />
       )}
-    </div>
+    </SliderWrapper>
   );
 };
 export default Lolomo;
+
+const SliderWrapper = styled.div`
+  position: relative;
+  z-index: 2;
+`;
 
 //   console.log(window.scrollY);
 //   console.log(window.pageYOffset);

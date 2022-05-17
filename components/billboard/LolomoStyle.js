@@ -116,6 +116,7 @@ export const Carousel = styled(Slider)`
     .slick-slide {
       position: relative;
       transition: all 1s;
+      aspect-ratio: 16/9;
     }
   }
 `;

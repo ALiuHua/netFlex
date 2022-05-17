@@ -15,6 +15,7 @@ export const getBanner = async (category) => {
   const { results: results1 } = res;
   const { results: results2 } = res2;
   const resultsPool = [...results1, ...results2];
+
   const filteredResults = resultsPool.filter(
     ({ original_language, original_name, original_title }) =>
       original_language === "en" &&
@@ -38,4 +39,67 @@ export const getRow = async (row) => {
     // original_language === "en" && backdrop_path && poster_path
   );
   return filteredSliderItems;
+};
+
+export const getTrailer = async (category, itemId) => {
+  //can be better we make name more geneic in tmdbEndpoint
+  // const method =
+  //   category === "TVShows" ? "fetchTVTrailers" : "fetchMovieTrailers";
+
+  // const trailerEndPoint = TMDB[category].helpers[method].replace("_id", itemId);
+  const trailerEndPoint = TMDB[category].helpers.fetchTrailers.replace(
+    "_id",
+    itemId
+  );
+  let trailer = null;
+  const res = await tmdb.get(trailerEndPoint);
+  // const {
+  //   data: { results },
+  // } = await tmdb.get(trailerEndPoint);
+  console.log(res, res.status);
+  const {
+    data: { results },
+  } = res;
+  if (results.length > 0) {
+    const trailerDetail = results
+      .reverse()
+      .find(
+        ({ site, type }) =>
+          site === "YouTube" &&
+          (type === "Teaser" ||
+            type === "Trailer" ||
+            type === "Featurette" ||
+            type === "Clip" ||
+            type === "Opening Credits")
+      );
+    if (trailerDetail) {
+      trailer = trailerDetail.key;
+    }
+  } else {
+    throw new Error("no trailer result"); // 如果没有获取到trailer， throw an error
+  }
+  return trailer;
+};
+export const getCardDetails = async (category, item) => {
+  // genery  trailer
+
+  const { data: details } = await tmdb.get(
+    TMDB[category].helpers.fetchDetails.replace("_id", item.id)
+  );
+  const { data: castData } = await tmdb.get(
+    TMDB[category].helpers.fetchCredits.replace("_id", item.id)
+  );
+  const { cast } = castData;
+  const { data: trailer } = await tmdb.get(
+    TMDB[category].helpers.fetchTrailers.replace("_id", item.id)
+  );
+
+  return { details, castData, trailer };
+};
+
+export const isNewRelease = (item) => {
+  const releaseDate = new Date(item?.release_date);
+  const currentDate = new Date();
+  const gap = currentDate.getTime() - releaseDate.getTime();
+  return Math.ceil(gap / (1000 * 3600 * 24)) <= 30;
 };

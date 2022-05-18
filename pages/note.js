@@ -16,3 +16,5 @@ got this information from: https://github.com/vercel/next.js/discussions/35773  
 */
 
 // transition动画的delay也有调度的效果；例如延迟1s，如果hover时间少于1s离开，则动画效果被取消
+
+//github     git@github.com:ALiuHua/netFlex.git

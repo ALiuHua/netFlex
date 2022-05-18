@@ -8,10 +8,9 @@ const BillboardHero = ({ category }) => {
   const [playCompleted, setPlayCompleted] = useState(false);
   const [muted, setMuted] = useState(true);
   const [trailerPlaying, setTrailerPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.1); //seams no work
+  const [volume, setVolume] = useState(0.3); //seams no work
   const onEndedHandler = () => {
     setPlayCompleted(true);
-    // setTrailer(null);
     setTrailerPlaying(false);
   };
   const volumeHandler = () => {
@@ -22,10 +21,11 @@ const BillboardHero = ({ category }) => {
       try {
         const bannerData = await getBanner(category);
         setBanner(bannerData);
-        // const fetchedTrailer = await getTrailer(category, bannerData.id);
         const fetchedTrailer = await getTrailer(category, bannerData.id);
+        // const fetchedTrailer = await getTrailer(category, 196749);
         //发生在try block；所以get banner 和get trailer 函数本省不需要try catch block。待求证
         //675353
+        //196749
         // 52814   120089   158415
         //  have test that this has been spilt into 3 times.
         console.log(fetchedTrailer);
@@ -75,10 +75,8 @@ const BillboardHero = ({ category }) => {
               <h1>{banner?.name || banner?.original_name || banner?.title}</h1>
               <p>{banner.overview}</p>
             </Description>
-
             {/* 这里我们刷新时并没有出现banner大小位置晃动的现象，这是因为
-          banner div的大小并不是由其内容决定的，而是通过padding设置的固定大小。advantage1
-          
+          banner div的大小并不是由其内容决定的，而是通过padding设置的固定大小。advantage1        
           这里我们用父div代表其真实大小，然后里面的子div设置为背景大小，然后利用负margin来调整到header位置。当
           子元素的负margin也回导致父元素上升，但这个子元素必须是第一个子元素*/}
             <ActionBox>
@@ -91,34 +89,47 @@ const BillboardHero = ({ category }) => {
             </ActionBox>
           </DescriptionContainer>
         )}
-        <ButtonBox>
-          {/* {muted ? (
-            <NotMuteIcon onClick={volumeHandler} />
-          ) : (
-            <MuteIcon onClick={volumeHandler} />
-          )} */}
-
-          {/* <NotMuteIcon onClick={() => {
-              console.log("clicked");
-            }}/>  why this not work????  put this handler on the component icon*/}
-
-          {trailerPlaying && trailer && (
-            <MuteButton onClick={volumeHandler}>
-              {muted ? <NotMuteIcon /> : <MuteIcon />}
-            </MuteButton>
-          )}
-          {!trailerPlaying && trailer && (
-            <ReplayButton onClick={replayHandler}>
-              {playCompleted && <ReplayIcon />}
-            </ReplayButton>
-          )}
-        </ButtonBox>
+        <EmbedButtonBox
+          trailerPlaying={trailerPlaying}
+          trailer={trailer}
+          volumeHandler={volumeHandler}
+          muted={muted}
+          replayHandler={replayHandler}
+          playCompleted={playCompleted}
+        />
       </BillboardDetail>
     </BillboardWrapper>
   );
 };
 
 export default BillboardHero;
+
+export const EmbedButtonBox = ({
+  trailerPlaying,
+  trailer,
+  volumeHandler,
+  muted,
+  replayHandler,
+  playCompleted,
+}) => {
+  return (
+    <ButtonBox>
+      {trailerPlaying && trailer && (
+        <MuteButton onClick={volumeHandler}>
+          {muted ? <NotMuteIcon /> : <MuteIcon />}
+        </MuteButton>
+      )}
+      {!trailerPlaying && trailer && (
+        <ReplayButton onClick={replayHandler}>
+          {playCompleted && <ReplayIcon />}
+        </ReplayButton>
+      )}
+    </ButtonBox>
+  );
+};
+
+// export default EmbedButtonBox;
+
 export const BillboardWrapper = styled.div`
   position: relative;
   margin-top: -100px;
@@ -126,8 +137,6 @@ export const BillboardWrapper = styled.div`
   height: 40vw;
   margin-bottom: 20px;
   z-index: 1;
-  /* cursor: pointer !important; */
-  /* background-color: orangered; */
 `;
 export const BillboardContent = styled.div`
   position: absolute;

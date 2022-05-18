@@ -39,38 +39,60 @@ const Player = React.forwardRef((props, ref) => {
 });
 
 export default Player;
+// const PlayerWrapper = styled.div`
+//   /* width: 500px;
+//   aspect-ratio: 16/9; */
+//   /* aspect-ratio: 16/9; */
+//   pointer-events: none;
+
+//   position: absolute;
+//   /* top: -7%; */
+//   /* top: -45%; */
+//   left: 0;
+//   /* top: -10%; */
+//   /* top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   width: 100%;
+//   /* height: 100%; */
+//   width: 100%;
+//   aspect-ratio: 16/9;
+//   /* bottom: 0; */
+//   /* left: 0; */
+//   /* right: 0; */
+//   /* & > div {
+//     height: 115%;
+//   } */
+
+//   iframe {
+//     position:absolute;
+//     top:50%;
+//     left:50%;
+//     transform: translate(-50%,-55%);
+//     /* height:100%; */
+//     aspect-ratio: 16/12;
+//     /* transform: scale(1.5);
+//     transform-origin: center; */
+//     height:180%;
+
+//     }
+//   }
+// `;
 const PlayerWrapper = styled.div`
-  /* width: 500px;
-  aspect-ratio: 16/9; */
-  /* aspect-ratio: 16/9; */
   pointer-events: none;
-
   position: absolute;
-  /* top: -7%; */
-  /* top: -45%; */
-  left: 0;
-  /* top: 50%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  /* width: 100%; */
-  /* height: 100%; */
-  width: 100%;
+  width: 125%;
   aspect-ratio: 16/9;
-  /* bottom: 0; */
-  /* left: 0; */
-  /* right: 0; */
-  /* & > div {
-    height: 115%;
-  } */
-  
+  overflow: hidden;
   iframe {
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%);
     aspect-ratio: 16/9;
-    height:180%;
-
-    }
+    height: 200%;
   }
 `;

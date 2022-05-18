@@ -1,25 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
-import { getCardDetails } from "../../helpers/browseHelper";
 import { getTrailer } from "../../helpers/browseHelper";
 import Player from "./Player";
 const Card = ({ category, item }) => {
-  //   const [mouseHover, setMouseHover] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
-  // const [poster,setPoster] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [playCompleted, setPlayCompleted] = useState(false);
   const [muted, setMuted] = useState(true);
   const [trailerPlaying, setTrailerPlaying] = useState(false);
   const [volume, setVolume] = useState(0.1);
   const [timer, setTimer] = useState(null);
-  // const [isHovered, setIsHovered] = useState(false);
-  // console.log(item);
+  const vPlayer = useRef();
   const hoverHandler = () => {
     const delayPlay = setTimeout(() => {
       const fetchCardData = async () => {
         try {
-          console.log("****************************************");
           const fetchedTrailer = await getTrailer(category, item.id);
           // "675353"
           setTrailer(fetchedTrailer);
@@ -51,11 +46,9 @@ const Card = ({ category, item }) => {
   };
   const onEndedHandler = () => {
     setPlayCompleted(true);
-    // setTrailer(null);
     setTrailerPlaying(false);
   };
-  const vPlayer = useRef();
-  // console.log(vPlayer);
+
   return (
     <CardWrapper onMouseEnter={hoverHandler} onMouseLeave={mouseLeaveHandler}>
       <MediaContent>
@@ -66,7 +59,6 @@ const Card = ({ category, item }) => {
             />
           </ImgWrapper>
         )}
-        {/* {console.log("trailerPlaying", trailerPlaying, trailer)} */}
         {trailer && (
           <Player
             ref={vPlayer}
@@ -77,7 +69,6 @@ const Card = ({ category, item }) => {
             muted={muted}
           />
         )}
-        {console.log("run again")}
       </MediaContent>
     </CardWrapper>
   );

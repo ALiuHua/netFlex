@@ -108,10 +108,10 @@ export const Carousel = styled(Slider)`
       /* background-color: green; */
       /* height: 150px; */
       /* background-color: red; */
-      div {
+      /* div {
         width: 100%;
         height: 100%;
-      }
+      } */
     }
     .slick-slide {
       position: relative;

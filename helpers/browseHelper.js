@@ -80,6 +80,15 @@ export const getTrailer = async (category, itemId) => {
   }
   return trailer;
 };
+export const getGenres = async (category) => {
+  const {
+    data: { genres },
+  } = await tmdb.get(TMDB[category].helpers.fetchGenres);
+
+  return genres;
+};
+// this return a list which should be available initially.
+// can be get at build stage. at get static props.
 export const getCardDetails = async (category, item) => {
   // genery  trailer
 
@@ -98,8 +107,8 @@ export const getCardDetails = async (category, item) => {
 };
 
 export const isNewRelease = (item) => {
-  const releaseDate = new Date(item?.release_date);
+  const releaseDate = new Date(item?.release_date || item?.first_air_date);
   const currentDate = new Date();
   const gap = currentDate.getTime() - releaseDate.getTime();
-  return Math.ceil(gap / (1000 * 3600 * 24)) <= 30;
+  return Math.ceil(gap / (1000 * 3600 * 24)) <= 100;
 };

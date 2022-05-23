@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled, { css } from "styled-components";
 import { getBanner, getTrailer } from "../../helpers/browseHelper";
 import Player from "./Player";
+import { PlayerContext } from "../../store/playerContext";
 const BillboardHero = ({ category }) => {
+  const { muted, volume, setVolume, activePlayer, setActivePlayer } =
+  useContext(PlayerContext);
   const [banner, setBanner] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [playCompleted, setPlayCompleted] = useState(false);
-  const [muted, setMuted] = useState(true);
-  const [trailerPlaying, setTrailerPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.3); //seams no work
+  const [showPlayer, setShowPlayer] = useState(false);
+  const [playing, setPlaying] = useState(true);
   const onEndedHandler = () => {
     setPlayCompleted(true);
-    setTrailerPlaying(false);
+    setShowPlayer(false);
   };
-  const volumeHandler = () => {
-    setMuted((prev) => !prev);
-  };
+  // const volumeHandler = () => {
+  //   toggleMuted((prev) => !prev);
+  //   console.log(activePlayer);
+  // };
   useEffect(() => {
+    // setActivePlayer("card");
     const fetchBillboard = async () => {
       try {
         const bannerData = await getBanner(category);
@@ -28,10 +32,9 @@ const BillboardHero = ({ category }) => {
         //196749
         // 52814   120089   158415
         //  have test that this has been spilt into 3 times.
-        console.log(fetchedTrailer);
         setTimeout(() => {
           setTrailer(fetchedTrailer);
-          setTrailerPlaying(true);
+          setShowPlayer(true);
           setPlayCompleted(false);
         }, 3000);
       } catch (err) {
@@ -44,25 +47,31 @@ const BillboardHero = ({ category }) => {
     };
     fetchBillboard();
   }, [category]);
-  console.log(trailer);
+  useEffect(() => {
+    setPlaying(true);
+    if (activePlayer !== "billboard" && showPlayer) {
+      setPlaying(false);
+    }
+  }, [activePlayer, showPlayer]);
   const replayHandler = () => {
     setTrailer(trailer);
-    setTrailerPlaying(true);
+    setShowPlayer(true);
   };
-
   return (
     <BillboardWrapper>
       <BillboardContent>
         <GradientLayerAdd />
-        {trailerPlaying && trailer && (
+        {showPlayer && trailer && (
           <Player
             trailer={trailer}
             onEnded={onEndedHandler}
             volume={volume}
             muted={muted}
+            playing={playing}
+            activePlayer={activePlayer}
           />
         )}
-        {!trailerPlaying && banner && (
+        {!showPlayer && banner && (
           <BillboardBackground banner={banner}>
             {/* <GradientLayer /> */}
           </BillboardBackground>
@@ -71,7 +80,7 @@ const BillboardHero = ({ category }) => {
       <BillboardDetail>
         {banner && (
           <DescriptionContainer>
-            <Description trailerPlaying={trailerPlaying}>
+            <Description showPlayer={showPlayer}>
               <h1>{banner?.name || banner?.original_name || banner?.title}</h1>
               <p>{banner.overview}</p>
             </Description>
@@ -90,10 +99,8 @@ const BillboardHero = ({ category }) => {
           </DescriptionContainer>
         )}
         <EmbedButtonBox
-          trailerPlaying={trailerPlaying}
+          showPlayer={showPlayer}
           trailer={trailer}
-          volumeHandler={volumeHandler}
-          muted={muted}
           replayHandler={replayHandler}
           playCompleted={playCompleted}
         />
@@ -105,21 +112,21 @@ const BillboardHero = ({ category }) => {
 export default BillboardHero;
 
 export const EmbedButtonBox = ({
-  trailerPlaying,
+  showPlayer,
   trailer,
-  volumeHandler,
-  muted,
   replayHandler,
   playCompleted,
+  scaled,
 }) => {
+  const { muted, toggleMuted } = useContext(PlayerContext);
   return (
-    <ButtonBox>
-      {trailerPlaying && trailer && (
-        <MuteButton onClick={volumeHandler}>
+    <ButtonBox scaled={scaled}>
+      {showPlayer && trailer && (
+        <MuteButton onClick={() => toggleMuted((prev) => !prev)}>
           {muted ? <NotMuteIcon /> : <MuteIcon />}
         </MuteButton>
       )}
-      {!trailerPlaying && trailer && (
+      {!showPlayer && trailer && (
         <ReplayButton onClick={replayHandler}>
           {playCompleted && <ReplayIcon />}
         </ReplayButton>
@@ -145,6 +152,7 @@ export const BillboardContent = styled.div`
   width: 100%;
   height: 56.25vw;
   z-index: -1;
+  overflow: hidden;
 `;
 export const BillboardBackground = styled.div`
   position: absolute;
@@ -179,7 +187,7 @@ export const GradientLayerAdd = styled.div`
     black 100%
   );
   opacity: 1;
-  z-index: 10;
+  z-index: 1000;
 `;
 // export const GradientLayer = styled.div`
 //   position: absolute;
@@ -231,8 +239,8 @@ export const Description = styled.div`
     font-size: 6.4rem;
     transition: all 1.3s ease-in 1.2s;
     margin-bottom: 3rem;
-    ${({ trailerPlaying }) =>
-      trailerPlaying &&
+    ${({ showPlayer }) =>
+      showPlayer &&
       css`
         /* font-size: 3.2rem; */
         transform: scale(0.55);
@@ -246,8 +254,8 @@ export const Description = styled.div`
     /* height: 100%; */
     max-height: 1000px;
     transition: all 1s ease-in 1s;
-    ${({ trailerPlaying }) =>
-      trailerPlaying &&
+    ${({ showPlayer }) =>
+      showPlayer &&
       css`
         opacity: 0;
         max-height: 0;
@@ -260,9 +268,18 @@ export const ActionBox = styled.div`
   display: flex;
 `;
 export const ButtonBox = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-right: 6.4rem;
+  position: absolute;
+  bottom: 0;
+  right: 6%;
+  z-index: 200;
+  /* display: flex; */
+  /* transform: ${({ scaled }) =>
+    Boolean(scaled) ? `scale(${scaled})` : `scale(1)`}; */
+
+  ${({ scaled }) =>
+    css`
+      transform: scale(${scaled});
+    `}
 `;
 export const MuteButton = styled.button`
   width: 5.3rem;

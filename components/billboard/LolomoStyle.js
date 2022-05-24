@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -9,13 +9,15 @@ export const CarouselWrapper = styled.div`
   /* width: 100%; */
   /* width: 100vw; */
   // this make scroll bar width added in. why?
+
   margin: 3vw 0;
-  padding: 0 60px;
+  padding: 0 60px; // for prev and next button
+
   h2 {
     font-size: 1.4vw;
     font-weight: 700;
     color: #e5e5e5;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
   &:hover {
     position: relative;
@@ -99,6 +101,11 @@ export const Carousel = styled(Slider)`
   }
   .slick-list {
     overflow: visible;
+    ${({ carouselClicked }) =>
+      !carouselClicked &&
+      css`
+        clip-path: inset(-100vw -100vw -100vw 0); // why this work?????????????
+      `}/* margin-right: -60px; */
     /* height: 100%; */
   }
   .slick-track {

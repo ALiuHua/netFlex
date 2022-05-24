@@ -13,7 +13,11 @@ const LolomoSlider = ({ item, children }) => {
       <button
         className={className}
         onClick={() => {
-          onClick(), onArrowClickedHandler();
+          onClick(),
+            setTimeout(() => {
+              onArrowClickedHandler();
+            }, 100);
+
           /*in this case i want to add another function when onclick happened,
         at first i trying to add another onClick on this element but it failed,
         because we can't attached two onClicked at one element, so the solution is
@@ -30,7 +34,7 @@ const LolomoSlider = ({ item, children }) => {
   };
   const settings = {
     dots: true,
-    speed: 1000,
+    speed: 500,
     slidesToShow: 6,
     slidesToScroll: 6,
     infinite: true,
@@ -71,7 +75,9 @@ const LolomoSlider = ({ item, children }) => {
   return (
     <CarouselWrapper>
       <h2>{item.title}</h2>
-      <Carousel {...settings}>{children}</Carousel>
+      <Carousel carouselClicked={carouselClicked} {...settings}>
+        {children}
+      </Carousel>
     </CarouselWrapper>
   );
 };

@@ -18,15 +18,17 @@ export const CarouselWrapper = styled.div`
     margin-bottom: 1rem;
   }
   &:hover {
+    position: relative;
+    z-index: 10;
     .slick-prev {
       opacity: 1;
       z-index: 10;
-      background-color: green;
+      /* background-color: green; */
     }
     .slick-next {
       opacity: 1;
       z-index: 10;
-      background-color: green;
+      /* background-color: green; */
     }
   }
   button {
@@ -36,7 +38,7 @@ export const CarouselWrapper = styled.div`
   }
   .slick-next:hover,
   .slick-prev:hover {
-    background-color: green;
+    /* background-color: green; */
   }
   .slick-prev {
     left: 0px;
@@ -117,6 +119,11 @@ export const Carousel = styled(Slider)`
       position: relative;
       transition: all 1s;
       aspect-ratio: 16/9;
+      z-index: 1;
+    }
+    .slick-slide:hover {
+      position: relative;
+      z-index: 2;
     }
   }
 `;

@@ -69,7 +69,7 @@ const Card = ({ category, item }) => {
 
   return (
     <CardWrapper onMouseEnter={hoverHandler} onMouseLeave={mouseLeaveHandler}>
-      <MediaContent>
+      <MediaContent className="mediaContent">
         {!showPlayer && (
           <ImgWrapper>
             <img
@@ -98,7 +98,7 @@ const Card = ({ category, item }) => {
           </>
         )}
       </MediaContent>
-      <MediaInfo>
+      <MediaInfo className="mediaInfo">
         <MiniTile>{item?.name}</MiniTile>
         <IsNew>{isNewRelease(item) && "new"}</IsNew>
         <GenreTag>
@@ -121,10 +121,12 @@ export default Card;
 const MediaInfo = styled.div`
   width: 100%;
   background-color: orange;
-  padding: 12px 24px;
-  height: 0px;
-  display: none;
-  transition: all 1s;
+  /* height: 0px; */
+  opacity: 0;
+  transition: all 0.1s ease-in;
+  * {
+    display: none;
+  }
 `;
 const MiniTile = styled.div``;
 const IsNew = styled.div``;
@@ -138,12 +140,6 @@ const GenreTag = styled.div`
   }
 `;
 
-const CardWrapper = styled.div`
-  position: relative;
-  box-shadow: rgb(0 0 0 / 75%) 0px 3px 10px;
-  aspect-ratio: 16/9;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.75), 0 6px 6px rgba(0, 0, 0, 0.5);
-`;
 const MediaContent = styled.div`
   overflow: hidden;
   position: relative;
@@ -151,41 +147,46 @@ const MediaContent = styled.div`
   aspect-ratio: 16/9;
   border-radius: 3px;
   overflow: hidden;
-  transition: all 0.3s ease-in-out 0.5s;
-  z-index: 1;
-  :hover {
-    transform: scale(1.5);
-    transform-origin: 50% 110%;
-    z-index: 100;
-  }
 `;
 const ImgWrapper = styled.div`
   position: relative;
-  z-index: 10;
+  z-index: 1;
   width: 100%;
   height: 100%;
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* object-fit: cover; // causing shaking   why?? */
     display: block;
   }
 `;
-const Description = styled.div`
-  transform-origin: 50% 40%;
-  position: relative;
-  z-index: 5;
-  animation: scaling 1s;
-  animation-fill-mode: forwards;
-  /* transition: all 3s; */
-  background-color: red;
 
-  @keyframes scaling {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(1.3);
-    }
+const CardWrapper = styled.div`
+  position: relative;
+  box-shadow: rgb(0 0 0 / 75%) 0px 3px 10px;
+  aspect-ratio: 16/9;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.75), 0 6px 6px rgba(0, 0, 0, 0.5);
+  transition: all 0.1s ease-in;
+  transform-origin: 50% 85%;
+  &:hover {
+    transform: scale(1.5);
+
+    transition: all 0.2s ease-in;
+    transition-delay: 0.5s; // this will only effect with hover state instead of both hover and unhover
+  }
+
+  &:hover .mediaContent {
+    transition-delay: 0.5s; //???
+    /* div {
+      img {
+        object-fit: cover;
+      }
+    } */
+  }
+  &:hover .mediaInfo {
+    opacity: 1;
+    height: 80px;
+    transition: all 0.2s ease-in;
+    transition-delay: 0.5s;
   }
 `;

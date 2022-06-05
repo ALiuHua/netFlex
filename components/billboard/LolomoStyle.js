@@ -33,11 +33,11 @@ export const CarouselWrapper = styled.div`
       /* background-color: green; */
     }
   }
-  button {
+  /* button {
     width: 60px;
     height: 100%;
     /* background-color: green; */
-  }
+  } */
   .slick-next:hover,
   .slick-prev:hover {
     /* background-color: green; */

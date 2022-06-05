@@ -40,7 +40,7 @@ body{
     line-height:1.1;
     font-size:1.6rem;
     box-sizing: border-box;
-    background-color:${({ theme }) => theme.backGroundColor};
+    background-color:${({ theme }) => theme.backgroundColor};
     min-width:32rem;
     color:${({ theme }) => theme.greyColor};
 }

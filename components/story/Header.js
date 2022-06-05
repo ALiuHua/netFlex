@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   HeaderWrapper,
   HeaderContent,
@@ -7,9 +7,27 @@ import {
   ButtonLink,
   MenuList,
   AccountTool,
+  SearchIcon,
+  SearchButton,
+  BellButton,
+  BellIcon,
+  ProfileWrapper,
+  SearchInput,
+  SearchBox,
 } from "./HeaderStyle";
 
 const Header = ({ pathname }) => {
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const searchRef = useRef();
+  useEffect(() => {
+    const clickHandler = (e) => {
+      if (!searchRef.current.contains(e.target)) setShowSearchBar(false);
+    };
+    window.addEventListener("click", clickHandler);
+    return () => {
+      removeEventListener("click", clickHandler);
+    };
+  }, []);
   return (
     <HeaderWrapper>
       <HeaderContent pathname={pathname}>
@@ -44,7 +62,25 @@ const Header = ({ pathname }) => {
                   </li>
                 </ul>
               </MenuList>
-              <AccountTool>tool box</AccountTool>
+              <AccountTool>
+                <SearchBox showSearchBar={showSearchBar} ref={searchRef}>
+                  <SearchInput showSearchBar={showSearchBar} />
+                  <SearchButton
+                    onClick={() => {
+                      setShowSearchBar((prev) => !prev);
+                    }}
+                  >
+                    <SearchIcon />
+                  </SearchButton>
+                </SearchBox>
+
+                <BellButton>
+                  <BellIcon />
+                </BellButton>
+                <ProfileWrapper>
+                  <p>我</p>
+                </ProfileWrapper>
+              </AccountTool>
             </>
           )}
 

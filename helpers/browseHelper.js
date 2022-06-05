@@ -56,7 +56,6 @@ export const getTrailer = async (category, itemId) => {
   // const {
   //   data: { results },
   // } = await tmdb.get(trailerEndPoint);
-  console.log(res, res.status);
   const {
     data: { results },
   } = res;

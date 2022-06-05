@@ -5,7 +5,7 @@ import Player from "./Player";
 import { PlayerContext } from "../../store/playerContext";
 const BillboardHero = ({ category }) => {
   const { muted, volume, setVolume, activePlayer, setActivePlayer } =
-  useContext(PlayerContext);
+    useContext(PlayerContext);
   const [banner, setBanner] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [playCompleted, setPlayCompleted] = useState(false);
@@ -322,6 +322,25 @@ export const PlayButton = styled.button`
     display: block;
     font-size: 2.3rem;
     font-weight: bold;
+  }
+`;
+export const CirclePlayButton = styled.button`
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  :hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  /* transform: scale(0.35); */
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    padding: 0.2rem;
+    display: inline-block;
   }
 `;
 export const MoreInfoButton = styled(PlayButton)`

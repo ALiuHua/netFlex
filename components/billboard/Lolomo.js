@@ -17,7 +17,15 @@ const Lolomo = ({ category }) => {
   return (
     <SliderWrapper>
       {TMDB[category].sections.map(
-        (item, index) => rowNumber > index && <Slider category={category} key={index} item={item} />
+        (item, index) =>
+          rowNumber > index && (
+            <Slider
+              category={category}
+              rowNumber={index + 1}
+              key={index}
+              item={item}
+            />
+          )
       )}
     </SliderWrapper>
   );

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import ReactPlayer from "react-player";
 import styled from "styled-components";
+// eslint-disable-next-line react/display-name
 const Player = React.forwardRef((props, ref) => {
   const { muted, volume, onEnded, onReady, trailer, playing, activePlayer } =
     props;
@@ -36,8 +37,8 @@ const Player = React.forwardRef((props, ref) => {
     </PlayerWrapper>
   );
 });
-
 export default Player;
+
 const PlayerWrapper = styled.div`
   pointer-events: none;
   position: absolute;
@@ -59,6 +60,4 @@ const PlayerWrapper = styled.div`
     height: ${({ activePlayer }) =>
       activePlayer === "card" ? "200%" : "100%"};
   }
-  }
- 
 `;

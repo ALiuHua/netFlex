@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import styled from "styled-components";
 import { CarouselWrapper, Carousel } from "./LolomoStyle";
 
 const LolomoSlider = ({ item, children }) => {
@@ -16,7 +16,7 @@ const LolomoSlider = ({ item, children }) => {
           onClick(),
             setTimeout(() => {
               onArrowClickedHandler();
-            }, 100);
+            }, 80);
 
           /*in this case i want to add another function when onclick happened,
         at first i trying to add another onClick on this element but it failed,
@@ -26,12 +26,19 @@ const LolomoSlider = ({ item, children }) => {
       />
     );
   };
-
+  const SampleNextArrowStyled = styled(SampleNextArrow)`
+    width: 55px;
+    height: 100%;
+  `;
   const SamplePrevArrow = ({ className, onClick }) => {
     return (
       carouselClicked && <button className={className} onClick={onClick} />
     );
   };
+  const SamplePrevArrowStyled = styled(SamplePrevArrow)`
+    width: 55px;
+    height: 100%;
+  `;
   const settings = {
     dots: true,
     speed: 500,
@@ -42,8 +49,8 @@ const LolomoSlider = ({ item, children }) => {
     //not used here to prevent the re-render of carousel. cause we just want prevArrow re-render.
     initialSlide: 0,
     // centerPadding: "30px",
-    prevArrow: <SamplePrevArrow />,
-    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrowStyled />,
+    nextArrow: <SampleNextArrowStyled />,
     responsive: [
       {
         breakpoint: 1024,

@@ -21,9 +21,10 @@ const Header = ({ pathname }) => {
   const searchRef = useRef();
   useEffect(() => {
     const clickHandler = (e) => {
+      if (pathname !== "/browse") return;
       if (!searchRef.current.contains(e.target)) setShowSearchBar(false);
     };
-    window.addEventListener("click", clickHandler);
+    document.addEventListener("click", clickHandler);
     return () => {
       removeEventListener("click", clickHandler);
     };

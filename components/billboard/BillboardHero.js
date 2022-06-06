@@ -271,7 +271,7 @@ export const ButtonBox = styled.div`
   position: absolute;
   bottom: 0;
   right: 6%;
-  z-index: 200;
+  z-index: 2;
   /* display: flex; */
   /* transform: ${({ scaled }) =>
     Boolean(scaled) ? `scale(${scaled})` : `scale(1)`}; */

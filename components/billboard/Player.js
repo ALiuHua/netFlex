@@ -48,7 +48,7 @@ const PlayerWrapper = styled.div`
   width: 125%;
   aspect-ratio: 16/9;
   overflow: hidden;
-  z-index: 100;
+  z-index: 1;
   iframe {
     position: absolute;
     top: 50%;

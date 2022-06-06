@@ -119,7 +119,8 @@ const Card = ({ category, item, rowNumber }) => {
                 volume={volume}
                 muted={muted}
                 playing={true}
-                activePlayer={activePlayer}
+                player="card"
+                // activePlayer={activePlayer}
               />
               <EmbedButtonBox
                 showPlayer={showPlayer.isShown}

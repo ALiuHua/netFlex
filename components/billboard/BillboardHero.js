@@ -68,7 +68,7 @@ const BillboardHero = ({ category }) => {
             volume={volume}
             muted={muted}
             playing={playing}
-            activePlayer={activePlayer}
+            player="billboard"
           />
         )}
         {!showPlayer && banner && (
@@ -183,7 +183,8 @@ export const GradientLayerAdd = styled.div`
     rgba(20, 20, 20, 0.15) 15%,
     rgba(20, 20, 20, 0.35) 29%,
     rgba(20, 20, 20, 0.58) 32%,
-    rgba(20, 20, 20, 0.75) 80%,
+    rgba(20, 20, 20, 0.75) 50%,
+    rgba(20, 20, 20, 1) 65%,
     rgba(20, 20, 20, 1) 100%
   );
   opacity: 1;

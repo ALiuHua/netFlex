@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 export const MediaInfo = styled.div`
   width: 100%;
-  background-color: ${({ theme }) => theme.backgroundColor};
+  background-color: rgba(35, 35, 35);
   opacity: 0;
   transition: all 0.1s ease-in;
   font-size: 1rem;

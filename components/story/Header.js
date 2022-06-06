@@ -64,7 +64,7 @@ const Header = ({ pathname }) => {
               </MenuList>
               <AccountTool>
                 <SearchBox showSearchBar={showSearchBar} ref={searchRef}>
-                  <SearchInput showSearchBar={showSearchBar} />
+                  <SearchInput showSearchBar={showSearchBar} focused />
                   <SearchButton
                     onClick={() => {
                       setShowSearchBar((prev) => !prev);

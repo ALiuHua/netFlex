@@ -24,23 +24,14 @@ export const CarouselWrapper = styled.div`
     z-index: 10;
     .slick-prev {
       opacity: 1;
-      z-index: 10;
+      /* z-index: 1; */
       /* background-color: green; */
     }
     .slick-next {
       opacity: 1;
-      z-index: 10;
+      /* z-index: 1; */
       /* background-color: green; */
     }
-  }
-  /* button {
-    width: 60px;
-    height: 100%;
-    /* background-color: green; */
-  } */
-  .slick-next:hover,
-  .slick-prev:hover {
-    /* background-color: green; */
   }
   .slick-prev {
     left: 0px;
@@ -80,6 +71,7 @@ export const Carousel = styled(Slider)`
     gap: 2px;
     display: flex !important;
     justify-content: flex-end;
+    z-index: -1;
     li {
       width: auto;
       height: auto;
@@ -101,6 +93,8 @@ export const Carousel = styled(Slider)`
   }
   .slick-list {
     overflow: visible;
+    /* position: relative;
+    z-index: 2; */
     ${({ carouselClicked }) =>
       !carouselClicked &&
       css`

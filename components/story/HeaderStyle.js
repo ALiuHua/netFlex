@@ -171,8 +171,11 @@ export const SearchInput = styled.input`
   height: 32px;
   border: none;
   outline: none;
-  background-color: rgba(0, 0, 0, 0.1);
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  background-color: transparent;
   transition: all 0.4s ease-out;
+  color: #eee;
+  font-size: 1.6rem;
   ${({ showSearchBar }) =>
     showSearchBar &&
     css`
@@ -183,11 +186,14 @@ export const SearchInput = styled.input`
 export const SearchBox = styled.div`
   position: relative;
   padding-left: 40px;
-  border: 0px solid #eee;
+  border: 1px solid rgba(238, 238, 238, 0);
   transition: all 0.4s ease-out;
+
   ${({ showSearchBar }) =>
     showSearchBar &&
     css`
-      border: 1px solid #eee;
+      border: 1px solid rgba(238, 238, 238, 1);
+      background-color: rgba(0, 0, 0, 0.2);
+      background-clip: border-box;
     `}
 `;

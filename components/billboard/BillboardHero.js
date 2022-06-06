@@ -183,8 +183,8 @@ export const GradientLayerAdd = styled.div`
     rgba(20, 20, 20, 0.15) 15%,
     rgba(20, 20, 20, 0.35) 29%,
     rgba(20, 20, 20, 0.58) 32%,
-    black 80%,
-    black 100%
+    rgba(20, 20, 20, 0.75) 80%,
+    rgba(20, 20, 20, 1) 100%
   );
   opacity: 1;
   z-index: 1000;

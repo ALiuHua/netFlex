@@ -50,7 +50,7 @@ export const MediaContent = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 16/9;
-  border-radius: 3px;
+  border-radius: 2px;
   overflow: hidden;
 `;
 export const ImgWrapper = styled.div`
@@ -68,9 +68,9 @@ export const ImgWrapper = styled.div`
 
 export const CardWrapper = styled.div`
   position: relative;
-  box-shadow: rgb(0 0 0 / 75%) 0px 3px 10px;
+  /* box-shadow: rgb(0 0 0 / 75%) 0px 3px 10px; */
   aspect-ratio: 16/9;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.75), 0 6px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 1.5rem rgba(20, 20, 20, 0.85);
   transition: all 0.1s ease-in;
   transform-origin: 50% 85%;
   &:hover {
@@ -82,6 +82,7 @@ export const CardWrapper = styled.div`
 
   &:hover .mediaContent {
     transition-delay: 0.5s; //???
+    border-radius: 2px 2px 0 0;
   }
   &:hover .mediaInfo {
     opacity: 1;

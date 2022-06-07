@@ -20,6 +20,7 @@ import { EmbedButtonBox } from "./BillboardHero";
 import { isNewRelease } from "../../helpers/browseHelper";
 import { GenreContext } from "../../pages/browse";
 import { CardContext } from "../../store/cardContext";
+import { useRouter } from "next/router";
 const Card = ({ category, item, rowNumber }) => {
   const { muted, volume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
@@ -40,7 +41,11 @@ const Card = ({ category, item, rowNumber }) => {
   // const [timer, setTimer] = useState(null);
   // const vPlayer = useRef();
   const isNew = isNewRelease(item);
-
+  const router = useRouter();
+  const playHandler = () => {
+    if (trailer) setTrailer(trailer);
+    router.push(`/play/${item.id}`);
+  };
   const genresInfo = item?.genre_ids.map((id, index) => {
     if (index > 2) return null;
     return genreCtx[category].find((genre) => genre.id === id);
@@ -111,6 +116,7 @@ const Card = ({ category, item, rowNumber }) => {
           showPlayer.playerID === item.id &&
           showPlayer.row === rowNumber && (
             <>
+              {console.log(trailer)}
               <Player
                 ref={vPlayer}
                 trailer={trailer}
@@ -133,7 +139,7 @@ const Card = ({ category, item, rowNumber }) => {
       </MediaContent>
       <MediaInfo className="mediaInfo">
         <ActionWrapper>
-          <CirclePlayButton>
+          <CirclePlayButton onClick={playHandler}>
             <PlayIcon />
           </CirclePlayButton>
           <DetailButton>

@@ -22,7 +22,7 @@ const Header = ({ pathname }) => {
   useEffect(() => {
     const clickHandler = (e) => {
       if (pathname !== "/browse") return;
-      if (!searchRef.current.contains(e.target)) setShowSearchBar(false);
+      if (!searchRef.current?.contains(e.target)) setShowSearchBar(false);
     };
     document.addEventListener("click", clickHandler);
     return () => {

@@ -32,6 +32,7 @@ html{
         font-size: 50%;
     }
     overflow-x: hidden;
+    /* overflow-y:hidden */
 }
 body{
     position:relative;
@@ -56,4 +57,13 @@ button{
     font-family: inherit;
 }
 li{list-style:none}
+/* main{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    overflow-y:scroll;
+    overflow-x:hidden;
+} */
 `;

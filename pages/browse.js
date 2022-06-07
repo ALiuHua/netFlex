@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import BillboardHero from "../components/billboard/BillboardHero";
 import Lolomo from "../components/billboard/Lolomo";
+import MoreInfo from "../components/moreInfo/MoreInfo";
 import { getGenres } from "../helpers/browseHelper";
 export const GenreContext = React.createContext({
   movies: [],
@@ -9,10 +10,16 @@ export const GenreContext = React.createContext({
 });
 const browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   const genreContextValue = { movies: movieGenres, TVShows: tvGenres };
+  const [showMoreInfo, setShowMoreInfo] = useState(false);
+  const onShowMoreInfoHandler = () => {
+    console.log("onShowMore");
+    setShowMoreInfo(!showMoreInfo);
+  };
   return (
     <GenreContext.Provider value={genreContextValue}>
-      <BillboardHero category={category} />
+      <BillboardHero category={category} onShowMore={onShowMoreInfoHandler} />
       <Lolomo category={category} />
+      {showMoreInfo && <MoreInfo onShowMore={onShowMoreInfoHandler} />}
     </GenreContext.Provider>
   );
 };

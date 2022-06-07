@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Slider from "./Slider";
 import { TMDB } from "../../data/dynamic/tmdbEndpoints";
 const Lolomo = ({ category }) => {
-  const [rowNumber, setRowNumber] = useState(1);
+  const [rowNumber, setRowNumber] = useState(4);
   useEffect(() => {
     const onScrollHandler = () => {
       window.innerHeight + window.scrollY + 400 >= document.body.offsetHeight &&

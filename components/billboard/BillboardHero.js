@@ -1,9 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 import styled, { css } from "styled-components";
 import { getBanner, getTrailer } from "../../helpers/browseHelper";
 import Player from "./Player";
 import { PlayerContext } from "../../store/playerContext";
-const BillboardHero = ({ category }) => {
+import { CardContext } from "../../store/cardContext";
+import Router from "next/router";
+const briefInfo = (infoText, num) => {
+  const shortInfo =
+    infoText
+      .split(" ")
+      .slice(0, num - 1)
+      .join(" ") + "...";
+  return shortInfo;
+};
+
+const BillboardHero = ({ category, onShowMore }) => {
   const { muted, volume, setVolume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
   const [banner, setBanner] = useState(null);
@@ -11,6 +23,17 @@ const BillboardHero = ({ category }) => {
   const [playCompleted, setPlayCompleted] = useState(false);
   const [showPlayer, setShowPlayer] = useState(false);
   const [playing, setPlaying] = useState(true);
+  const router = useRouter();
+  const { setTrailer: setPlayerTrailer } = useContext(CardContext);
+  const playHandler = () => {
+    if (trailer) setPlayerTrailer(trailer);
+    router.push(`/play/${banner.id}`);
+  };
+  const moreInfoHandler = () => {
+    console.log("query test runnning");
+    Router.push({ pathname: "/browse", query: { keywords: "test" } });
+    onShowMore();
+  };
   const onEndedHandler = () => {
     setPlayCompleted(true);
     setShowPlayer(false);
@@ -21,6 +44,7 @@ const BillboardHero = ({ category }) => {
   // };
   useEffect(() => {
     // setActivePlayer("card");
+    let timeoutId;
     const fetchBillboard = async () => {
       try {
         const bannerData = await getBanner(category);
@@ -32,7 +56,7 @@ const BillboardHero = ({ category }) => {
         //196749
         // 52814   120089   158415
         //  have test that this has been spilt into 3 times.
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           setTrailer(fetchedTrailer);
           setShowPlayer(true);
           setPlayCompleted(false);
@@ -46,6 +70,9 @@ const BillboardHero = ({ category }) => {
       }
     };
     fetchBillboard();
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [category]);
   useEffect(() => {
     setPlaying(true);
@@ -82,17 +109,17 @@ const BillboardHero = ({ category }) => {
           <DescriptionContainer>
             <Description showPlayer={showPlayer}>
               <h1>{banner?.name || banner?.original_name || banner?.title}</h1>
-              <p>{banner.overview}</p>
+              <p>{briefInfo(banner.overview, 20)}</p>
             </Description>
             {/* 这里我们刷新时并没有出现banner大小位置晃动的现象，这是因为
           banner div的大小并不是由其内容决定的，而是通过padding设置的固定大小。advantage1        
           这里我们用父div代表其真实大小，然后里面的子div设置为背景大小，然后利用负margin来调整到header位置。当
           子元素的负margin也回导致父元素上升，但这个子元素必须是第一个子元素*/}
             <ActionBox>
-              <PlayButton>
+              <PlayButton onClick={playHandler}>
                 <PlayIcon /> <span>Play</span>
               </PlayButton>
-              <MoreInfoButton>
+              <MoreInfoButton onClick={moreInfoHandler}>
                 <InfoIcon /> <span>More Info</span>
               </MoreInfoButton>
             </ActionBox>
@@ -311,6 +338,7 @@ export const PlayButton = styled.button`
   border-radius: 4px;
   /* font-size:6.4rem */
   transition: background-color 0.2s;
+  cursor: pointer;
   :hover {
     background-color: rgba(255, 255, 255, 0.75);
   }
@@ -347,7 +375,7 @@ export const CirclePlayButton = styled.button`
 export const MoreInfoButton = styled(PlayButton)`
   background-color: rgba(109, 109, 110, 0.7);
   color: white;
-
+  cursor: pointer;
   :hover {
     background-color: rgba(109, 109, 110, 0.4);
   }

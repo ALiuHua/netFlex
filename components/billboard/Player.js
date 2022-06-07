@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import ReactPlayer from "react-player";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 // eslint-disable-next-line react/display-name
 const Player = React.forwardRef((props, ref) => {
   const { muted, volume, onEnded, onReady, trailer, playing } = props;
@@ -17,7 +17,7 @@ const Player = React.forwardRef((props, ref) => {
         height={"100%"}
         muted={muted}
         volume={volume}
-        // controls
+        controls={props.control}
         onEnded={onEnded}
         onReady={onReady}
         config={{
@@ -37,13 +37,21 @@ const Player = React.forwardRef((props, ref) => {
   );
 });
 export default Player;
+
 const PlayerWrapper = styled.div`
-  pointer-events: none;
+  transform: translate(-50%, -50%);
+  ${({ player }) =>
+    player !== "videoPlayer" &&
+    css`
+      pointer-events: none;
+    `};
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-  height: ${({ player }) => (player === "card" ? "150%" : "130%")};
+
+  height: ${({ player }) =>
+    player === "card" ? "150%" : player === "billboard" ? "130%" : "115%"};
+  /* player === "card" ? "150%" : player === "billboard" ? "130%" : "115%"};  */
   aspect-ratio: 16/9;
   overflow: hidden;
   z-index: 1;
@@ -56,7 +64,7 @@ const PlayerWrapper = styled.div`
 
     /* height: 200%; */
     height: ${({ player }) =>
-      player === "card" ? "200%" : "100%"};
+      player === "card" ? "200%" : player === "billboard" ? "100%" : "100%"};
   }
 `;
 

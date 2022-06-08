@@ -28,7 +28,10 @@ const MoreInfo = (props) => {
         trailer: currentTrailer,
       } = await getDetails("TVShows", router.query.jbv);
       console.log(details, castData, trailer);
-      setTrailer(currentTrailer);
+      if (!trailer) {
+        setTrailer(currentTrailer);
+      }
+      setShowPlayer({ isShown: true, playerID: null, row: null });
       setBanner(details);
       //   setShowPlayer({ isShown: true, playerID: null, row: null });
     };
@@ -40,7 +43,7 @@ const MoreInfo = (props) => {
       //     console.log("ruingn edffe", router.query.jbv);
       //     getPreviewDetail();
       //   }
-      setShowPlayer({ isShown: true, playerID: null, row: null }); // for temporary
+      //   setShowPlayer({ isShown: true, playerID: null, row: null }); // for temporary
     };
     timerId = setTimeout(handler, 500);
     return () => {
@@ -48,6 +51,9 @@ const MoreInfo = (props) => {
       setShowPlayer({ isShown: false, playerID: null, row: null });
     }; // for temporary
   }, [router.query.jbv]);
+  const onEndedHandler = () => {
+    setShowPlayer({ isShown: false, playerID: null, row: null });
+  };
   return (
     <>
       <ContentWrapper>
@@ -63,16 +69,14 @@ const MoreInfo = (props) => {
         {console.log("render onInfo")}
         <Content>
           <PreviewPlayer>
-            {/* <Player trailer="6sosTNRw_uQ" playing={true} /> */}
             <GradientLayerAdd />
-            {showPlayer.isShown && trailer && (
+            {trailer && (
               <Player
                 trailer={trailer}
-                // onEnded={onEndedHandler}
-                // volume={volume}
-                // muted={muted}
+                muted={muted}
                 playing={true}
                 player="billboard"
+                onEnded={onEndedHandler}
               />
             )}
             {!showPlayer.isShown && banner && (
@@ -81,6 +85,14 @@ const MoreInfo = (props) => {
               </BillboardBackground>
             )}
           </PreviewPlayer>
+          <div>
+            <p>111</p>
+            <p>111</p>
+            <p>111</p>
+            <p>111</p>
+            <p>111</p>
+            <p>111</p>
+          </div>
         </Content>
       </ContentWrapper>
     </>
@@ -118,4 +130,5 @@ const PreviewPlayer = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 16/9;
+  overflow: hidden;
 `;

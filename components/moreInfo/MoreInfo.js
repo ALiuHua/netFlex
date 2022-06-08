@@ -4,10 +4,16 @@ import styled from "styled-components";
 import Player from "../billboard/Player";
 import { CardContext } from "../../store/cardContext";
 import { PlayerContext } from "../../store/playerContext";
-
+import { ActionWrapper } from "../billboard/CardStyle";
+import { CirclePlayButton, PlayIcon } from "../Billboard/BillboardHeroStyle";
 import {
   GradientLayerAdd,
   BillboardBackground,
+} from "../billboard/BillboardHeroStyle";
+import {
+  MuteButton,
+  NotMuteIcon,
+  MuteIcon,
 } from "../billboard/BillboardHeroStyle";
 import { getDetails } from "../../helpers/browseHelper";
 
@@ -19,6 +25,10 @@ const MoreInfo = (props) => {
   const { muted, toggleMuted, volume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
   console.log(trailer);
+  const playHandler = () => {
+    if (trailer) setTrailer(trailer);
+    router.push(`/play/${banner.id}`);
+  };
   useEffect(() => {
     const getPreviewDetail = async () => {
       console.log(router.query.jbv);
@@ -85,14 +95,17 @@ const MoreInfo = (props) => {
               </BillboardBackground>
             )}
           </PreviewPlayer>
-          <div>
-            <p>111</p>
-            <p>111</p>
-            <p>111</p>
-            <p>111</p>
-            <p>111</p>
-            <p>111</p>
-          </div>
+
+          <ActionsBox>
+            <ActionWrapper>
+              <CirclePlayButton onClick={playHandler}>
+                <PlayIcon />
+              </CirclePlayButton>
+            </ActionWrapper>
+            <MuteButton onClick={() => toggleMuted((prev) => !prev)}>
+              {muted ? <NotMuteIcon /> : <MuteIcon />}
+            </MuteButton>
+          </ActionsBox>
         </Content>
       </ContentWrapper>
     </>
@@ -131,4 +144,14 @@ const PreviewPlayer = styled.div`
   width: 100%;
   aspect-ratio: 16/9;
   overflow: hidden;
+  z-index: 1;
+`;
+const ActionsBox = styled.div`
+  position: absolute;
+  bottom: 3vw;
+  z-index: 2;
+  padding: 0 4vw;
+  button {
+    transform: scale(2);
+  }
 `;

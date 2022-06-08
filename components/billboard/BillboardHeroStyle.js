@@ -71,12 +71,12 @@ export const GradientLayerAdd = styled.div`
   background-image: linear-gradient(
     to bottom,
     rgba(20, 20, 20, 0) 0,
-    rgba(20, 20, 20, 0.1) 15%,
-    rgba(20, 20, 20, 0.25) 29%,
-    rgba(20, 20, 20, 0.35) 32%,
-    rgba(20, 20, 20, 0.45) 50%,
-    rgba(20, 20, 20, 0.65) 65%,
-    rgba(20, 20, 20, 0.85) 80%,
+    rgba(20, 20, 20, 0.15) 15%,
+    rgba(20, 20, 20, 0.3) 30%,
+    rgba(20, 20, 20, 0.45) 40%,
+    rgba(20, 20, 20, 0.6) 50%,
+    rgba(20, 20, 20, 0.75) 65%,
+    rgba(20, 20, 20, 0.95) 75%,
     rgba(20, 20, 20, 1) 85%,
     rgba(20, 20, 20, 1) 100%
   );

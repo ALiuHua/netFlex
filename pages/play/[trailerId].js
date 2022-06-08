@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Player from "../../components/billboard/Player";
 import { CardContext } from "../../store/cardContext";
 import { getTrailer } from "../../helpers/browseHelper";
-export const playerPage = () => {
+export const PlayerPage = () => {
   const router = useRouter();
   console.log(router);
   const {
@@ -54,7 +54,7 @@ export const playerPage = () => {
     </PlayerBox>
   );
 };
-export default playerPage;
+export default PlayerPage;
 const PlayerBox = styled.div`
   position: absolute;
   top: 0;

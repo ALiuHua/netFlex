@@ -37,11 +37,14 @@ export const CarouselWrapper = styled.div`
     left: 0px;
     transform: translate(-100%, -50%);
     opacity: 0;
+    z-index: 1;
 
     &::before {
       /* content: "1"; */
       /* color: transparent; */
       font-size: 40px;
+      position: relative;
+      z-index: 2;
     }
   }
   .slick-next {

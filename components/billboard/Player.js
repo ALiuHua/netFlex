@@ -3,7 +3,17 @@ import ReactPlayer from "react-player";
 import styled, { css } from "styled-components";
 // eslint-disable-next-line react/display-name
 const Player = React.forwardRef((props, ref) => {
-  const { muted, volume, onEnded, onReady, trailer, playing } = props;
+  const {
+    muted,
+    volume,
+    onEnded,
+    // onReady, // will show loading spinner
+    // onProgress,
+    onStart, // directly dive into palying screen
+    // onPlay, will triger during the video playing
+    trailer,
+    playing,
+  } = props;
   // const player = useRef();
 
   //player flicking when card player shows.
@@ -17,9 +27,11 @@ const Player = React.forwardRef((props, ref) => {
         height={"100%"}
         muted={muted}
         volume={volume}
+        onStart={onStart}
+        // onProgress={onProgress}
         controls={props.control}
         onEnded={onEnded}
-        onReady={onReady}
+        // onReady={onReady}
         config={{
           youtube: {
             playerVars: {

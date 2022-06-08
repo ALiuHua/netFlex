@@ -1,21 +1,85 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Player from "../billboard/Player";
+import { CardContext } from "../../store/cardContext";
+import { PlayerContext } from "../../store/playerContext";
+
+import {
+  GradientLayerAdd,
+  BillboardBackground,
+} from "../billboard/BillboardHeroStyle";
+import { getDetails } from "../../helpers/browseHelper";
+
 const MoreInfo = (props) => {
   const router = useRouter();
+  const [banner, setBanner] = useState(null);
+  const { trailer, setTrailer, showPlayer, setShowPlayer } =
+    useContext(CardContext);
+  const { muted, toggleMuted, volume, activePlayer, setActivePlayer } =
+    useContext(PlayerContext);
+  console.log(trailer);
+  useEffect(() => {
+    const getPreviewDetail = async () => {
+      console.log(router.query.jbv);
+      const {
+        details,
+        castData,
+        trailer: currentTrailer,
+      } = await getDetails("TVShows", router.query.jbv);
+      console.log(details, castData, trailer);
+      setTrailer(currentTrailer);
+      setBanner(details);
+      //   setShowPlayer({ isShown: true, playerID: null, row: null });
+    };
+
+    let timerId;
+    getPreviewDetail();
+    const handler = () => {
+      //   if (router.query.jbv && !trailer) {
+      //     console.log("ruingn edffe", router.query.jbv);
+      //     getPreviewDetail();
+      //   }
+      setShowPlayer({ isShown: true, playerID: null, row: null }); // for temporary
+    };
+    timerId = setTimeout(handler, 500);
+    return () => {
+      clearTimeout(timerId, handler);
+      setShowPlayer({ isShown: false, playerID: null, row: null });
+    }; // for temporary
+  }, [router.query.jbv]);
   return (
     <>
       <ContentWrapper>
         <BackDrop
           onClick={() => {
             props.onShowMore();
+            setTrailer(null);
+            setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
+            setActivePlayer("billboard");
             router.push("/browse");
           }}
         />
+        {console.log("render onInfo")}
         <Content>
           <PreviewPlayer>
-            <Player trailer="6sosTNRw_uQ" playing={true} />
+            {/* <Player trailer="6sosTNRw_uQ" playing={true} /> */}
+            <GradientLayerAdd />
+            {showPlayer.isShown && trailer && (
+              <Player
+                trailer={trailer}
+                // onEnded={onEndedHandler}
+                // volume={volume}
+                // muted={muted}
+                playing={true}
+                player="billboard"
+              />
+            )}
+            {!showPlayer.isShown && banner && (
+              <BillboardBackground banner={banner}>
+                {/* <GradientLayer /> */}
+              </BillboardBackground>
+            )}
           </PreviewPlayer>
         </Content>
       </ContentWrapper>

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { BackgroundImage } from "../components/story/hero/HeroStyles";
 import SignIn from "../components/story/signIn/SignIn";
-const login = () => {
+const Login = () => {
   return (
     <>
       <BackgroundImage />
@@ -12,7 +12,7 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
 
 const BackgroundImgWrapper = styled.div`
   position: absolute;

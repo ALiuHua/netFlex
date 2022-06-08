@@ -8,7 +8,7 @@ export const GenreContext = React.createContext({
   movies: [],
   TVShows: [],
 });
-const browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
+const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   const genreContextValue = { movies: movieGenres, TVShows: tvGenres };
   const [showMoreInfo, setShowMoreInfo] = useState(false);
   const onShowMoreInfoHandler = () => {
@@ -24,7 +24,7 @@ const browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   );
 };
 
-export default browse;
+export default Browse;
 
 export const getStaticProps = async () => {
   const movieGenres = await getGenres("movies");

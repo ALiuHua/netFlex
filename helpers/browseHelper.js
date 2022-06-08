@@ -88,19 +88,40 @@ export const getGenres = async (category) => {
 };
 // this return a list which should be available initially.
 // can be get at build stage. at get static props.
-export const getCardDetails = async (category, item) => {
+export const getDetails = async (category, itemId) => {
   // genery  trailer
 
   const { data: details } = await tmdb.get(
-    TMDB[category].helpers.fetchDetails.replace("_id", item.id)
+    TMDB[category].helpers.fetchDetails.replace("_id", itemId)
   );
   const { data: castData } = await tmdb.get(
-    TMDB[category].helpers.fetchCredits.replace("_id", item.id)
+    TMDB[category].helpers.fetchCredits.replace("_id", itemId)
   );
   const { cast } = castData;
-  const { data: trailer } = await tmdb.get(
-    TMDB[category].helpers.fetchTrailers.replace("_id", item.id)
+  let trailer = null;
+  const { data: trailerData } = await tmdb.get(
+    TMDB[category].helpers.fetchTrailers.replace("_id", itemId)
   );
+  const { results: trailerResults } = trailerData;
+  if (trailerResults.length > 0) {
+    const trailerDetail = trailerResults
+      .reverse()
+      .find(
+        ({ site, type }) =>
+          site === "YouTube" &&
+          (type === "Teaser" ||
+            type === "Trailer" ||
+            type === "Featurette" ||
+            type === "Clip" ||
+            type === "Opening Credits")
+      );
+    if (trailerDetail) {
+      trailer = trailerDetail.key;
+    }
+  } else {
+    throw new Error("no trailer result"); // 如果没有获取到trailer， throw an error
+    // 此种情况下应该set trailer 为null
+  }
 
   return { details, castData, trailer };
 };

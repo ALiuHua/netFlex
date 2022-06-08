@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { CirclePlayButton, PlayIcon } from "./BillboardHero";
+import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
 import {
   MediaInfo,
   MiniTile,
@@ -16,7 +16,7 @@ import {
 import { getTrailer } from "../../helpers/browseHelper";
 import Player from "./Player";
 import { PlayerContext } from "../../store/playerContext";
-import { EmbedButtonBox } from "./BillboardHero";
+import EmbedButtonBox from "./BillboardHeroStyle";
 import { isNewRelease } from "../../helpers/browseHelper";
 import { GenreContext } from "../../pages/browse";
 import { CardContext } from "../../store/cardContext";
@@ -96,7 +96,9 @@ const Card = ({ category, item, rowNumber }) => {
     setShowPlayer({ isShown: false, playerID: null, row: null });
     setActivePlayer("billboard");
   };
-
+  const onProgressHadler = (a) => {
+    console.log(a);
+  };
   return (
     <CardWrapper onMouseEnter={hoverHandler} onMouseLeave={mouseLeaveHandler}>
       <MediaContent className="mediaContent">
@@ -121,7 +123,15 @@ const Card = ({ category, item, rowNumber }) => {
                 ref={vPlayer}
                 trailer={trailer}
                 onEnded={onEndedHandler}
-                onReady={onTrailerReady}
+                onStart={onTrailerReady}
+                // onReady={onTrailerReady}
+                // onProgress={(progress) => {
+                //   console.log(progress);
+                //   if (progress.loaded < 0.5 && progress.loaded > 0) {
+                //     console.log(progress);
+                //     onTrailerReady();
+                //   }
+                // }}
                 volume={volume}
                 muted={muted}
                 playing={true}

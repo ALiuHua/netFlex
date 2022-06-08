@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { CarouselWrapper, Carousel } from "./LolomoStyle";
-
+const ArrowButton = styled.button`
+  width: 55px;
+  height: 100%;
+`;
 const LolomoSlider = ({ item, children }) => {
   const [carouselClicked, setCarouselClicked] = useState(false);
   const onArrowClickedHandler = () => {
+    console.log("onArrowClickedHandler1 clicked");
     if (carouselClicked) return;
+    console.log("onArrowClickedHandler2 clicked");
     setCarouselClicked(true);
   };
   const SampleNextArrow = ({ className, onClick }) => {
     return (
-      <button
+      <ArrowButton
         className={className}
         onClick={() => {
-          onClick(),
-            setTimeout(() => {
-              onArrowClickedHandler();
-            }, 80);
+          onClick(), console.log("button clicked");
+          setTimeout(() => {
+            onArrowClickedHandler();
+          }, 80);
 
           /*in this case i want to add another function when onclick happened,
         at first i trying to add another onClick on this element but it failed,
@@ -26,19 +31,19 @@ const LolomoSlider = ({ item, children }) => {
       />
     );
   };
-  const SampleNextArrowStyled = styled(SampleNextArrow)`
-    width: 55px;
-    height: 100%;
-  `;
+  // const SampleNextArrowStyled = styled(SampleNextArrow)`
+  //   width: 55px;
+  //   height: 100%;
+  // `;
   const SamplePrevArrow = ({ className, onClick }) => {
     return (
-      carouselClicked && <button className={className} onClick={onClick} />
+      carouselClicked && <ArrowButton className={className} onClick={onClick} />
     );
   };
-  const SamplePrevArrowStyled = styled(SamplePrevArrow)`
-    width: 55px;
-    height: 100%;
-  `;
+  // const SamplePrevArrowStyled = styled(SamplePrevArrow)`
+  //   width: 55px;
+  //   height: 100%;
+  // `;
   const settings = {
     dots: true,
     speed: 500,
@@ -49,8 +54,8 @@ const LolomoSlider = ({ item, children }) => {
     //not used here to prevent the re-render of carousel. cause we just want prevArrow re-render.
     initialSlide: 0,
     // centerPadding: "30px",
-    prevArrow: <SamplePrevArrowStyled />,
-    nextArrow: <SampleNextArrowStyled />,
+    prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow />,
     responsive: [
       {
         breakpoint: 1024,

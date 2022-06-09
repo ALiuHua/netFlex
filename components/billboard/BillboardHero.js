@@ -43,7 +43,7 @@ const BillboardHero = ({ category, onShowMore }) => {
   const playHandler = () => {
     setActivePlayer("videoPlayer");
     if (trailer) setPlayerTrailer(trailer);
-    router.push(`/play/${banner.id}`);
+    router.push(`/play/${banner.id}`); //60574
   };
   const moreInfoHandler = () => {
     setActivePlayer("previewPlayer");
@@ -142,10 +142,9 @@ const BillboardHero = ({ category, onShowMore }) => {
           </DescriptionContainer>
         )}
         <EmbedButtonBox
-          showPlayer={showPlayer}
-          trailer={trailer}
+          showReplay={!showPlayer && playCompleted}
+          showMuteToggling={showPlayer}
           replayHandler={replayHandler}
-          playCompleted={playCompleted}
         />
       </BillboardDetail>
     </BillboardWrapper>

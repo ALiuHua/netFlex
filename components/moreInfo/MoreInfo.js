@@ -6,6 +6,7 @@ import { CardContext } from "../../store/cardContext";
 import { PlayerContext } from "../../store/playerContext";
 import { ActionWrapper } from "../billboard/CardStyle";
 import { CirclePlayButton, PlayIcon } from "../Billboard/BillboardHeroStyle";
+import EmbedButtonBox from "../billboard/BillboardHeroStyle";
 import {
   GradientLayerAdd,
   BillboardBackground,
@@ -80,6 +81,7 @@ const MoreInfo = (props) => {
         <Content>
           <PreviewPlayer>
             <GradientLayerAdd />
+            {console.log(trailer, showPlayer.isShown, banner)}
             {trailer && (
               <Player
                 trailer={trailer}
@@ -102,9 +104,7 @@ const MoreInfo = (props) => {
                 <PlayIcon />
               </CirclePlayButton>
             </ActionWrapper>
-            <MuteButton onClick={() => toggleMuted((prev) => !prev)}>
-              {muted ? <NotMuteIcon /> : <MuteIcon />}
-            </MuteButton>
+            <EmbedButtonBox showMuteToggling={true} scaled={0.45} />
           </ActionsBox>
         </Content>
       </ContentWrapper>
@@ -148,9 +148,14 @@ const PreviewPlayer = styled.div`
 `;
 const ActionsBox = styled.div`
   position: absolute;
+  left: 0;
+  width: 100%;
   bottom: 3vw;
   z-index: 2;
   padding: 0 4vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   button {
     transform: scale(2);
   }

@@ -2,23 +2,23 @@ import styled, { css } from "styled-components";
 import { PlayerContext } from "../../store/playerContext";
 import { useContext } from "react";
 const EmbedButtonBox = ({
-  showPlayer,
-  trailer,
+  showMuteToggling,
   replayHandler,
-  playCompleted,
+  showReplay,
   scaled,
 }) => {
   const { muted, toggleMuted } = useContext(PlayerContext);
   return (
     <ButtonBox scaled={scaled}>
-      {showPlayer && trailer && (
+      {showMuteToggling && (
         <MuteButton onClick={() => toggleMuted((prev) => !prev)}>
           {muted ? <NotMuteIcon /> : <MuteIcon />}
         </MuteButton>
       )}
-      {!showPlayer && trailer && (
+
+      {showReplay && (
         <ReplayButton onClick={replayHandler}>
-          {playCompleted && <ReplayIcon />}
+          <ReplayIcon />
         </ReplayButton>
       )}
     </ButtonBox>

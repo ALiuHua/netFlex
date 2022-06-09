@@ -21,7 +21,7 @@ import { isNewRelease } from "../../helpers/browseHelper";
 import { GenreContext } from "../../pages/browse";
 import { CardContext } from "../../store/cardContext";
 import { useRouter } from "next/router";
-const Card = ({ category, item, rowNumber }) => {
+const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   const { muted, volume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
   const genreCtx = useContext(GenreContext);
@@ -34,13 +34,12 @@ const Card = ({ category, item, rowNumber }) => {
     setTimer,
     vPlayer,
   } = useContext(CardContext);
-  //can also create a context for card component so that we can avoid
-  //making each card instance have such states setting.
-  // const [trailer, setTrailer] = useState(null);
-  // const [showPlayer, setShowPlayer] = useState(false);
-  // const [timer, setTimer] = useState(null);
-  // const vPlayer = useRef();
-  const isNew = isNewRelease(item);
+  const cardRef = useRef();
+  // console.log(cardRef.current);
+  const withinSliderRange = (itemNode, itemsNum) => {
+    const ItemIndex = itemNode.closest(".slick-slide").dataset.index;
+    return ItemIndex < itemsNum;
+  };
   const router = useRouter();
   const playHandler = () => {
     if (trailer) setTrailer(trailer);
@@ -50,10 +49,6 @@ const Card = ({ category, item, rowNumber }) => {
     if (index > 2) return null;
     return genreCtx[category].find((genre) => genre.id === id);
   });
-  // console.log(genreCtx[category].map(data=>))
-  //vote_average  genre_ids
-  // to be seosans   pg?  recommondation?
-
   const hoverHandler = () => {
     const delayPlay = setTimeout(() => {
       const fetchCardData = async () => {
@@ -79,16 +74,16 @@ const Card = ({ category, item, rowNumber }) => {
     }, 500);
     setTimer(delayPlay);
   };
-  const onTrailerReady = () => {
-    // vPlayer.current.seekTo(20, "seconds"); // can skip to 20s
-    if (trailer) {
-      setShowPlayer({ isShown: true, playerID: item.id, row: rowNumber });
-    }
+  const onTrailerStart = () => {
+    setShowPlayer({ ...showPlayer, isShown: true });
   };
-  const mouseLeaveHandler = () => {
+  const mouseLeaveHandler = (e) => {
+    // e.stopPropagation();
     clearTimeout(timer);
     setTrailer(null);
+    if (activePlayer === "previewPlayer") return;
     setShowPlayer({ isShown: false, playerID: null, row: null });
+    console.log("mouseLeave", trailer, activePlayer);
     setActivePlayer("billboard");
   };
   const onEndedHandler = () => {
@@ -96,15 +91,34 @@ const Card = ({ category, item, rowNumber }) => {
     setShowPlayer({ isShown: false, playerID: null, row: null });
     setActivePlayer("billboard");
   };
-  const onProgressHadler = (a) => {
-    console.log(a);
+  const moreInfoHandler = () => {
+    setShowPlayer({ isShown: false, playerID: null, row: null });
+    setActivePlayer("previewPlayer");
+    console.log("query test runnning");
+    if (trailer) setTrailer(trailer);
+    router.push({ pathname: "/browse", query: { jbv: item.id } });
+    console.log("showMore", trailer);
+    onShowMore();
   };
+  const isBannerShow =
+    !showPlayer.isShown ||
+    showPlayer.playerID !== item.id ||
+    showPlayer.row !== rowNumber;
+  const isPlayerShow =
+    trailer &&
+    showPlayer.playerID === item.id &&
+    showPlayer.row === rowNumber &&
+    withinSliderRange(cardRef.current, number);
   return (
-    <CardWrapper onMouseEnter={hoverHandler} onMouseLeave={mouseLeaveHandler}>
+    <CardWrapper
+      onMouseEnter={hoverHandler}
+      onMouseLeave={mouseLeaveHandler}
+      ref={cardRef}
+    >
       <MediaContent className="mediaContent">
-        {(!showPlayer.isShown ||
-          showPlayer.playerID !== item.id ||
-          showPlayer.row !== rowNumber) && (
+        {showPlayer.playerID === item.id &&
+          console.log(isBannerShow, isPlayerShow)}
+        {isBannerShow && (
           <ImgWrapper>
             {isNewRelease(item) && <IsNew>New</IsNew>}
             <MiniTile>{item?.name.split(":")[0]}</MiniTile>
@@ -114,49 +128,35 @@ const Card = ({ category, item, rowNumber }) => {
             />
           </ImgWrapper>
         )}
-        {trailer &&
-          showPlayer.playerID === item.id &&
-          showPlayer.row === rowNumber && (
-            <>
-              {console.log(trailer)}
-              <Player
-                ref={vPlayer}
-                trailer={trailer}
-                onEnded={onEndedHandler}
-                onStart={onTrailerReady}
-                // onReady={onTrailerReady}
-                // onProgress={(progress) => {
-                //   console.log(progress);
-                //   if (progress.loaded < 0.5 && progress.loaded > 0) {
-                //     console.log(progress);
-                //     onTrailerReady();
-                //   }
-                // }}
-                volume={volume}
-                muted={muted}
-                playing={true}
-                player="card"
-                // activePlayer={activePlayer}
-              />
-              <EmbedButtonBox
-                showPlayer={showPlayer.isShown}
-                trailer={trailer}
-                muted={muted}
-                scaled="0.35"
-              />
-            </>
-          )}
+        {isPlayerShow && (
+          <>
+            <Player
+              ref={vPlayer}
+              trailer={trailer}
+              onEnded={onEndedHandler}
+              onStart={onTrailerStart}
+              volume={volume}
+              muted={muted}
+              playing={true}
+              player="card"
+            />
+            <EmbedButtonBox
+              showMuteToggling={showPlayer.isShown}
+              muted={muted}
+              scaled="0.35"
+            />
+          </>
+        )}
       </MediaContent>
       <MediaInfo className="mediaInfo">
         <ActionWrapper>
           <CirclePlayButton onClick={playHandler}>
             <PlayIcon />
           </CirclePlayButton>
-          <DetailButton>
+          <DetailButton onClick={moreInfoHandler}>
             <DetailIcon />
           </DetailButton>
         </ActionWrapper>
-
         <GenreTag>
           {genresInfo.map((data, i) => {
             return (

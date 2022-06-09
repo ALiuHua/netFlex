@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Slider from "./Slider";
 import { TMDB } from "../../data/dynamic/tmdbEndpoints";
-const Lolomo = ({ category }) => {
+const Lolomo = ({ category,onShowMore }) => {
   const [rowNumber, setRowNumber] = useState(4);
   useEffect(() => {
     const onScrollHandler = () => {
@@ -24,6 +24,7 @@ const Lolomo = ({ category }) => {
               rowNumber={index + 1}
               key={index}
               item={item}
+              onShowMore={onShowMore}
             />
           )
       )}

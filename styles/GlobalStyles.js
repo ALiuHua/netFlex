@@ -44,6 +44,7 @@ body{
     background-color:${({ theme }) => theme.backgroundColor};
     min-width:32rem;
     color:${({ theme }) => theme.greyColor};
+    overflow-x:hidden ;  // sometimes we can cancle this overflow:hidden to check items
 }
 /* h1,h2{margin-bottom:0.4em} */
 a{

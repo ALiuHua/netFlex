@@ -18,7 +18,7 @@ const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   return (
     <GenreContext.Provider value={genreContextValue}>
       <BillboardHero category={category} onShowMore={onShowMoreInfoHandler} />
-      <Lolomo category={category} />
+      <Lolomo category={category} onShowMore={onShowMoreInfoHandler}/>
       {showMoreInfo && <MoreInfo onShowMore={onShowMoreInfoHandler} />}
     </GenreContext.Provider>
   );

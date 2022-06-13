@@ -20,12 +20,17 @@ import {
   InfoIcon,
 } from "./BillboardHeroStyle";
 import EmbedButtonBox from "./BillboardHeroStyle";
-const briefInfo = (infoText, num) => {
-  const shortInfo =
-    infoText
-      .split(" ")
-      .slice(0, num - 1)
-      .join(" ") + "...";
+export const briefInfo = (infoText, num) => {
+  let shortInfo;
+  if (infoText) {
+    shortInfo =
+      infoText
+        .split(" ")
+        .slice(0, num - 1)
+        .join(" ") + "...";
+  } else {
+    shortInfo = [];
+  }
   return shortInfo;
 };
 
@@ -41,22 +46,32 @@ const BillboardHero = ({ category, onShowMore }) => {
   const router = useRouter();
   const { setTrailer: setPlayerTrailer } = useContext(CardContext);
   const playHandler = () => {
-    setActivePlayer("videoPlayer");
+    // setActivePlayer("videoPlayer");
     if (trailer) setPlayerTrailer(trailer);
     router.push(`/play/${banner.id}`); //60574
   };
   const moreInfoHandler = () => {
-    setActivePlayer("previewPlayer");
-    console.log("query test runnning");
-    if (trailer) setPlayerTrailer(trailer);
-    router.push({ pathname: "/browse", query: { jbv: banner.id } });
-    onShowMore();
+    onShowMore(banner.poster_path, banner.id, trailer);
+    // router.push({ pathname: "/browse", query: { jbv: banner.id } });
+    // setActivePlayer("previewPlayer");
+    // console.log("query test runnning");
+    // if (trailer) setPlayerTrailer(trailer);
   };
+  // const moreInfoHandler = () => {
+  //   router.push({ pathname: "/browse", query: { jbv: banner.id } });
+  //   setActivePlayer("previewPlayer");
+  //   console.log("query test runnning");
+  //   if (trailer) setPlayerTrailer(trailer);
+
+  //   onShowMore(banner.backdrop_path,banner.id,trailer);
+  // };
+
   const onEndedHandler = () => {
     setPlayCompleted(true);
     setShowPlayer(false);
   };
   useEffect(() => {
+    console.log("billboard useEffect running 1");
     setActivePlayer("billboard");
     let timeoutId;
     const fetchBillboard = async () => {
@@ -87,6 +102,7 @@ const BillboardHero = ({ category, onShowMore }) => {
     if (activePlayer !== "billboard" && showPlayer) {
       setPlaying(false);
     }
+    console.log("billboard useEffect running 2");
     // if (activePlayer !== "billboard" && showPlayer) {
     //   setBillboard(false);
     // }

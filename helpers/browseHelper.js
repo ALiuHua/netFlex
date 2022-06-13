@@ -27,6 +27,7 @@ export const getBanner = async (category) => {
       (original_name || original_title) !== "Master of None"
   );
   const banner = filteredResults[chooseRandomBanner(filteredResults.length)];
+  console.log(banner);
   return banner;
 };
 export const getRow = async (row) => {
@@ -132,3 +133,30 @@ export const isNewRelease = (item) => {
   const gap = currentDate.getTime() - releaseDate.getTime();
   return Math.ceil(gap / (1000 * 3600 * 24)) <= 100;
 };
+export const getSeasons = async (id, seasonNum) => {
+  const {
+    data: { episodes },
+  } = await tmdb.get(
+    TMDB.TVShows.helpers.fetchTVSeason
+      .replace("_id", id)
+      .replace("_seasonNumber", seasonNum)
+  );
+  console.log(episodes);
+  return episodes;
+};
+
+/*(8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+0:
+air_date: "2019-07-04"
+crew: (5) [{…}, {…}, {…}, {…}, {…}]
+episode_number: 1
+guest_stars: (12) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+id: 1657328
+name: "Chapter One: Suzie, Do You Copy?"
+overview: "Summer brings new jobs and budding romance. But the mood shifts when Dustin's radio picks up a Russian broadcast, and Will senses something is wrong."
+production_code: ""
+runtime: 50
+season_number: 3
+still_path: "/97PVnrEQWEsdMnD08QDmMxLkV7h.jpg"
+vote_average: 7.695
+vote_count: 113 */

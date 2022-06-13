@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import BillboardHero from "../components/billboard/BillboardHero";
 import Lolomo from "../components/billboard/Lolomo";
 import MoreInfo from "../components/moreInfo/MoreInfo";
 import { getGenres } from "../helpers/browseHelper";
+import { CardContext } from "../store/cardContext";
+import { PlayerContext } from "../store/playerContext";
 export const GenreContext = React.createContext({
   movies: [],
   TVShows: [],
@@ -11,15 +14,34 @@ export const GenreContext = React.createContext({
 const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   const genreContextValue = { movies: movieGenres, TVShows: tvGenres };
   const [showMoreInfo, setShowMoreInfo] = useState(false);
-  const onShowMoreInfoHandler = () => {
-    console.log("onShowMore");
+  const [previewPoster, setPreviewPoster] = useState(null);
+  const { setTrailer } = useContext(CardContext);
+  const router = useRouter();
+  const { setActivePlayer } = useContext(PlayerContext);
+  const onShowMoreInfoHandler = (bannerPath, id, trailer) => {
+    router.push({ pathname: "/browse", query: { jbv: id } });
+    setActivePlayer("previewPlayer");
+    setPreviewPoster({ backdrop_path: bannerPath });
+    console.log("query test runnning");
+    if (trailer) setTrailer(trailer);
     setShowMoreInfo(!showMoreInfo);
   };
+  useEffect(() => {
+    console.log(router);
+    if (router.asPath.includes("jbv")) setShowMoreInfo(true);
+  }, []);
   return (
     <GenreContext.Provider value={genreContextValue}>
       <BillboardHero category={category} onShowMore={onShowMoreInfoHandler} />
-      <Lolomo category={category} onShowMore={onShowMoreInfoHandler}/>
-      {showMoreInfo && <MoreInfo onShowMore={onShowMoreInfoHandler} />}
+      <Lolomo category={category} onShowMore={onShowMoreInfoHandler} />
+      {showMoreInfo && (
+        <MoreInfo
+          category={category}
+          onShowMore={onShowMoreInfoHandler}
+          genreContext={genreContextValue}
+          previewPoster={previewPoster}
+        />
+      )}
     </GenreContext.Provider>
   );
 };
@@ -29,7 +51,8 @@ export default Browse;
 export const getStaticProps = async () => {
   const movieGenres = await getGenres("movies");
   const tvGenres = await getGenres("TVShows");
-
+  // another way is to create dummy data locally.
+  console.log("getProps running");
   return {
     props: {
       movieGenres,

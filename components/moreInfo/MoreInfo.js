@@ -11,54 +11,43 @@ import {
   GradientLayerAdd,
   BillboardBackground,
 } from "../billboard/BillboardHeroStyle";
-import {
-  MuteButton,
-  NotMuteIcon,
-  MuteIcon,
-} from "../billboard/BillboardHeroStyle";
+import Description from "./Description";
 import { getDetails } from "../../helpers/browseHelper";
-
-const MoreInfo = (props) => {
+import Episodes from "./Episodes";
+const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
   const router = useRouter();
   const [banner, setBanner] = useState(null);
   const { trailer, setTrailer, showPlayer, setShowPlayer } =
     useContext(CardContext);
+  const [cast, setCast] = useState(null);
   const { muted, toggleMuted, volume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
-  console.log(trailer);
+  console.log(trailer, showPlayer.isShown, banner);
   const playHandler = () => {
     if (trailer) setTrailer(trailer);
     router.push(`/play/${banner.id}`);
   };
   useEffect(() => {
+    console.log("moreinfo useEffect running");
     const getPreviewDetail = async () => {
-      console.log(router.query.jbv);
       const {
         details,
         castData,
         trailer: currentTrailer,
       } = await getDetails("TVShows", router.query.jbv);
-      console.log(details, castData, trailer);
+      //   console.log(details, castData, trailer);
       if (!trailer) {
         setTrailer(currentTrailer);
       }
       setShowPlayer({ isShown: true, playerID: null, row: null });
       setBanner(details);
+      setCast(castData);
       //   setShowPlayer({ isShown: true, playerID: null, row: null });
     };
 
-    let timerId;
     getPreviewDetail();
-    const handler = () => {
-      //   if (router.query.jbv && !trailer) {
-      //     console.log("ruingn edffe", router.query.jbv);
-      //     getPreviewDetail();
-      //   }
-      //   setShowPlayer({ isShown: true, playerID: null, row: null }); // for temporary
-    };
-    timerId = setTimeout(handler, 500);
+
     return () => {
-      clearTimeout(timerId, handler);
       setShowPlayer({ isShown: false, playerID: null, row: null });
     }; // for temporary
   }, [router.query.jbv]);
@@ -70,18 +59,17 @@ const MoreInfo = (props) => {
       <ContentWrapper>
         <BackDrop
           onClick={() => {
-            props.onShowMore();
+            onShowMore();
             setTrailer(null);
             setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
             setActivePlayer("billboard");
             router.push("/browse");
           }}
         />
-        {console.log("render onInfo")}
         <Content>
           <PreviewPlayer>
             <GradientLayerAdd />
-            {console.log(trailer, showPlayer.isShown, banner)}
+            {/* {console.log(trailer, showPlayer.isShown, banner)} */}
             {trailer && (
               <Player
                 trailer={trailer}
@@ -91,8 +79,8 @@ const MoreInfo = (props) => {
                 onEnded={onEndedHandler}
               />
             )}
-            {!showPlayer.isShown && banner && (
-              <BillboardBackground banner={banner}>
+            {!showPlayer.isShown && (banner || previewPoster) && (
+              <BillboardBackground banner={banner || previewPoster}>
                 {/* <GradientLayer /> */}
               </BillboardBackground>
             )}
@@ -107,6 +95,15 @@ const MoreInfo = (props) => {
             <EmbedButtonBox showMuteToggling={true} scaled={0.45} />
           </ActionsBox>
         </Content>
+        <RelatedInfoContainer>
+          <Description
+            category={category}
+            details={banner}
+            genreContext={genreContext}
+            cast={cast}
+          />
+          {banner && <Episodes details={banner} />}
+        </RelatedInfoContainer>
       </ContentWrapper>
     </>
   );
@@ -124,20 +121,26 @@ const BackDrop = styled.div`
 `;
 const ContentWrapper = styled.div`
   position: fixed;
-  top: 80px;
+  top: 3.6rem;
   left: 25vw;
   /* right: 15vw; */
   /* transform: translateX(-50%); */
   width: 50vw;
-  z-index: 3;
-  height: 100vh;
-  overflow-y: auto;
+  z-index: 999999;
+  height: 96.4vh;
+  overflow-y: scroll;
   border-radius: 8px;
+  line-height: 1.4;
+  background-color: rgba(24, 24, 24);
 `;
 const Content = styled.div`
   position: relative;
-  background-color: #141414;
+
   width: 100%;
+`;
+const RelatedInfoContainer = styled.div`
+  padding: 0 5rem;
+  margin-bottom: 3.6rem;
 `;
 const PreviewPlayer = styled.div`
   position: relative;
@@ -152,7 +155,8 @@ const ActionsBox = styled.div`
   width: 100%;
   bottom: 3vw;
   z-index: 2;
-  padding: 0 4vw;
+  padding: 0 5rem;
+
   display: flex;
   justify-content: space-between;
   align-items: flex-end;

@@ -21,6 +21,13 @@ import { isNewRelease } from "../../helpers/browseHelper";
 import { GenreContext } from "../../pages/browse";
 import { CardContext } from "../../store/cardContext";
 import { useRouter } from "next/router";
+export const getItemGenre = (itemGenresArray, genreCtx, genreNum, category) => {
+  const ItemGenre = itemGenresArray.map((id, index) => {
+    if (index > genreNum - 1) return null;
+    return genreCtx[category].find((genre) => genre.id === id);
+  });
+  return ItemGenre;
+};
 const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   const { muted, volume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
@@ -45,10 +52,11 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
     if (trailer) setTrailer(trailer);
     router.push(`/play/${item.id}`);
   };
-  const genresInfo = item?.genre_ids.map((id, index) => {
-    if (index > 2) return null;
-    return genreCtx[category].find((genre) => genre.id === id);
-  });
+
+  // const genresInfo = item?.genre_ids.map((id, index) => {
+  //   if (index > 2) return null;
+  //   return genreCtx[category].find((genre) => genre.id === id);
+  // });
   const hoverHandler = () => {
     const delayPlay = setTimeout(() => {
       const fetchCardData = async () => {
@@ -93,13 +101,22 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   };
   const moreInfoHandler = () => {
     setShowPlayer({ isShown: false, playerID: null, row: null });
-    setActivePlayer("previewPlayer");
-    console.log("query test runnning");
-    if (trailer) setTrailer(trailer);
-    router.push({ pathname: "/browse", query: { jbv: item.id } });
+    // setActivePlayer("previewPlayer");
+    // console.log("query test runnning");
+    // if (trailer) setTrailer(trailer);
+    // router.push({ pathname: "/browse", query: { jbv: item.id } });
     console.log("showMore", trailer);
-    onShowMore();
+    onShowMore(item.poster_path, item.id, trailer);
   };
+  // const moreInfoHandler = () => {
+  //   setShowPlayer({ isShown: false, playerID: null, row: null });
+  //   setActivePlayer("previewPlayer");
+  //   console.log("query test runnning");
+  //   if (trailer) setTrailer(trailer);
+  //   router.push({ pathname: "/browse", query: { jbv: item.id } });
+  //   console.log("showMore", trailer);
+  //   onShowMore();
+  // };
   const isBannerShow =
     !showPlayer.isShown ||
     showPlayer.playerID !== item.id ||
@@ -158,14 +175,20 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
           </DetailButton>
         </ActionWrapper>
         <GenreTag>
-          {genresInfo.map((data, i) => {
-            return (
-              <React.Fragment key={i}>
-                {i !== 0 && <span className="dot">&bull;</span>}
-                <span className="genreName">{data?.name.split("&")[0]}</span>
-              </React.Fragment>
-            );
-          })}
+          {getItemGenre(item?.genre_ids, genreCtx, 3, category).map(
+            (data, i) => {
+              return (
+                data && (
+                  <React.Fragment key={i}>
+                    {i !== 0 && <span className="dot">&bull;</span>}
+                    <span className="genreName">
+                      {data?.name.split("&")[0]}
+                    </span>
+                  </React.Fragment>
+                )
+              );
+            }
+          )}
         </GenreTag>
       </MediaInfo>
     </CardWrapper>

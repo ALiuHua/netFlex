@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { getSeasons } from "../../helpers/browseHelper";
+import Image from "next/image";
 const Episodes = ({ details }) => {
-  console.log(details);
+  console.log("Episode",details);
   const [seasonData, setSeasonData] = useState(null);
   const [selectedSeason, setSelectedSeason] = useState(1);
   useEffect(() => {
@@ -39,9 +40,15 @@ const Episodes = ({ details }) => {
               <span>{data.episode_number}</span>
               <Poster>
                 <div>
-                  <img
+                  {/* <img
                     src={`https://image.tmdb.org/t/p/original${data.still_path}`}
                     alt=""
+                  /> */}
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w185${data.still_path}`}
+                    alt=""
+                    layout="fill"
+                    objectFit="cover"
                   />
                 </div>
               </Poster>
@@ -91,10 +98,11 @@ const EpisodeContent = styled.div`
       aspect-ratio: 16/9;
       border-radius: 6px;
       overflow: hidden;
-      img {
+      position: relative;
+      /* img {
         display: block;
         width: 100%;
-      }
+      } */
     }
   }
   & > div:nth-child(3) {

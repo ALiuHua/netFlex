@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { PlayerContext } from "../../store/playerContext";
 import { CardContext } from "../../store/cardContext";
 // import Router from "next/router";
+import Image from "next/image";
 import { getBanner, getTrailer } from "../../helpers/browseHelper";
 import Player from "./Player";
 import {
@@ -127,17 +128,19 @@ const BillboardHero = ({ category, onShowMore }) => {
             playing={playing}
             player="billboard"
             onStart={() => {
-              console.log("onStart", trailer, showPlayer);
               if (trailer) {
                 setShowPlayer(true);
               }
             }}
           />
         )}
-        {!showPlayer && banner && (
+        {/* {!showPlayer && banner && (
           <BillboardBackground banner={banner}>
-            {/* <GradientLayer /> */}
           </BillboardBackground>
+        )} */}
+
+        {!showPlayer && banner && (
+          <CoverImage coverPath={banner?.backdrop_path} />
         )}
       </BillboardContent>
       <BillboardDetail>
@@ -168,3 +171,17 @@ const BillboardHero = ({ category, onShowMore }) => {
 };
 
 export default BillboardHero;
+export const CoverImage = ({ coverPath, children }) => {
+  return (
+    <BillboardBackground>
+      {children}
+      <Image
+        src={`https://image.tmdb.org/t/p/original${coverPath}`}
+        alt="billboard banner"
+        layout="fill"
+        objectFit="cover"
+        priority
+      />
+    </BillboardBackground>
+  );
+};

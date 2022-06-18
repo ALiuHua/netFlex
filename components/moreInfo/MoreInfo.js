@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { CoverImage } from "../billboard/BillboardHero";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Player from "../billboard/Player";
@@ -7,10 +8,7 @@ import { PlayerContext } from "../../store/playerContext";
 import { ActionWrapper } from "../billboard/CardStyle";
 import { CirclePlayButton, PlayIcon } from "../Billboard/BillboardHeroStyle";
 import EmbedButtonBox from "../billboard/BillboardHeroStyle";
-import {
-  GradientLayerAdd,
-  BillboardBackground,
-} from "../billboard/BillboardHeroStyle";
+import { GradientLayerAdd } from "../billboard/BillboardHeroStyle";
 import Description from "./Description";
 import { getDetails } from "../../helpers/browseHelper";
 import Episodes from "./Episodes";
@@ -22,31 +20,26 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
   const [cast, setCast] = useState(null);
   const { muted, toggleMuted, volume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
-  console.log(trailer, showPlayer.isShown, banner);
   const playHandler = () => {
     if (trailer) setTrailer(trailer);
     router.push(`/play/${banner.id}`);
   };
+  console.log(trailer, banner, showPlayer.isShown);
   useEffect(() => {
-    console.log("moreinfo useEffect running");
+    console.log("More info useEffect");
     const getPreviewDetail = async () => {
       const {
         details,
         castData,
         trailer: currentTrailer,
       } = await getDetails("TVShows", router.query.jbv);
-      //   console.log(details, castData, trailer);
-      if (!trailer) {
-        setTrailer(currentTrailer);
-      }
       setShowPlayer({ isShown: true, playerID: null, row: null });
       setBanner(details);
+      setTrailer(currentTrailer);
       setCast(castData);
       //   setShowPlayer({ isShown: true, playerID: null, row: null });
     };
-
-    getPreviewDetail();
-
+    if (router.query.jbv) getPreviewDetail();
     return () => {
       setShowPlayer({ isShown: false, playerID: null, row: null });
     }; // for temporary
@@ -63,13 +56,12 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
             setTrailer(null);
             setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
             setActivePlayer("billboard");
-            router.push("/browse");
+            router.push("/browse", undefined, { shallow: true });
           }}
         />
         <Content>
           <PreviewPlayer>
             <GradientLayerAdd />
-            {/* {console.log(trailer, showPlayer.isShown, banner)} */}
             {trailer && (
               <Player
                 trailer={trailer}
@@ -80,9 +72,11 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
               />
             )}
             {!showPlayer.isShown && (banner || previewPoster) && (
-              <BillboardBackground banner={banner || previewPoster}>
-                {/* <GradientLayer /> */}
-              </BillboardBackground>
+              <CoverImage
+                coverPath={
+                  banner?.backdrop_path || previewPoster?.backdrop_path
+                }
+              />
             )}
           </PreviewPlayer>
 

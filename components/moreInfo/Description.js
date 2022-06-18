@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { briefInfo } from "../billboard/BillboardHero";
 const Description = ({ category, details, cast }) => {
+  console.log("Description");
   return (
     <DetailsWrapper>
       {details && (

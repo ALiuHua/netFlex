@@ -110,7 +110,7 @@ export const Carousel = styled(Slider)`
     /* width: 500% !important; */
     & > div {
       flex: 1;
-      margin: 0 3.5px;
+      padding: 0 3.5px;
       /* background-color: green; */
       /* height: 150px; */
       /* background-color: red; */
@@ -120,10 +120,20 @@ export const Carousel = styled(Slider)`
       } */
     }
     .slick-slide {
+      width: 100/6%;
       position: relative;
       transition: all 1s;
       aspect-ratio: 16/9;
       z-index: 1;
+      @media (max-width: 87.5em) {
+        width: 20%;
+      }
+      @media (min-width: 68.75em) {
+        width: 25%;
+      }
+      @media (min-width: 50em) {
+        width: 100/3%;
+      }
     }
     .slick-slide:hover {
       position: relative;

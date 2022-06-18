@@ -13,33 +13,33 @@ export const GenreContext = React.createContext({
 });
 const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   const genreContextValue = { movies: movieGenres, TVShows: tvGenres };
-  const [showMoreInfo, setShowMoreInfo] = useState(false);
   const [previewPoster, setPreviewPoster] = useState(null);
-  const { setTrailer } = useContext(CardContext);
+  // const { setTrailer } = useContext(CardContext);
   const router = useRouter();
   const { setActivePlayer } = useContext(PlayerContext);
   const onShowMoreInfoHandler = (bannerPath, id, trailer) => {
-    router.push({ pathname: "/browse", query: { jbv: id } });
+    if (id) router.push(`/browse/?jbv=${id}`, undefined, { shallow: true });
+    // router.push({ pathname: "/browse", query: { jbv: id } });
     setActivePlayer("previewPlayer");
-    setPreviewPoster({ backdrop_path: bannerPath });
-    console.log("query test runnning");
-    if (trailer) setTrailer(trailer);
-    setShowMoreInfo(!showMoreInfo);
+    // setPreviewPoster({ backdrop_path: bannerPath });
+    // console.log("query test runnning");
+    // if (trailer) setTrailer(trailer);
+    // setShowMoreInfo(!showMoreInfo);
   };
-  useEffect(() => {
-    console.log(router);
-    if (router.asPath.includes("jbv")) setShowMoreInfo(true);
-  }, []);
+  // useEffect(() => {
+  //   console.log(router);
+  //   if (router.asPath.includes("jbv")) setShowMoreInfo(true);
+  // }, []);
   return (
     <GenreContext.Provider value={genreContextValue}>
       <BillboardHero category={category} onShowMore={onShowMoreInfoHandler} />
       <Lolomo category={category} onShowMore={onShowMoreInfoHandler} />
-      {showMoreInfo && (
+      {router.asPath.includes("jbv") && (
         <MoreInfo
           category={category}
           onShowMore={onShowMoreInfoHandler}
           genreContext={genreContextValue}
-          previewPoster={previewPoster}
+          // previewPoster={previewPoster}
         />
       )}
     </GenreContext.Provider>

@@ -19,6 +19,7 @@ export const MiniTile = styled.h3`
   left: 5%;
   bottom: 8%;
   color: #eee;
+  z-index: 1;
 `;
 export const IsNew = styled.span`
   display: flex;
@@ -32,7 +33,7 @@ export const IsNew = styled.span`
   /* border-radius: 2px; */
   top: 0;
   right: 0;
-
+  z-index: 1;
   position: absolute;
 `;
 export const GenreTag = styled.div`

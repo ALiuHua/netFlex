@@ -51,16 +51,17 @@ export const BillboardBackground = styled.div`
   left: 0;
   right: 0;
   z-index: 2;
-  ${({ banner }) => css`
+  /* ${({ banner }) => css`
     background: linear-gradient(
         77deg,
         rgba(0, 0, 0, 0.6) 0,
         rgba(0, 0, 0, 0) 85%
       ),
       url(https://image.tmdb.org/t/p/original${banner?.backdrop_path});
-  `};
-  background-position: center;
-  background-size: cover;
+      url(https://image.tmdb.org/t/p/original/111616);
+  `}; */
+  /* background-position: center;
+  background-size: cover; */
 `;
 export const GradientLayerAdd = styled.div`
   position: absolute;
@@ -77,8 +78,8 @@ export const GradientLayerAdd = styled.div`
     rgba(20, 20, 20, 0.6) 50%,
     rgba(20, 20, 20, 0.75) 65%,
     rgba(20, 20, 20, 0.95) 75%,
-    rgba(24, 24, 24, 1) 85%,
-    rgba(24, 24, 24, 1) 100%
+    rgba(20, 20, 20, 1) 85%,
+    rgba(20, 20, 20, 1) 100%
   );
   opacity: 1;
   z-index: 1000;

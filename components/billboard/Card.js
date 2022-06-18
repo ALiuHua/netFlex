@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
+import Image from "next/image";
 import {
   MediaInfo,
   MiniTile,
@@ -51,6 +52,7 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   const playHandler = () => {
     if (trailer) setTrailer(trailer);
     router.push(`/play/${item.id}`);
+    // setActivePlayer("videoPlayer");
   };
 
   // const genresInfo = item?.genre_ids.map((id, index) => {
@@ -88,10 +90,9 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   const mouseLeaveHandler = (e) => {
     // e.stopPropagation();
     clearTimeout(timer);
-    setTrailer(null);
     if (activePlayer === "previewPlayer") return;
+    setTrailer(null);
     setShowPlayer({ isShown: false, playerID: null, row: null });
-    console.log("mouseLeave", trailer, activePlayer);
     setActivePlayer("billboard");
   };
   const onEndedHandler = () => {
@@ -133,15 +134,19 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
       ref={cardRef}
     >
       <MediaContent className="mediaContent">
-        {showPlayer.playerID === item.id &&
-          console.log(isBannerShow, isPlayerShow)}
         {isBannerShow && (
           <ImgWrapper>
             {isNewRelease(item) && <IsNew>New</IsNew>}
             <MiniTile>{item?.name.split(":")[0]}</MiniTile>
             <GradientLayer />
-            <img
+            {/* <img
               src={`https://image.tmdb.org/t/p/w342/${item?.backdrop_path}`}
+            /> */}
+            <Image
+              src={`https://image.tmdb.org/t/p/w342/${item?.backdrop_path}`}
+              alt="to be continue"
+              layout="fill"
+              objectFit="cover"
             />
           </ImgWrapper>
         )}

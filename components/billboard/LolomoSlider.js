@@ -58,27 +58,27 @@ const LolomoSlider = ({ item, children }) => {
     nextArrow: <SampleNextArrow />,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1400,
         settings: {
-          slidesToShow: 3,
-          slideToScroll: 3,
+          slidesToShow: 5,
+          slideToScroll: 5,
           infinite: true,
           dots: true,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 1100,
         settings: {
-          slidesToShow: 2,
-          slideToScroll: 2,
-          initialSlide: 2,
+          slidesToShow: 4,
+          slideToScroll: 4,
+          // initialSlide: 2,
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 800,
         settings: {
-          slidesToShow: 1,
-          slideToScroll: 1,
+          slidesToShow: 3,
+          slideToScroll: 3,
         },
       },
     ],

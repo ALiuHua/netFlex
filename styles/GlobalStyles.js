@@ -36,7 +36,8 @@ html{
 }
 body{
     position:relative;
-    font-family: 'Netflix Sans',sans-serif;
+    /* font-family: 'Netflix Sans',sans-serif; */
+    font-family: sans-serif;
     font-weight: 400;
     line-height:1.1;
     font-size:1.6rem;

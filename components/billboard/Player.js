@@ -62,7 +62,13 @@ const PlayerWrapper = styled.div`
   top: 50%;
 
   height: ${({ player }) =>
-    player === "card" ? "150%" : player === "billboard" ? "130%" : "115%"};
+    player === "card"
+      ? "150%"
+      : player === "billboard"
+      ? "130%"
+      : player === "videoPlayer"
+      ? "100%"
+      : "115%"};
   /* player === "card" ? "150%" : player === "billboard" ? "130%" : "115%"};  */
   aspect-ratio: 16/9;
   overflow: hidden;

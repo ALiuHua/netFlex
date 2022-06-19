@@ -83,6 +83,12 @@ const PlayerWrapper = styled.div`
     /* height: 200%; */
     height: ${({ player }) =>
       player === "card" ? "200%" : player === "billboard" ? "100%" : "100%"};
+    .ytp-chrome-bottom {
+      bottom: 50px !important;
+    }
+  }
+  .ytp-chrome-bottom {
+    bottom: 50px !important;
   }
 `;
 

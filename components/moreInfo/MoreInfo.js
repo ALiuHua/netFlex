@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CoverImage } from "../billboard/BillboardHero";
 import { useRouter } from "next/router";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Player from "../billboard/Player";
 import { CardContext } from "../../store/cardContext";
 import { PlayerContext } from "../../store/playerContext";
@@ -12,7 +12,10 @@ import { GradientLayerAdd } from "../billboard/BillboardHeroStyle";
 import Description from "./Description";
 import { getDetails } from "../../helpers/browseHelper";
 import Episodes from "./Episodes";
+
 const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
+  const scrollbarWidth = window.innerWidth - document.body.offsetWidth; //need to be at customizehook
+  console.log(scrollbarWidth);
   const router = useRouter();
   const [banner, setBanner] = useState(null);
   const { trailer, setTrailer, showPlayer, setShowPlayer } =
@@ -33,7 +36,7 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
         castData,
         trailer: currentTrailer,
       } = await getDetails("TVShows", router.query.jbv);
-      setShowPlayer({ isShown: true, playerID: null, row: null });
+      // setShowPlayer({ isShown: true, playerID: null, row: null });
       setBanner(details);
       setTrailer(currentTrailer);
       setCast(castData);
@@ -48,17 +51,17 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
     setShowPlayer({ isShown: false, playerID: null, row: null });
   };
   return (
-    <>
+    <div>
+      <BackDrop
+        onClick={() => {
+          onShowMore();
+          setTrailer(null);
+          setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
+          setActivePlayer("billboard");
+          router.push("/browse", undefined, { shallow: true });
+        }}
+      />
       <ContentWrapper>
-        <BackDrop
-          onClick={() => {
-            onShowMore();
-            setTrailer(null);
-            setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
-            setActivePlayer("billboard");
-            router.push("/browse", undefined, { shallow: true });
-          }}
-        />
         <Content>
           <PreviewPlayer>
             <GradientLayerAdd />
@@ -69,6 +72,9 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
                 playing={true}
                 player="billboard"
                 onEnded={onEndedHandler}
+                onStart={() => {
+                  setShowPlayer({ isShown: true, playerID: null, row: null });
+                }}
               />
             )}
             {!showPlayer.isShown && (banner || previewPoster) && (
@@ -99,19 +105,28 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
           {banner && <Episodes details={banner} />}
         </RelatedInfoContainer>
       </ContentWrapper>
-    </>
+      <NoScrollBar scrollbar={scrollbarWidth} />
+    </div>
   );
 };
 
 export default MoreInfo;
+
+const NoScrollBar = createGlobalStyle`
+
+html{
+  overflow-y: hidden !important;
+  margin-right:${({ scrollbar }) => scrollbar + "px"}
+}
+`;
 const BackDrop = styled.div`
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   width: 100vw;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: -1;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 11;
 `;
 const ContentWrapper = styled.div`
   position: fixed;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { getSeasons } from "../../helpers/browseHelper";
 import Image from "next/image";
 const Episodes = ({ details }) => {
-  console.log("Episode",details);
+  console.log("Episode", details);
   const [seasonData, setSeasonData] = useState(null);
   const [selectedSeason, setSelectedSeason] = useState(1);
   useEffect(() => {
@@ -24,6 +24,7 @@ const Episodes = ({ details }) => {
     <EpisodesWrapper>
       <HeadInfo>
         {console.log(selectedSeason)}
+        {console.log(seasonData)}
         <span>Episodes</span>
         <Select onChange={seasonSelectedHandler}>
           {details.seasons.map((data, index) => (
@@ -40,12 +41,10 @@ const Episodes = ({ details }) => {
               <span>{data.episode_number}</span>
               <Poster>
                 <div>
-                  {/* <img
-                    src={`https://image.tmdb.org/t/p/original${data.still_path}`}
-                    alt=""
-                  /> */}
                   <Image
-                    src={`https://image.tmdb.org/t/p/w185${data.still_path}`}
+                    src={`https://image.tmdb.org/t/p/w185${
+                      data.still_path || details.backdrop_path
+                    }`}
                     alt=""
                     layout="fill"
                     objectFit="cover"
@@ -55,9 +54,14 @@ const Episodes = ({ details }) => {
               <Description>
                 <div>
                   <SubTitle>{data.name}</SubTitle>
-                  <Duration>{data.runtime}m</Duration>
+                  {data?.runtime !== 0 && data?.runtime && (
+                    <Duration>{data.runtime}m</Duration>
+                  )}
                 </div>
-                <p>{data.overview}</p>
+                <p>
+                  {data.overview ||
+                    `No available content yet, will released at ${data.air_date}`}
+                </p>
               </Description>
             </EpisodeContent>
           );

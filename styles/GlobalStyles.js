@@ -31,7 +31,7 @@ html{
     @media only screen and (max-width:${({ theme }) => theme.mediaSmall}) {
         font-size: 50%;
     }
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     /* overflow-y:hidden */
 }
 body{

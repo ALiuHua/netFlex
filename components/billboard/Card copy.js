@@ -29,18 +29,10 @@ export const getItemGenre = (itemGenresArray, genreCtx, genreNum, category) => {
   });
   return ItemGenre;
 };
-const withinSliderRange = (itemNode, itemsNum) => {
-  const ItemIndex = +itemNode.closest(".slick-slide").dataset.index;
-  const isWithinSliderRange =
-    ItemIndex < itemsNum - 1 && (ItemIndex > 0 || ItemIndex === 0);
-  return isWithinSliderRange;
-};
-
 const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   const { muted, volume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
   const genreCtx = useContext(GenreContext);
-  console.log(number);
   const {
     trailer,
     setTrailer,
@@ -52,6 +44,10 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   } = useContext(CardContext);
   const cardRef = useRef();
   // console.log(cardRef.current);
+  const withinSliderRange = (itemNode, itemsNum) => {
+    const ItemIndex = itemNode.closest(".slick-slide").dataset.index;
+    return ItemIndex + 1 < itemsNum;
+  };
 
   const router = useRouter();
   const playHandler = () => {
@@ -59,12 +55,12 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
     router.push(`/play/${item.id}`);
     // setActivePlayer("videoPlayer");
   };
+  console.log(cardRef);
   // const genresInfo = item?.genre_ids.map((id, index) => {
   //   if (index > 2) return null;
   //   return genreCtx[category].find((genre) => genre.id === id);
   // });
-  const hoverHandler = (e) => {
-    console.log(e.target.closest(".slick-slide").dataset.index);
+  const hoverHandler = () => {
     const delayPlay = setTimeout(() => {
       const fetchCardData = async () => {
         try {
@@ -114,21 +110,24 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
     console.log("showMore", trailer);
     onShowMore(item.poster_path, item.id, trailer);
   };
+  // const moreInfoHandler = () => {
+  //   setShowPlayer({ isShown: false, playerID: null, row: null });
+  //   setActivePlayer("previewPlayer");
+  //   console.log("query test runnning");
+  //   if (trailer) setTrailer(trailer);
+  //   router.push({ pathname: "/browse", query: { jbv: item.id } });
+  //   console.log("showMore", trailer);
+  //   onShowMore();
+  // };
   const isBannerShow =
     !showPlayer.isShown ||
     showPlayer.playerID !== item.id ||
     showPlayer.row !== rowNumber;
-  // const isPlayerShow =
-  //   trailer && showPlayer.playerID === item.id && showPlayer.row === rowNumber;
   const isPlayerShow =
     trailer &&
     showPlayer.playerID === item.id &&
     showPlayer.row === rowNumber &&
     withinSliderRange(cardRef.current, number);
-  cardRef.current &&
-    showPlayer.playerID === item.id &&
-    showPlayer.row === rowNumber &&
-    console.log(withinSliderRange(cardRef.current, number));
   return (
     <CardWrapper
       onMouseEnter={hoverHandler}

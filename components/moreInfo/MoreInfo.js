@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { CoverImage } from "../billboard/BillboardHero";
 import { useRouter } from "next/router";
 import styled, { createGlobalStyle } from "styled-components";
@@ -12,10 +12,11 @@ import { GradientLayerAdd } from "../billboard/BillboardHeroStyle";
 import Description from "./Description";
 import { getDetails } from "../../helpers/browseHelper";
 import Episodes from "./Episodes";
+import Recommendation from "./YouMayLike";
 
 const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
-  const scrollbarWidth = window.innerWidth - document.body.offsetWidth; //need to be at customizehook
-  console.log(scrollbarWidth);
+  //   const scrollbarWidth = window.innerWidth - document.body.offsetWidth; //need to be at customizehook
+  //   console.log(scrollbarWidth);
   const router = useRouter();
   const [banner, setBanner] = useState(null);
   const { trailer, setTrailer, showPlayer, setShowPlayer } =
@@ -27,7 +28,7 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
     if (trailer) setTrailer(trailer);
     router.push(`/play/${banner.id}`);
   };
-  console.log(trailer, banner, showPlayer.isShown);
+  console.log(trailer, banner, showPlayer.isShown, cast);
   useEffect(() => {
     console.log("More info useEffect");
     const getPreviewDetail = async () => {
@@ -50,18 +51,24 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
   const onEndedHandler = () => {
     setShowPlayer({ isShown: false, playerID: null, row: null });
   };
+  const clickRef = useRef();
+  useEffect(() => {
+    const clickHandler = (e) => {
+      if (clickRef.current && !clickRef.current.contains(e.target)) {
+        setTrailer(null);
+        setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
+        setActivePlayer("billboard");
+        router.push("/browse", undefined, { shallow: true });
+      }
+    };
+    document.body.addEventListener("click", clickHandler);
+    return () => {
+      removeEventListener("click", clickHandler);
+    };
+  }, []);
   return (
-    <div>
-      <BackDrop
-        onClick={() => {
-          onShowMore();
-          setTrailer(null);
-          setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
-          setActivePlayer("billboard");
-          router.push("/browse", undefined, { shallow: true });
-        }}
-      />
-      <ContentWrapper>
+    <MoreInfoWrapper>
+      <ContentWrapper ref={clickRef}>
         <Content>
           <PreviewPlayer>
             <GradientLayerAdd />
@@ -82,6 +89,7 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
                 coverPath={
                   banner?.backdrop_path || previewPoster?.backdrop_path
                 }
+                size="w780"
               />
             )}
           </PreviewPlayer>
@@ -103,10 +111,11 @@ const MoreInfo = ({ category, onShowMore, genreContext, previewPoster }) => {
             cast={cast}
           />
           {banner && <Episodes details={banner} />}
+          {banner && <Recommendation details={banner} category={category} />}
         </RelatedInfoContainer>
       </ContentWrapper>
-      <NoScrollBar scrollbar={scrollbarWidth} />
-    </div>
+      <NoScrollBar scrollbar={17} />
+    </MoreInfoWrapper>
   );
 };
 
@@ -119,28 +128,25 @@ html{
   margin-right:${({ scrollbar }) => scrollbar + "px"}
 }
 `;
-const BackDrop = styled.div`
+const MoreInfoWrapper = styled.div`
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   width: 100vw;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.75);
   z-index: 11;
+  overflow-y: scroll;
 `;
 const ContentWrapper = styled.div`
-  position: fixed;
-  top: 3.6rem;
-  left: 25vw;
-  /* right: 15vw; */
-  /* transform: translateX(-50%); */
+  margin: 3.6rem auto 0 auto;
   width: 50vw;
-  z-index: 999999;
-  height: 96.4vh;
-  overflow-y: scroll;
   border-radius: 8px;
   line-height: 1.4;
-  background-color: rgba(24, 24, 24);
+  background-color: rgba(20, 20, 20);
+  min-height: 100vh;
+  border-radius: 7px;
+  overflow: hidden;
 `;
 const Content = styled.div`
   position: relative;

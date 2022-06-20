@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { getSeasons } from "../../helpers/browseHelper";
 import Image from "next/image";
+import { briefInfo } from "../billboard/BillboardHero";
 const Episodes = ({ details }) => {
   console.log("Episode", details);
   const [seasonData, setSeasonData] = useState(null);
@@ -42,9 +43,7 @@ const Episodes = ({ details }) => {
               <Poster>
                 <div>
                   <Image
-                    src={`https://image.tmdb.org/t/p/w185${
-                      data.still_path || details.backdrop_path
-                    }`}
+                    src={`https://image.tmdb.org/t/p/w185${data.still_path}`}
                     alt=""
                     layout="fill"
                     objectFit="cover"
@@ -59,7 +58,7 @@ const Episodes = ({ details }) => {
                   )}
                 </div>
                 <p>
-                  {data.overview ||
+                  {briefInfo(data.overview, 20) ||
                     `No available content yet, will released at ${data.air_date}`}
                 </p>
               </Description>
@@ -75,16 +74,19 @@ const Episodes = ({ details }) => {
 export default Episodes;
 const EpisodesWrapper = styled.div`
   /* background-color: #141414; */
+  & > div:nth-child(2) {
+    background-color: rgb(36, 36, 36);
+    border-radius: 6px;
+    overflow: hidden;
+  }
 `;
 const EpisodeContent = styled.div`
   display: flex;
   padding: 1.6rem;
 
   min-height: 8em; // have media-query condition
-  border-top: 1px solid #404040;
-  &:last-child {
-    border-bottom: 1px solid #404040;
-  }
+  border-bottom: 1px solid #404040;
+  /* box-shadow: 0px 1px 1px rgb(36, 36, 36); */
   & > span {
     flex: 0 0 7%;
     display: flex;
@@ -125,12 +127,14 @@ const HeadInfo = styled.div`
 `;
 const Select = styled.select`
   font-size: 2rem;
-  background-color: transparent;
+  background-color: rgb(36, 36, 36);
   color: rgb(255, 255, 255);
   margin: 4.8rem 0 2rem 0;
-  padding: 8px 16px;
+  padding: 8px 24px;
+  border-radius: 4px;
+  border: 1px solid #404040;
   option {
-    background-color: rgb(24, 24, 24);
+    background-color: rgb(36, 36, 36);
   }
 `;
 const Poster = styled.div``;

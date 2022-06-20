@@ -145,18 +145,12 @@ export const getSeasons = async (id, seasonNum) => {
   return episodes;
 };
 
-/*(8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-0:
-air_date: "2019-07-04"
-crew: (5) [{…}, {…}, {…}, {…}, {…}]
-episode_number: 1
-guest_stars: (12) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-id: 1657328
-name: "Chapter One: Suzie, Do You Copy?"
-overview: "Summer brings new jobs and budding romance. But the mood shifts when Dustin's radio picks up a Russian broadcast, and Will senses something is wrong."
-production_code: ""
-runtime: 50
-season_number: 3
-still_path: "/97PVnrEQWEsdMnD08QDmMxLkV7h.jpg"
-vote_average: 7.695
-vote_count: 113 */
+export const getRecommendation = async (category, id) => {
+  const {
+    data: { results },
+  } = await tmdb.get(
+    TMDB[category].helpers.fetchRecommendations.replace("_id", id)
+  );
+  console.log(results);
+  return results;
+};

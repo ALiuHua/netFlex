@@ -11,8 +11,13 @@ const EmbedButtonBox = ({
   return (
     <ButtonBox scaled={scaled}>
       {showMuteToggling && (
-        <MuteButton onClick={() => toggleMuted((prev) => !prev)}>
-          {muted ? <NotMuteIcon /> : <MuteIcon />}
+        <MuteButton
+          onClick={(e) => {
+            toggleMuted((prev) => !prev);
+            e.stopPropagation(); // to resolve the issue that i click on the detail page still trigger the detail click outside handler, which is a problem because mute icon will change
+          }}
+        >
+          {muted ? <MuteIcon /> : <NotMuteIcon />}
         </MuteButton>
       )}
 

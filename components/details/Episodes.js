@@ -43,7 +43,9 @@ const Episodes = ({ details }) => {
               <Poster>
                 <div>
                   <Image
-                    src={`https://image.tmdb.org/t/p/w185${data.still_path}`}
+                    src={`https://image.tmdb.org/t/p/w185${
+                      data.still_path || details.backdrop_path
+                    }`}
                     alt=""
                     layout="fill"
                     objectFit="cover"

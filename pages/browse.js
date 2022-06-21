@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import BillboardHero from "../components/billboard/BillboardHero";
 import Lolomo from "../components/billboard/Lolomo";
-import MoreInfo from "../components/moreInfo/MoreInfo";
+import Details from "../components/details/Details";
 import { getGenres } from "../helpers/browseHelper";
 import { CardContext } from "../store/cardContext";
 import { PlayerContext } from "../store/playerContext";
@@ -13,18 +13,13 @@ export const GenreContext = React.createContext({
 });
 const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   const genreContextValue = { movies: movieGenres, TVShows: tvGenres };
-  const [previewPoster, setPreviewPoster] = useState(null);
-  // const { setTrailer } = useContext(CardContext);
+  const [detailsPoster, setDetailsPoster] = useState(null);
   const router = useRouter();
   const { setActivePlayer } = useContext(PlayerContext);
-  const onShowMoreInfoHandler = (bannerPath, id, trailer) => {
+  const onShowDetailsHandler = (bannerPath, id) => {
     if (id) router.push(`/browse/?jbv=${id}`, undefined, { shallow: true });
-    // router.push({ pathname: "/browse", query: { jbv: id } });
     setActivePlayer("previewPlayer");
-    // setPreviewPoster({ backdrop_path: bannerPath });
-    // console.log("query test runnning");
-    // if (trailer) setTrailer(trailer);
-    // setShowMoreInfo(!showMoreInfo);
+    setDetailsPoster(bannerPath);
   };
   // useEffect(() => {
   //   console.log(router);
@@ -32,14 +27,13 @@ const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   // }, []);
   return (
     <GenreContext.Provider value={genreContextValue}>
-      <BillboardHero category={category} onShowMore={onShowMoreInfoHandler} />
-      <Lolomo category={category} onShowMore={onShowMoreInfoHandler} />
+      <BillboardHero category={category} onShowMore={onShowDetailsHandler} />
+      <Lolomo category={category} onShowMore={onShowDetailsHandler} />
       {router.asPath.includes("jbv") && (
-        <MoreInfo
+        <Details
           category={category}
-          onShowMore={onShowMoreInfoHandler}
           genreContext={genreContextValue}
-          // previewPoster={previewPoster}
+          detailsPoster={detailsPoster}
         />
       )}
     </GenreContext.Provider>

@@ -5,54 +5,56 @@ import Image from "next/image";
 import { briefInfo } from "../billboard/BillboardHero";
 const Recommendation = ({ category, details }) => {
   console.log("Episode", details);
-  const [recommendData, setRecommendData] = useState(null);
+  const [recommendData, setRecommendData] = useState([]);
   useEffect(() => {
     const fetchRecommendtion = async () => {
       const seasons = await getRecommendation(category, details?.id);
-      setRecommendData(seasons);
+      if (seasons) setRecommendData(seasons);
     };
     fetchRecommendtion();
   }, [category, details?.id]);
   console.log(recommendData);
-  //   const seasonSelectedHandler = (e) => {
-  //     const selectedItem = details?.seasons.find(
-  //       (data) => data.name === e.target.value
-  //     );
-  //     setSelectedSeason(selectedItem.season_number);
-  //   };
   return (
-    <RecommendationWrapper>
-      <HeadInfo>
-        <span>More like this</span>
-      </HeadInfo>
-      <Content>
-        {recommendData &&
-          recommendData.map((data, index) => {
-            return (
-              <EpisodeContent key={index}>
-                <Poster>
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w300${data.backdrop_path}`}
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </Poster>
-                <Description>
-                  <div>
-                    <SubTitle>{data.name}</SubTitle>
-                    <span>{new Date(data.first_air_date).getFullYear()}</span>
-                  </div>
-                  <p>
-                    {briefInfo(data.overview, 25) ||
-                      `No available content yet, will released at ${data.first_air_date}`}
-                  </p>
-                </Description>
-              </EpisodeContent>
-            );
-          })}
-      </Content>
-    </RecommendationWrapper>
+    <>
+      {recommendData.length !== 0 && (
+        <RecommendationWrapper>
+          <HeadInfo>
+            <span>More like this</span>
+          </HeadInfo>
+          <Content>
+            {recommendData.map((data, index) => {
+              return (
+                <EpisodeContent key={index}>
+                  <Poster>
+                    <Image
+                      // src={`https://image.tmdb.org/t/p/w300${data.backdrop_path}`}
+                      src={`https://image.tmdb.org/t/p/${
+                        data.backdrop_path
+                          ? `w300${data.backdrop_path}`
+                          : `w342${data.poster_path}`
+                      }`}
+                      alt=""
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </Poster>
+                  <Description>
+                    <div>
+                      <SubTitle>{data.name}</SubTitle>
+                      <span>{new Date(data.first_air_date).getFullYear()}</span>
+                    </div>
+                    <p>
+                      {briefInfo(data.overview, 25) ||
+                        `No available content yet, will released at ${data.first_air_date}`}
+                    </p>
+                  </Description>
+                </EpisodeContent>
+              );
+            })}
+          </Content>
+        </RecommendationWrapper>
+      )}
+    </>
   );
 };
 /*0:

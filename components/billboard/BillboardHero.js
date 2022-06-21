@@ -30,7 +30,7 @@ export const briefInfo = (infoText, num) => {
         .slice(0, num - 1)
         .join(" ") + "...";
   } else {
-    shortInfo = [];
+    shortInfo = null;
   }
   return shortInfo;
 };
@@ -52,7 +52,7 @@ const BillboardHero = ({ category, onShowMore }) => {
     router.push(`/play/${banner.id}`); //60574
   };
   const moreInfoHandler = () => {
-    onShowMore(banner.poster_path, banner.id, trailer);
+    onShowMore(banner.backdrop_path, banner.id);
     // router.push({ pathname: "/browse", query: { jbv: banner.id } });
     // setActivePlayer("previewPlayer");
     // console.log("query test runnning");
@@ -160,18 +160,20 @@ const BillboardHero = ({ category, onShowMore }) => {
             </ActionBox>
           </DescriptionContainer>
         )}
+        <div>
         <EmbedButtonBox
           showReplay={!showPlayer && playCompleted}
           showMuteToggling={showPlayer}
           replayHandler={replayHandler}
         />
+        </div>
       </BillboardDetail>
     </BillboardWrapper>
   );
 };
 
 export default BillboardHero;
-export const CoverImage = ({ coverPath,size, children }) => {
+export const CoverImage = ({ coverPath, size, children }) => {
   return (
     <BillboardBackground>
       {children}

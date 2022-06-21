@@ -117,10 +117,10 @@ export const BillboardDetail = styled.div`
   width: 100%;
   height: 55%;
   padding: 0 45px;
-  z-index: 1000;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: end;
 `;
 export const DescriptionContainer = styled.div`
   width: 36%;
@@ -166,15 +166,21 @@ export const Description = styled.div`
 export const ActionBox = styled.div`
   display: flex;
 `;
+// export const ButtonBox = styled.div`
+//   position: absolute;
+//   bottom: 0;
+//   right: 6%;
+//   z-index: 2;
+//   ${({ scaled }) =>
+//     css`
+//       transform: scale(${scaled});
+//     `}
+// `;
 export const ButtonBox = styled.div`
-  position: absolute;
+  /* position: absolute;
   bottom: 0;
   right: 6%;
-  z-index: 2;
-  /* display: flex; */
-  /* transform: ${({ scaled }) =>
-    Boolean(scaled) ? `scale(${scaled})` : `scale(1)`}; */
-
+  z-index: 2; */
   ${({ scaled }) =>
     css`
       transform: scale(${scaled});

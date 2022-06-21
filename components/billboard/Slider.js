@@ -19,7 +19,6 @@ const Slider = ({ category, item, rowNumber, onShowMore }) => {
           key={data.id}
           item={data}
           rowNumber={rowNumber}
-          number={contentItems.length + 1}
           onShowMore={onShowMore}
         />
       ))}

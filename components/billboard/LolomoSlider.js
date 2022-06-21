@@ -52,7 +52,7 @@ const LolomoSlider = ({ item, children }) => {
     infinite: true,
     // carouselClicked,
     //not used here to prevent the re-render of carousel. cause we just want prevArrow re-render.
-    initialSlide: 0,
+    // initialSlide: 0,
     // centerPadding: "30px",
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
@@ -63,6 +63,7 @@ const LolomoSlider = ({ item, children }) => {
           slidesToShow: 5,
           slideToScroll: 5,
           infinite: true,
+          // initialSlide: 0,
           dots: true,
         },
       },
@@ -71,6 +72,9 @@ const LolomoSlider = ({ item, children }) => {
         settings: {
           slidesToShow: 4,
           slideToScroll: 4,
+          infinite: true,
+          // initialSlide: 0,
+          dots: true,
           // initialSlide: 2,
         },
       },
@@ -79,6 +83,9 @@ const LolomoSlider = ({ item, children }) => {
         settings: {
           slidesToShow: 3,
           slideToScroll: 3,
+          infinite: true,
+          dots: true,
+          // initialSlide: 0,
         },
       },
     ],

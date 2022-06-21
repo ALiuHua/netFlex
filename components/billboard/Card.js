@@ -22,25 +22,11 @@ import { isNewRelease } from "../../helpers/browseHelper";
 import { GenreContext } from "../../pages/browse";
 import { CardContext } from "../../store/cardContext";
 import { useRouter } from "next/router";
-export const getItemGenre = (itemGenresArray, genreCtx, genreNum, category) => {
-  const ItemGenre = itemGenresArray.map((id, index) => {
-    if (index > genreNum - 1) return null;
-    return genreCtx[category].find((genre) => genre.id === id);
-  });
-  return ItemGenre;
-};
-const withinSliderRange = (itemNode, itemsNum) => {
-  const ItemIndex = +itemNode.closest(".slick-slide").dataset.index;
-  const isWithinSliderRange =
-    ItemIndex < itemsNum - 1 && (ItemIndex > 0 || ItemIndex === 0);
-  return isWithinSliderRange;
-};
-
-const Card = ({ category, item, rowNumber, number, onShowMore }) => {
+import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
+const Card = ({ category, item, rowNumber, onShowMore }) => {
   const { muted, volume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
   const genreCtx = useContext(GenreContext);
-  console.log(number);
   const {
     trailer,
     setTrailer,
@@ -51,20 +37,15 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
     vPlayer,
   } = useContext(CardContext);
   const cardRef = useRef();
-  // console.log(cardRef.current);
-
   const router = useRouter();
   const playHandler = () => {
     if (trailer) setTrailer(trailer);
     router.push(`/play/${item.id}`);
     // setActivePlayer("videoPlayer");
   };
-  // const genresInfo = item?.genre_ids.map((id, index) => {
-  //   if (index > 2) return null;
-  //   return genreCtx[category].find((genre) => genre.id === id);
-  // });
+
   const hoverHandler = (e) => {
-    console.log(e.target.closest(".slick-slide").dataset.index);
+    console.log(item);
     const delayPlay = setTimeout(() => {
       const fetchCardData = async () => {
         try {
@@ -107,12 +88,7 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   };
   const moreInfoHandler = () => {
     setShowPlayer({ isShown: false, playerID: null, row: null });
-    // setActivePlayer("previewPlayer");
-    // console.log("query test runnning");
-    // if (trailer) setTrailer(trailer);
-    // router.push({ pathname: "/browse", query: { jbv: item.id } });
-    console.log("showMore", trailer);
-    onShowMore(item.poster_path, item.id, trailer);
+    onShowMore(item.backdrop_path, item.id);
   };
   const isBannerShow =
     !showPlayer.isShown ||
@@ -124,11 +100,12 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
     trailer &&
     showPlayer.playerID === item.id &&
     showPlayer.row === rowNumber &&
-    withinSliderRange(cardRef.current, number);
-  cardRef.current &&
+    withinSliderRange(cardRef.current);
+  trailer &&
     showPlayer.playerID === item.id &&
     showPlayer.row === rowNumber &&
-    console.log(withinSliderRange(cardRef.current, number));
+    console.log(withinSliderRange(cardRef.current));
+  console.log(isPlayerShow);
   return (
     <CardWrapper
       onMouseEnter={hoverHandler}
@@ -141,9 +118,6 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
             {isNewRelease(item) && <IsNew>New</IsNew>}
             <MiniTile>{item?.name.split(":")[0]}</MiniTile>
             <GradientLayer />
-            {/* <img
-              src={`https://image.tmdb.org/t/p/w342/${item?.backdrop_path}`}
-            /> */}
             <Image
               src={`https://image.tmdb.org/t/p/w342/${item?.backdrop_path}`}
               alt="to be continue"
@@ -164,11 +138,21 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
               playing={true}
               player="card"
             />
-            <EmbedButtonBox
-              showMuteToggling={showPlayer.isShown}
-              muted={muted}
-              scaled="0.35"
-            />
+            <div
+              style={{
+                position: "absolute",
+                zIndex: "5",
+                bottom: "0",
+                right: "0",
+                opacity: "0.5",
+              }}
+            >
+              <EmbedButtonBox
+                showMuteToggling={showPlayer.isShown}
+                muted={muted}
+                scaled="0.35"
+              />
+            </div>
           </>
         )}
       </MediaContent>

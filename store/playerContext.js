@@ -10,6 +10,7 @@ export const PlayerContext = React.createContext({
 });
 
 const PlayerContextProvider = ({ children }) => {
+  console.log("player context provider running");
   const [muted, setMuted] = useState(true);
   const [volume, setVolume] = useState(0.5);
   const [activePlayer, setActivePlayer] = useState("billboard");

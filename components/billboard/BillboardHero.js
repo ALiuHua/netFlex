@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import { PlayerContext } from "../../store/playerContext";
-import { CardContext } from "../../store/cardContext";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // import Router from "next/router";
 import Image from "next/image";
 import { getBanner, getTrailer } from "../../helpers/browseHelper";
@@ -36,8 +36,9 @@ export const briefInfo = (infoText, num) => {
 };
 
 const BillboardHero = ({ category, onShowMore }) => {
-  const { muted, volume, setVolume, activePlayer, setActivePlayer } =
-    useContext(PlayerContext);
+  const activePlayer = useSelector((state) => state.player.activePlayer);
+  const dispatch = useDispatch();
+
   const [banner, setBanner] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [playCompleted, setPlayCompleted] = useState(false);
@@ -45,10 +46,8 @@ const BillboardHero = ({ category, onShowMore }) => {
   const [playing, setPlaying] = useState(true); //only here
   // const [getDistracted,setGetDistracted] = useState(false);
   const router = useRouter();
-  const { setTrailer: setPlayerTrailer } = useContext(CardContext);
   const playHandler = () => {
     // setActivePlayer("videoPlayer");
-    if (trailer) setPlayerTrailer(trailer);
     router.push(`/play/${banner.id}`); //60574
   };
   const moreInfoHandler = () => {
@@ -73,7 +72,8 @@ const BillboardHero = ({ category, onShowMore }) => {
   };
   useEffect(() => {
     console.log("billboard useEffect running 1");
-    setActivePlayer("billboard");
+    // setActivePlayer("billboard");
+    // dispatch(playerActions.toggleActivePlayer());
     let timeoutId;
     const fetchBillboard = async () => {
       try {
@@ -123,8 +123,6 @@ const BillboardHero = ({ category, onShowMore }) => {
           <Player
             trailer={trailer}
             onEnded={onEndedHandler}
-            volume={volume}
-            muted={muted}
             playing={playing}
             player="billboard"
             onStart={() => {
@@ -161,11 +159,11 @@ const BillboardHero = ({ category, onShowMore }) => {
           </DescriptionContainer>
         )}
         <div>
-        <EmbedButtonBox
-          showReplay={!showPlayer && playCompleted}
-          showMuteToggling={showPlayer}
-          replayHandler={replayHandler}
-        />
+          <EmbedButtonBox
+            showReplay={!showPlayer && playCompleted}
+            showMuteToggling={showPlayer}
+            replayHandler={replayHandler}
+          />
         </div>
       </BillboardDetail>
     </BillboardWrapper>

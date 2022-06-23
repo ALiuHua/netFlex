@@ -1,32 +1,36 @@
 import React, { useRef } from "react";
 import ReactPlayer from "react-player";
 import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
+
 // eslint-disable-next-line react/display-name
 const Player = React.forwardRef((props, ref) => {
   const {
-    muted,
-    volume,
     onEnded,
     // onReady, // will show loading spinner
     // onProgress,
     onStart, // directly dive into palying screen
     // onPlay, will triger during the video playing
-    trailer,
+    trailer: propsTrailer,
     playing,
   } = props;
   // const player = useRef();
+  const trailer = useSelector((state) => state.trailer.trailer);
+
+  let realTrailer = propsTrailer;
+  if (!propsTrailer) realTrailer = trailer;
+  const muted = useSelector((state) => state.player.mute);
 
   //player flicking when card player shows.
   return (
     <PlayerWrapper player={props.player}>
       <ReactPlayer
         ref={ref}
-        url={`https://www.youtube-nocookie.com/embed/${trailer}`}
+        url={`https://www.youtube-nocookie.com/embed/${realTrailer}`}
         playing={playing}
         width={"100%"}
         height={"100%"}
         muted={muted}
-        volume={volume}
         onStart={onStart}
         // onProgress={onProgress}
         controls={props.control}

@@ -1,19 +1,23 @@
 import styled, { css } from "styled-components";
-import { PlayerContext } from "../../store/playerContext";
-import { useContext } from "react";
+import playerSlice from "../../store/player-slice";
+import { useSelector, useDispatch } from "react-redux";
+import { playerActions } from "../../store/player-slice";
 const EmbedButtonBox = ({
   showMuteToggling,
   replayHandler,
   showReplay,
   scaled,
 }) => {
-  const { muted, toggleMuted } = useContext(PlayerContext);
+  const muted = useSelector((state) => state.player.mute);
+  const dispatch = useDispatch();
+
   return (
     <ButtonBox scaled={scaled}>
       {showMuteToggling && (
         <MuteButton
           onClick={(e) => {
-            toggleMuted((prev) => !prev);
+            // toggleMuted((prev) => !prev);
+            dispatch(playerActions.toggleMuted());
             e.stopPropagation(); // to resolve the issue that i click on the detail page still trigger the detail click outside handler, which is a problem because mute icon will change
           }}
         >

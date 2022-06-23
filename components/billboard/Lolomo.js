@@ -2,18 +2,23 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Slider from "./Slider";
 import { TMDB } from "../../data/dynamic/tmdbEndpoints";
-const Lolomo = ({ category,onShowMore }) => {
+const Lolomo = ({ category, onShowMore }) => {
   const [rowNumber, setRowNumber] = useState(4);
   useEffect(() => {
     const onScrollHandler = () => {
       window.innerHeight + window.scrollY + 400 >= document.body.offsetHeight &&
-        setRowNumber((prevRowNumber) => prevRowNumber + 2);
+        setRowNumber((prevRowNumber) =>
+          prevRowNumber < TMDB[category].sections.length
+            ? prevRowNumber + 2
+            : prevRowNumber
+        );
     };
     window.addEventListener("scroll", onScrollHandler); //添加一次，转动可用
     return () => {
       removeEventListener("scroll", onScrollHandler);
     };
   }, []);
+  console.log(rowNumber);
   return (
     <SliderWrapper>
       {TMDB[category].sections.map(
@@ -21,7 +26,6 @@ const Lolomo = ({ category,onShowMore }) => {
           rowNumber > index && (
             <Slider
               category={category}
-              rowNumber={index + 1}
               key={index}
               item={item}
               onShowMore={onShowMore}

@@ -1,10 +1,6 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { trailerActions } from "../../store/trailer-slice";
-import { playerActions } from "../../store/player-slice";
-import { CardContext } from "../../store/cardContext";
 import {
   MediaInfo,
   MiniTile,
@@ -18,37 +14,57 @@ import {
   DetailButton,
   GradientLayer,
 } from "./CardStyle";
-import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
-import Player from "./Player";
-import EmbedButtonBox from "./BillboardHeroStyle";
-
 import { getTrailer } from "../../helpers/browseHelper";
-import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
+import Player from "./Player";
+import { PlayerContext } from "../../store/playerContext";
+import EmbedButtonBox from "./BillboardHeroStyle";
 import { isNewRelease } from "../../helpers/browseHelper";
 import { GenreContext } from "../../pages/browse";
-
+import { CardContext } from "../../store/cardContext";
+import { useRouter } from "next/router";
+import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
 const Card = ({ category, item, rowNumber, onShowMore }) => {
-  const dispatch = useDispatch();
-  console.log("card");
-  const [playerLoaded, setPlayerLoaded] = useState(false);
-  const [trailerShow, setTrailerShow] = useState(false);
+  const { muted, volume, activePlayer, setActivePlayer } =
+    useContext(PlayerContext);
   const genreCtx = useContext(GenreContext);
-  const { timer, setTimer, vPlayer } = useContext(CardContext);
+  // const {
+  //   trailer,
+  //   setTrailer,
+  //   showPlayer,
+  //   setShowPlayer,
+  //   timer,
+  //   setTimer,
+  //   vPlayer,
+  // } = useContext(CardContext);
+  const [trailer, setTrailer] = useState(null);
+  const [showPlayer, setShowPlayer] = useState({
+    isShown: false,
+    playerID: null,
+    row: null,
+  });
+  const [timer, setTimer] = useState(null);
+  const vPlayer = useRef();
   const cardRef = useRef();
   const router = useRouter();
   const playHandler = () => {
+    if (trailer) setTrailer(trailer);
     router.push(`/play/${item.id}`);
     // setActivePlayer("videoPlayer");
   };
-
+  console.log("card Running");
   const hoverHandler = (e) => {
     const delayPlay = setTimeout(() => {
       const fetchCardData = async () => {
         try {
           const fetchedTrailer = await getTrailer(category, item.id);
           // "675353"
-          dispatch(trailerActions.setTrailer(fetchedTrailer));
-          setPlayerLoaded(true);
+          setTrailer(fetchedTrailer);
+          setShowPlayer({
+            isShown: false,
+            playerID: item.id,
+            row: rowNumber,
+          });
+          setActivePlayer("card"); //why this still can triggler 187 rerenders
         } catch (err) {
           if (err.response) {
             console.log(err.response); // response status not at 200 range
@@ -62,33 +78,40 @@ const Card = ({ category, item, rowNumber, onShowMore }) => {
     setTimer(delayPlay);
   };
   const onTrailerStart = () => {
-    // dispatch(trailerActions.setShowPlayer({ ...showPlayer, isShown: true }));
-    setTrailerShow(true);
-    dispatch(playerActions.toggleActivePlayer("card"));
+    setShowPlayer({ ...showPlayer, isShown: true });
   };
   const mouseLeaveHandler = (e) => {
     // e.stopPropagation();
     clearTimeout(timer);
-    dispatch(trailerActions.setTrailer(null));
-    setPlayerLoaded(false);
-    setTrailerShow(false);
-    dispatch(playerActions.toggleActivePlayer("billboard"));
+    setTrailer(null);
+    setShowPlayer({ isShown: false, playerID: null, row: null });
+    // setActivePlayer("billboard");
   };
   const onEndedHandler = () => {
-    dispatch(trailerActions.setTrailer(null));
-    setPlayerLoaded(false);
-    setTrailerShow(false);
-    dispatch(playerActions.toggleActivePlayer("billboard"));
+    setTrailer(null);
+    setShowPlayer({ isShown: false, playerID: null, row: null });
+    setActivePlayer("billboard");
   };
   const moreInfoHandler = () => {
-    setPlayerLoaded(false);
-    setTrailerShow(false);
+    setShowPlayer({ isShown: false, playerID: null, row: null });
     onShowMore(item.backdrop_path, item.id);
   };
-  const isBannerShow = !playerLoaded || !trailerShow;
-  const isPlayerShow = playerLoaded && withinSliderRange(cardRef.current);
-  // const isPlayerShow = playerLoaded
-
+  const isBannerShow =
+    !showPlayer.isShown ||
+    showPlayer.playerID !== item.id ||
+    showPlayer.row !== rowNumber;
+  // const isPlayerShow =
+  //   trailer && showPlayer.playerID === item.id && showPlayer.row === rowNumber;
+  const isPlayerShow =
+    trailer &&
+    showPlayer.playerID === item.id &&
+    showPlayer.row === rowNumber &&
+    withinSliderRange(cardRef.current);
+  trailer &&
+    showPlayer.playerID === item.id &&
+    showPlayer.row === rowNumber &&
+    withinSliderRange(cardRef.current) &&
+    console.log(isPlayerShow);
   return (
     <CardWrapper
       onMouseEnter={hoverHandler}
@@ -113,9 +136,11 @@ const Card = ({ category, item, rowNumber, onShowMore }) => {
           <>
             <Player
               ref={vPlayer}
-              // trailer={trailer}
+              trailer={trailer}
               onEnded={onEndedHandler}
               onStart={onTrailerStart}
+              volume={volume}
+              muted={muted}
               playing={true}
               player="card"
             />
@@ -128,7 +153,11 @@ const Card = ({ category, item, rowNumber, onShowMore }) => {
                 opacity: "0.5",
               }}
             >
-              <EmbedButtonBox showMuteToggling={trailerShow} scaled="0.35" />
+              <EmbedButtonBox
+                showMuteToggling={showPlayer.isShown}
+                muted={muted}
+                scaled="0.35"
+              />
             </div>
           </>
         )}

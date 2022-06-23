@@ -4,21 +4,19 @@ import { GlobalStyles } from "../styles/GlobalStyles";
 import Header from "../components/story/Header";
 import Footer from "../components/story/footer/Footer";
 import { useRouter } from "next/router";
-import CardContextProvider from "../store/cardContext";
-import PlayerContextProvider from "../store/playerContext";
+import { Provider } from "react-redux";
+import store from "../store/index";
 const Layout = ({ children }) => {
   const { pathname } = useRouter();
   return (
-    <PlayerContextProvider>
-      <CardContextProvider>
-        <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          <Header pathname={pathname} />
-          <main>{children}</main>
-          <Footer pathname={pathname} />
-        </ThemeProvider>
-      </CardContextProvider>
-    </PlayerContextProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Header pathname={pathname} />
+        <main>{children}</main>
+        <Footer pathname={pathname} />
+      </ThemeProvider>
+    </Provider>
   );
 };
 

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useMemo,
+} from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import BillboardHero from "../components/billboard/BillboardHero";
@@ -12,7 +18,9 @@ export const GenreContext = React.createContext({
   TVShows: [],
 });
 const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
-  const genreContextValue = { movies: movieGenres, TVShows: tvGenres };
+  const genreContextValue = useMemo(() => {
+    return { movies: movieGenres, TVShows: tvGenres };
+  }, []);
   const [detailsPoster, setDetailsPoster] = useState(null);
   const router = useRouter();
   const { setActivePlayer } = useContext(PlayerContext);

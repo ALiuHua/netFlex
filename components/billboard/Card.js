@@ -27,7 +27,7 @@ import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
 import { isNewRelease } from "../../helpers/browseHelper";
 import { GenreContext } from "../../pages/browse";
 
-const Card = React.memo(({ category, item, onShowMore }) => {
+const Card = ({ category, item, onShowMore }) => {
   const dispatch = useDispatch();
   console.log("card runnning");
   const [playerLoaded, setPlayerLoaded] = useState(false);
@@ -39,7 +39,7 @@ const Card = React.memo(({ category, item, onShowMore }) => {
   const cardRef = useRef();
   // const router = useRouter();
   const playHandler = () => {
-    // router.push(`/play/${item.id}`);
+    router.push(`/play/${item.id}`);
     // setActivePlayer("videoPlayer");
   };
 
@@ -51,6 +51,7 @@ const Card = React.memo(({ category, item, onShowMore }) => {
           // "675353"
           dispatch(trailerActions.setTrailer(fetchedTrailer));
           setPlayerLoaded(true);
+          console.log("fetch card");
         } catch (err) {
           if (err.response) {
             console.log(err.response); // response status not at 200 range
@@ -89,6 +90,7 @@ const Card = React.memo(({ category, item, onShowMore }) => {
     setTrailerShow(false);
   };
   const isBannerShow = !playerLoaded || !trailerShow;
+  // const isPlayerShow = playerLoaded;
   const isPlayerShow = playerLoaded && withinSliderRange(cardRef.current);
   // const isPlayerShow = playerLoaded
 
@@ -164,6 +166,6 @@ const Card = React.memo(({ category, item, onShowMore }) => {
       </MediaInfo>
     </CardWrapper>
   );
-});
+};
 
 export default Card;

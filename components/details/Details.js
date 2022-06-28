@@ -35,6 +35,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
     // if (trailer) setTrailer(trailer);
     router.push(`/play/${item.id}`);
   };
+  console.log("details running");
   // console.log(trailer, item, showPlayer.isShown, cast);
   useEffect(() => {
     console.log("More info useEffect");
@@ -59,7 +60,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
   const onEndedHandler = () => {
     setTrailerShow(false);
   };
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const clickRef = useRef();
   useEffect(() => {
     const clickOutsideHandler = (e) => {
@@ -67,7 +68,7 @@ const dispatch = useDispatch();
         setTrailer(null);
         // setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
         // setActivePlayer("billboard");
-        dispatch(playerActions.toggleActivePlayer("billboard"))
+        dispatch(playerActions.toggleActivePlayer("billboard"));
         router.push("/browse", undefined, { shallow: true });
       }
     };

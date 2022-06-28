@@ -1,10 +1,10 @@
 import React, { useState, useRef, useContext } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { trailerActions } from "../../store/trailer-slice";
 import { playerActions } from "../../store/player-slice";
-import { CardContext } from "../../store/cardContext";
+// import { CardContext } from "../../store/cardContext";
 import {
   MediaInfo,
   MiniTile,
@@ -27,17 +27,19 @@ import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
 import { isNewRelease } from "../../helpers/browseHelper";
 import { GenreContext } from "../../pages/browse";
 
-const Card = ({ category, item, rowNumber, onShowMore }) => {
+const Card = React.memo(({ category, item, onShowMore }) => {
   const dispatch = useDispatch();
-  console.log("card");
+  console.log("card runnning");
   const [playerLoaded, setPlayerLoaded] = useState(false);
   const [trailerShow, setTrailerShow] = useState(false);
   const genreCtx = useContext(GenreContext);
-  const { timer, setTimer, vPlayer } = useContext(CardContext);
+  // const { timer, setTimer, vPlayer } = useContext(CardContext);
+  const [timer, setTimer] = useState(null);
+  const vPlayer = useRef();
   const cardRef = useRef();
-  const router = useRouter();
+  // const router = useRouter();
   const playHandler = () => {
-    router.push(`/play/${item.id}`);
+    // router.push(`/play/${item.id}`);
     // setActivePlayer("videoPlayer");
   };
 
@@ -68,6 +70,7 @@ const Card = ({ category, item, rowNumber, onShowMore }) => {
   };
   const mouseLeaveHandler = (e) => {
     // e.stopPropagation();
+    console.log("mouseLeave");
     clearTimeout(timer);
     dispatch(trailerActions.setTrailer(null));
     setPlayerLoaded(false);
@@ -81,9 +84,9 @@ const Card = ({ category, item, rowNumber, onShowMore }) => {
     dispatch(playerActions.toggleActivePlayer("billboard"));
   };
   const moreInfoHandler = () => {
+    onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
     setPlayerLoaded(false);
     setTrailerShow(false);
-    onShowMore(item.backdrop_path, item.id);
   };
   const isBannerShow = !playerLoaded || !trailerShow;
   const isPlayerShow = playerLoaded && withinSliderRange(cardRef.current);
@@ -161,6 +164,6 @@ const Card = ({ category, item, rowNumber, onShowMore }) => {
       </MediaInfo>
     </CardWrapper>
   );
-};
+});
 
 export default Card;

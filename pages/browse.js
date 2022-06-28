@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import BillboardHero from "../components/billboard/BillboardHero";
@@ -16,11 +16,13 @@ const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   const [detailsPoster, setDetailsPoster] = useState(null);
   const router = useRouter();
   const { setActivePlayer } = useContext(PlayerContext);
-  const onShowDetailsHandler = (bannerPath, id) => {
-    if (id) router.push(`/browse/?jbv=${id}`, undefined, { shallow: true });
-    setActivePlayer("previewPlayer");
-    setDetailsPoster(bannerPath);
-  };
+  const onShowDetailsHandler = useCallback((url, bannerPath, id) => {
+    // router.push(url, undefined, { shallow: true });
+    if (id) router.push(url, undefined, { shallow: true });
+    // if (id) router.push(`/browse/?jbv=${id}`, undefined, { shallow: true });
+    // setActivePlayer("previewPlayer");
+    // setDetailsPoster(bannerPath);
+  }, []);
   // useEffect(() => {
   //   console.log(router);
   //   if (router.asPath.includes("jbv")) setShowMoreInfo(true);
@@ -28,8 +30,8 @@ const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   return (
     <GenreContext.Provider value={genreContextValue}>
       <BillboardHero category={category} onShowMore={onShowDetailsHandler} />
-      <Lolomo category={category} onShowMore={onShowDetailsHandler} />
-      {router.asPath.includes("jbv") && (
+      <Lolomo onShowMore={onShowDetailsHandler} />
+      {router.query.jbv && (
         <Details
           category={category}
           genreContext={genreContextValue}

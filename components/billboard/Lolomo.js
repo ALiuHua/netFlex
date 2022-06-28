@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Slider from "./Slider";
 import { TMDB } from "../../data/dynamic/tmdbEndpoints";
-const Lolomo = ({ category, onShowMore }) => {
+const Lolomo = ({ category = "TVShows", onShowMore }) => {
   const [rowNumber, setRowNumber] = useState(4);
   useEffect(() => {
     const onScrollHandler = () => {
@@ -18,6 +18,7 @@ const Lolomo = ({ category, onShowMore }) => {
       removeEventListener("scroll", onScrollHandler);
     };
   }, []);
+  console.log("lolomo running");
   console.log(rowNumber);
   return (
     <SliderWrapper>

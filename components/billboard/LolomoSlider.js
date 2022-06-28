@@ -5,7 +5,7 @@ const ArrowButton = styled.button`
   width: 55px;
   height: 100%;
 `;
-const LolomoSlider = ({ item, children }) => {
+const LolomoSlider = React.memo(({ item, children }) => {
   const [carouselClicked, setCarouselClicked] = useState(false);
   const onArrowClickedHandler = () => {
     console.log("onArrowClickedHandler1 clicked");
@@ -99,6 +99,6 @@ const LolomoSlider = ({ item, children }) => {
       </Carousel>
     </CarouselWrapper>
   );
-};
+});
 
 export default LolomoSlider;

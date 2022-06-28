@@ -35,7 +35,7 @@ export const briefInfo = (infoText, num) => {
   return shortInfo;
 };
 
-const BillboardHero = ({ category, onShowMore }) => {
+const BillboardHero = React.memo(({ category, onShowMore }) => {
   const activePlayer = useSelector((state) => state.player.activePlayer);
   const dispatch = useDispatch();
 
@@ -70,12 +70,14 @@ const BillboardHero = ({ category, onShowMore }) => {
     setPlayCompleted(true);
     setShowPlayer(false);
   };
+  console.log("billboard running");
   useEffect(() => {
     console.log("billboard useEffect running 1");
     // setActivePlayer("billboard");
     // dispatch(playerActions.toggleActivePlayer());
     let timeoutId;
     const fetchBillboard = async () => {
+      console.log("fetched");
       try {
         const bannerData = await getBanner(category);
         setBanner(bannerData);
@@ -168,7 +170,7 @@ const BillboardHero = ({ category, onShowMore }) => {
       </BillboardDetail>
     </BillboardWrapper>
   );
-};
+});
 
 export default BillboardHero;
 export const CoverImage = ({ coverPath, size, children }) => {

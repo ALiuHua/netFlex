@@ -22,21 +22,14 @@ const Details = ({ category, genreContext, detailsPoster }) => {
   //   console.log(scrollbarWidth);
   const router = useRouter();
   const [item, setItem] = useState(null);
-  // const { trailer, setTrailer, showPlayer, setShowPlayer } =
-  //   useContext(CardContext);
-  // const trailer = useSelector((state) => state.trailer.trailer);
   const [trailer, setTrailer] = useState(null);
   const [cast, setCast] = useState(null);
-  // const { muted, toggleMuted, volume, activePlayer, setActivePlayer } =
-  //   useContext(PlayerContext);
   const [playerLoaded, setPlayerLoaded] = useState(false);
   const [trailerShow, setTrailerShow] = useState(false);
   const playHandler = () => {
-    // if (trailer) setTrailer(trailer);
     router.push(`/play/${item.id}`);
   };
   console.log("details running");
-  // console.log(trailer, item, showPlayer.isShown, cast);
   useEffect(() => {
     console.log("More info useEffect");
     const getPreviewDetail = async () => {
@@ -45,12 +38,10 @@ const Details = ({ category, genreContext, detailsPoster }) => {
         castData,
         trailer: detailsTrailer,
       } = await getDetails("TVShows", router.query.jbv);
-      // setTrailerShow({ isShown: true, playerID: null, row: null });
       setItem(detailsData);
       setTrailer(detailsTrailer);
       setCast(castData);
       setPlayerLoaded(true);
-      //   setTrailerShow({ isShown: true, playerID: null, row: null });
     };
     if (router.query.jbv) getPreviewDetail();
     return () => {
@@ -68,8 +59,9 @@ const Details = ({ category, genreContext, detailsPoster }) => {
         setTrailer(null);
         // setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
         // setActivePlayer("billboard");
-        dispatch(playerActions.toggleActivePlayer("billboard"));
+
         router.push("/browse", undefined, { shallow: true });
+        dispatch(playerActions.toggleActivePlayer("billboard"));
       }
     };
     document.body.addEventListener("click", clickOutsideHandler);

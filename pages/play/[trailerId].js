@@ -1,21 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Player from "../../components/billboard/Player";
-import { CardContext } from "../../store/cardContext";
 import { getTrailer } from "../../helpers/browseHelper";
 export const PlayerPage = () => {
   const router = useRouter();
   console.log(router);
-  const {
-    trailer,
-    setTrailer,
-    showPlayer,
-    setShowPlayer,
-    timer,
-    setTimer,
-    vPlayer,
-  } = useContext(CardContext);
+  const [trailer, setTrailer] = useState(null);
   useEffect(() => {
     const fetchCardData = async () => {
       try {
@@ -36,7 +27,7 @@ export const PlayerPage = () => {
       }
     };
     console.log(trailer);
-    if (!trailer) fetchCardData();
+    fetchCardData();
     return () => {
       setTrailer(null);
     };

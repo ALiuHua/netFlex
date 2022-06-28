@@ -1,6 +1,6 @@
 import React from "react";
-import Slider from "./Slider";
-import Card from "./Card";
+import Slider from "../Slider";
+import Card from "../Card";
 const SliderContent = ({ item }) => {
   return (
     <Slider item={item}>

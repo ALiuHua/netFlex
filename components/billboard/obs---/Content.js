@@ -1,7 +1,7 @@
 import React from "react";
 
-import BillboardHero from "./BillboardHero";
-import Lolomo from "../billboard/Lolomo";
+import BillboardHero from "../BillboardHero";
+import Lolomo from "../Lolomo";
 const Content = ({ category = "TVShows" }) => {
   console.log("content --");
   return (

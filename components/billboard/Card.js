@@ -1,10 +1,10 @@
 import React, { useState, useRef, useContext } from "react";
 import Image from "next/image";
-// import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { trailerActions } from "../../store/trailer-slice";
 import { playerActions } from "../../store/player-slice";
-// import { CardContext } from "../../store/cardContext";
+import { getTrailer, isNewRelease } from "../../helpers/browseHelper";
+import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
 import {
   MediaInfo,
   MiniTile,
@@ -18,13 +18,10 @@ import {
   DetailButton,
   GradientLayer,
 } from "./CardStyle";
-import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
-import Player from "./Player";
 import EmbedButtonBox from "./BillboardHeroStyle";
+import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
 
-import { getTrailer } from "../../helpers/browseHelper";
-import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
-import { isNewRelease } from "../../helpers/browseHelper";
+import Player from "./Player";
 import { GenreContext } from "../../pages/browse";
 
 const Card = ({ category, item, onShowMore }) => {
@@ -33,14 +30,13 @@ const Card = ({ category, item, onShowMore }) => {
   const [playerLoaded, setPlayerLoaded] = useState(false);
   const [trailerShow, setTrailerShow] = useState(false);
   const genreCtx = useContext(GenreContext);
-  // const { timer, setTimer, vPlayer } = useContext(CardContext);
   const [timer, setTimer] = useState(null);
   const vPlayer = useRef();
   const cardRef = useRef();
-  // const router = useRouter();
   const playHandler = () => {
-    router.push(`/play/${item.id}`);
-    // setActivePlayer("videoPlayer");
+    onShowMore(`/play/${item.id}`);
+    console.log("handler running");
+    // onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
   };
 
   const hoverHandler = (e) => {
@@ -61,13 +57,13 @@ const Card = ({ category, item, onShowMore }) => {
         }
       };
       fetchCardData();
+      dispatch(playerActions.toggleActivePlayer("card"));
     }, 500);
     setTimer(delayPlay);
   };
   const onTrailerStart = () => {
     // dispatch(trailerActions.setShowPlayer({ ...showPlayer, isShown: true }));
     setTrailerShow(true);
-    dispatch(playerActions.toggleActivePlayer("card"));
   };
   const mouseLeaveHandler = (e) => {
     // e.stopPropagation();
@@ -86,6 +82,7 @@ const Card = ({ category, item, onShowMore }) => {
   };
   const moreInfoHandler = () => {
     onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
+    dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
     setPlayerLoaded(false);
     setTrailerShow(false);
   };

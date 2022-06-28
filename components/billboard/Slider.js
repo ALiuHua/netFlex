@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getRow } from "../../helpers/browseHelper";
 import LolomoSlider from "./LolomoSlider";
-import CardContextProvider from "../../store/cardContext";
 import Card from "./Card";
+// eslint-disable-next-line react/display-name
 const Slider = React.memo(({ category, item, onShowMore }) => {
   const [contentItems, setContentItems] = useState([]);
   useEffect(() => {

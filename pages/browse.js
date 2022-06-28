@@ -1,17 +1,11 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useContext, useCallback, useMemo } from "react";
 import { useRouter } from "next/router";
-import styled from "styled-components";
+
 import BillboardHero from "../components/billboard/BillboardHero";
 import Lolomo from "../components/billboard/Lolomo";
 import Details from "../components/details/Details";
+
 import { getGenres } from "../helpers/browseHelper";
-import { CardContext } from "../store/cardContext";
 import { PlayerContext } from "../store/playerContext";
 export const GenreContext = React.createContext({
   movies: [],
@@ -24,13 +18,16 @@ const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   const [detailsPoster, setDetailsPoster] = useState(null);
   const router = useRouter();
   const { setActivePlayer } = useContext(PlayerContext);
-  const onShowDetailsHandler = useCallback((url, bannerPath, id) => {
-    // router.push(url, undefined, { shallow: true });
-    if (id) router.push(url, undefined, { shallow: true });
-    // if (id) router.push(`/browse/?jbv=${id}`, undefined, { shallow: true });
-    // setActivePlayer("previewPlayer");
-    // setDetailsPoster(bannerPath);
-  }, []);
+  const onShowDetailsHandler = useCallback(
+    (url, bannerPath = null, id = null) => {
+      // router.push(url, undefined, { shallow: true });
+      router.push(url, undefined, { shallow: true });
+      // if (id) router.push(`/browse/?jbv=${id}`, undefined, { shallow: true });
+      // setActivePlayer("previewPlayer");
+      setDetailsPoster(bannerPath);
+    },
+    []
+  );
   // useEffect(() => {
   //   console.log(router);
   //   if (router.asPath.includes("jbv")) setShowMoreInfo(true);

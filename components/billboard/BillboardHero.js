@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 // import Router from "next/router";
@@ -35,7 +35,7 @@ export const briefInfo = (infoText, num) => {
   return shortInfo;
 };
 
-const BillboardHero = React.memo(({ category, onShowMore }) => {
+const BillboardHero = ({ category, onShowMore }) => {
   const activePlayer = useSelector((state) => state.player.activePlayer);
   const dispatch = useDispatch();
 
@@ -45,27 +45,15 @@ const BillboardHero = React.memo(({ category, onShowMore }) => {
   const [showPlayer, setShowPlayer] = useState(false);
   const [playing, setPlaying] = useState(true); //only here
   // const [getDistracted,setGetDistracted] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
   const playHandler = () => {
     // setActivePlayer("videoPlayer");
-    router.push(`/play/${banner.id}`); //60574
+    onShowMore(`/play/${banner.id}`);
+    // router.push(`/play/${banner.id}`); //60574
   };
   const moreInfoHandler = () => {
-    onShowMore(banner.backdrop_path, banner.id);
-    // router.push({ pathname: "/browse", query: { jbv: banner.id } });
-    // setActivePlayer("previewPlayer");
-    // console.log("query test runnning");
-    // if (trailer) setPlayerTrailer(trailer);
+    onShowMore(`/browse?jbv=${banner.id}`, banner.backdrop_path, banner.id);
   };
-  // const moreInfoHandler = () => {
-  //   router.push({ pathname: "/browse", query: { jbv: banner.id } });
-  //   setActivePlayer("previewPlayer");
-  //   console.log("query test runnning");
-  //   if (trailer) setPlayerTrailer(trailer);
-
-  //   onShowMore(banner.backdrop_path,banner.id,trailer);
-  // };
-
   const onEndedHandler = () => {
     setPlayCompleted(true);
     setShowPlayer(false);
@@ -170,7 +158,7 @@ const BillboardHero = React.memo(({ category, onShowMore }) => {
       </BillboardDetail>
     </BillboardWrapper>
   );
-});
+};
 
 export default BillboardHero;
 export const CoverImage = ({ coverPath, size, children }) => {

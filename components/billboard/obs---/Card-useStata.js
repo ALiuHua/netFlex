@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
+import { CirclePlayButton, PlayIcon } from "../BillboardHeroStyle";
 import Image from "next/image";
 import {
   MediaInfo,
@@ -13,54 +13,46 @@ import {
   DetailIcon,
   DetailButton,
   GradientLayer,
-} from "./CardStyle";
-import { getTrailer } from "../../helpers/browseHelper";
-import Player from "./Player";
-import { PlayerContext } from "../../store/playerContext";
-import EmbedButtonBox from "./BillboardHeroStyle";
-import { isNewRelease } from "../../helpers/browseHelper";
-import { GenreContext } from "../../pages/browse";
-import { CardContext } from "../../store/cardContext";
+} from "../CardStyle";
+import { getTrailer } from "../../../helpers/browseHelper";
+import Player from "../Player";
+import { PlayerContext } from "../../../store/playerContext";
+import EmbedButtonBox from "../BillboardHeroStyle";
+import { isNewRelease } from "../../../helpers/browseHelper";
+import { GenreContext } from "../../../pages/browse";
+import { CardContext } from "../../../store/cardContext";
 import { useRouter } from "next/router";
-export const getItemGenre = (itemGenresArray, genreCtx, genreNum, category) => {
-  const ItemGenre = itemGenresArray.map((id, index) => {
-    if (index > genreNum - 1) return null;
-    return genreCtx[category].find((genre) => genre.id === id);
-  });
-  return ItemGenre;
-};
-const Card = ({ category, item, rowNumber, number, onShowMore }) => {
+import { withinSliderRange, getItemGenre } from "../../../helpers/dataHelper";
+const Card = ({ category, item, rowNumber, onShowMore }) => {
   const { muted, volume, activePlayer, setActivePlayer } =
     useContext(PlayerContext);
   const genreCtx = useContext(GenreContext);
-  const {
-    trailer,
-    setTrailer,
-    showPlayer,
-    setShowPlayer,
-    timer,
-    setTimer,
-    vPlayer,
-  } = useContext(CardContext);
+  // const {
+  //   trailer,
+  //   setTrailer,
+  //   showPlayer,
+  //   setShowPlayer,
+  //   timer,
+  //   setTimer,
+  //   vPlayer,
+  // } = useContext(CardContext);
+  const [trailer, setTrailer] = useState(null);
+  const [showPlayer, setShowPlayer] = useState({
+    isShown: false,
+    playerID: null,
+    row: null,
+  });
+  const [timer, setTimer] = useState(null);
+  const vPlayer = useRef();
   const cardRef = useRef();
-  // console.log(cardRef.current);
-  const withinSliderRange = (itemNode, itemsNum) => {
-    const ItemIndex = itemNode.closest(".slick-slide").dataset.index;
-    return ItemIndex + 1 < itemsNum;
-  };
-
   const router = useRouter();
   const playHandler = () => {
     if (trailer) setTrailer(trailer);
     router.push(`/play/${item.id}`);
     // setActivePlayer("videoPlayer");
   };
-  console.log(cardRef);
-  // const genresInfo = item?.genre_ids.map((id, index) => {
-  //   if (index > 2) return null;
-  //   return genreCtx[category].find((genre) => genre.id === id);
-  // });
-  const hoverHandler = () => {
+  console.log("card Running");
+  const hoverHandler = (e) => {
     const delayPlay = setTimeout(() => {
       const fetchCardData = async () => {
         try {
@@ -72,7 +64,7 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
             playerID: item.id,
             row: rowNumber,
           });
-          setActivePlayer("card");
+          setActivePlayer("card"); //why this still can triggler 187 rerenders
         } catch (err) {
           if (err.response) {
             console.log(err.response); // response status not at 200 range
@@ -91,10 +83,9 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   const mouseLeaveHandler = (e) => {
     // e.stopPropagation();
     clearTimeout(timer);
-    if (activePlayer === "previewPlayer") return;
     setTrailer(null);
     setShowPlayer({ isShown: false, playerID: null, row: null });
-    setActivePlayer("billboard");
+    // setActivePlayer("billboard");
   };
   const onEndedHandler = () => {
     setTrailer(null);
@@ -103,31 +94,24 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
   };
   const moreInfoHandler = () => {
     setShowPlayer({ isShown: false, playerID: null, row: null });
-    // setActivePlayer("previewPlayer");
-    // console.log("query test runnning");
-    // if (trailer) setTrailer(trailer);
-    // router.push({ pathname: "/browse", query: { jbv: item.id } });
-    console.log("showMore", trailer);
-    onShowMore(item.poster_path, item.id, trailer);
+    onShowMore(item.backdrop_path, item.id);
   };
-  // const moreInfoHandler = () => {
-  //   setShowPlayer({ isShown: false, playerID: null, row: null });
-  //   setActivePlayer("previewPlayer");
-  //   console.log("query test runnning");
-  //   if (trailer) setTrailer(trailer);
-  //   router.push({ pathname: "/browse", query: { jbv: item.id } });
-  //   console.log("showMore", trailer);
-  //   onShowMore();
-  // };
   const isBannerShow =
     !showPlayer.isShown ||
     showPlayer.playerID !== item.id ||
     showPlayer.row !== rowNumber;
+  // const isPlayerShow =
+  //   trailer && showPlayer.playerID === item.id && showPlayer.row === rowNumber;
   const isPlayerShow =
     trailer &&
     showPlayer.playerID === item.id &&
     showPlayer.row === rowNumber &&
-    withinSliderRange(cardRef.current, number);
+    withinSliderRange(cardRef.current);
+  trailer &&
+    showPlayer.playerID === item.id &&
+    showPlayer.row === rowNumber &&
+    withinSliderRange(cardRef.current) &&
+    console.log(isPlayerShow);
   return (
     <CardWrapper
       onMouseEnter={hoverHandler}
@@ -140,9 +124,6 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
             {isNewRelease(item) && <IsNew>New</IsNew>}
             <MiniTile>{item?.name.split(":")[0]}</MiniTile>
             <GradientLayer />
-            {/* <img
-              src={`https://image.tmdb.org/t/p/w342/${item?.backdrop_path}`}
-            /> */}
             <Image
               src={`https://image.tmdb.org/t/p/w342/${item?.backdrop_path}`}
               alt="to be continue"
@@ -163,11 +144,21 @@ const Card = ({ category, item, rowNumber, number, onShowMore }) => {
               playing={true}
               player="card"
             />
-            <EmbedButtonBox
-              showMuteToggling={showPlayer.isShown}
-              muted={muted}
-              scaled="0.35"
-            />
+            <div
+              style={{
+                position: "absolute",
+                zIndex: "5",
+                bottom: "0",
+                right: "0",
+                opacity: "0.5",
+              }}
+            >
+              <EmbedButtonBox
+                showMuteToggling={showPlayer.isShown}
+                muted={muted}
+                scaled="0.35"
+              />
+            </div>
           </>
         )}
       </MediaContent>

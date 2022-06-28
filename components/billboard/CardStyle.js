@@ -72,11 +72,15 @@ export const CardWrapper = styled.div`
   /* box-shadow: rgb(0 0 0 / 75%) 0px 3px 10px; */
   aspect-ratio: 16/9;
   box-shadow: 5px 5px 1.5rem rgba(20, 20, 20, 0.85);
+  transform-origin: ${({ location }) =>
+    location === "left"
+      ? "0% 85%"
+      : location === "right"
+      ? "100% 85%"
+      : "50% 85%"};
   transition: all 0.1s ease-in;
-  transform-origin: 50% 85%;
   &:hover {
     transform: scale(1.5);
-
     transition: all 0.2s ease-in;
     transition-delay: 0.5s; // this will only effect with hover state instead of both hover and unhover
   }

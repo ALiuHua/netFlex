@@ -6,7 +6,7 @@ import Lolomo from "../components/billboard/Lolomo";
 import Details from "../components/details/Details";
 
 import { getGenres } from "../helpers/browseHelper";
-import { PlayerContext } from "../store/playerContext";
+// import { PlayerContext } from "../store/playerContext";
 export const GenreContext = React.createContext({
   movies: [],
   TVShows: [],
@@ -17,7 +17,7 @@ const Browse = ({ category = "TVShows", movieGenres, tvGenres }) => {
   }, []);
   const [detailsPoster, setDetailsPoster] = useState(null);
   const router = useRouter();
-  const { setActivePlayer } = useContext(PlayerContext);
+  // const { setActivePlayer } = useContext(PlayerContext);
   const onShowDetailsHandler = useCallback(
     (url, bannerPath = null, id = null) => {
       // router.push(url, undefined, { shallow: true });

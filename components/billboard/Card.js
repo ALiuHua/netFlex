@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { trailerActions } from "../../store/trailer-slice";
@@ -23,6 +23,7 @@ import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
 
 import Player from "./Player";
 import { GenreContext } from "../../pages/browse";
+import { createModifiersFromModifierFlags } from "typescript";
 
 const Card = ({ category, item, onShowMore }) => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Card = ({ category, item, onShowMore }) => {
   const [timer, setTimer] = useState(null);
   const vPlayer = useRef();
   const cardRef = useRef();
+  const [location, setLocation] = useState("middle");
   const playHandler = () => {
     onShowMore(`/play/${item.id}`);
     console.log("handler running");
@@ -40,6 +42,10 @@ const Card = ({ category, item, onShowMore }) => {
   };
 
   const hoverHandler = (e) => {
+    const redc = e.target.getBoundingClientRect();
+    if (redc.x < redc.width) setLocation("left");
+    if (redc.x + 2 * redc.width > document.body.offsetWidth)
+      setLocation("right");
     const delayPlay = setTimeout(() => {
       const fetchCardData = async () => {
         try {
@@ -58,6 +64,11 @@ const Card = ({ category, item, onShowMore }) => {
       };
       fetchCardData();
       dispatch(playerActions.toggleActivePlayer("card"));
+      // const redc = e.target.getBoundingClientRect();
+      // if (redc.x < redc.width) setLocation("left");
+      // if (redc.x + 2 * redc.width > document.body.offsetWidth)
+      //   setLocation("right");
+      // console.log(redc, document.body.offsetWidth);
     }, 500);
     setTimer(delayPlay);
   };
@@ -90,12 +101,19 @@ const Card = ({ category, item, onShowMore }) => {
   // const isPlayerShow = playerLoaded;
   const isPlayerShow = playerLoaded && withinSliderRange(cardRef.current);
   // const isPlayerShow = playerLoaded
-
+  // useEffect(() => {
+  //   const redc = cardRef.getBoundingClientRect();
+  //   if (redc.x < redc.width) setLocation("left");
+  //   if (redc.x + 2 * redc.width > document.body.offsetWidth)
+  //     setLocation("right");
+  //   console.log(redc, document.body.offsetWidth);
+  // }, []);
   return (
     <CardWrapper
       onMouseEnter={hoverHandler}
       onMouseLeave={mouseLeaveHandler}
       ref={cardRef}
+      location={location}
     >
       <MediaContent className="mediaContent">
         {isBannerShow && (

@@ -29,8 +29,22 @@ const Header = ({ pathname }) => {
       removeEventListener("click", clickHandler);
     };
   }, []);
+  const [stickyHeader, setStickHeader] = useState(false);
+  useEffect(() => {
+    const scrollHandler = () => {
+      if (window.scrollY > 2) {
+        setStickHeader(true);
+      } else {
+        setStickHeader(false);
+      }
+    };
+    window.addEventListener("scroll", scrollHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
   return (
-    <HeaderWrapper>
+    <HeaderWrapper pathname={pathname} stickyHeader={stickyHeader}>
       <HeaderContent pathname={pathname}>
         <LogoWrapper pathname={pathname}>
           {pathname === "/" ? (

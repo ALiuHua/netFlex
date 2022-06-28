@@ -5,6 +5,29 @@ export const HeaderWrapper = styled.header`
   padding-top: 2rem;
   height: 10rem;
   position: relative;
+  transition: background-color 0.5s linear;
+
+  ${({ pathname }) =>
+    pathname === "/browse" &&
+    css`
+      height: 7rem;
+      padding-top: 0;
+      background-image: linear-gradient(
+        to bottom,
+        rgba(20, 20, 20, 0.8),
+        rgba(20, 20, 20, 0.05)
+      );
+      background-color: transparent;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+    `}
+  ${({ stickyHeader }) =>
+    stickyHeader &&
+    css`
+      background-color: #141414;
+    `}
   z-index: 10;
   /* background-color: transparent; */
 `;
@@ -15,6 +38,7 @@ export const HeaderContent = styled.div`
     pathname.startsWith("/browse") &&
     css`
       /* position: fixed; */
+      height: 100%;
     `}
   display: flex;
   align-items: center;

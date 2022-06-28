@@ -13,22 +13,29 @@ import Description from "./Description";
 import { getDetails } from "../../helpers/browseHelper";
 import Episodes from "./Episodes";
 import Recommendation from "./Recommondation";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { playerActions } from "../../store/player-slice";
 
 const Details = ({ category, genreContext, detailsPoster }) => {
   //   const scrollbarWidth = window.innerWidth - document.body.offsetWidth; //need to be at customizehook
   //   console.log(scrollbarWidth);
   const router = useRouter();
   const [item, setItem] = useState(null);
-  const { trailer, setTrailer, showPlayer, setShowPlayer } =
-    useContext(CardContext);
+  // const { trailer, setTrailer, showPlayer, setShowPlayer } =
+  //   useContext(CardContext);
+  // const trailer = useSelector((state) => state.trailer.trailer);
+  const [trailer, setTrailer] = useState(null);
   const [cast, setCast] = useState(null);
-  const { muted, toggleMuted, volume, activePlayer, setActivePlayer } =
-    useContext(PlayerContext);
+  // const { muted, toggleMuted, volume, activePlayer, setActivePlayer } =
+  //   useContext(PlayerContext);
+  const [playerLoaded, setPlayerLoaded] = useState(false);
+  const [trailerShow, setTrailerShow] = useState(false);
   const playHandler = () => {
-    if (trailer) setTrailer(trailer);
+    // if (trailer) setTrailer(trailer);
     router.push(`/play/${item.id}`);
   };
-  console.log(trailer, item, showPlayer.isShown, cast);
+  // console.log(trailer, item, showPlayer.isShown, cast);
   useEffect(() => {
     console.log("More info useEffect");
     const getPreviewDetail = async () => {
@@ -37,27 +44,30 @@ const Details = ({ category, genreContext, detailsPoster }) => {
         castData,
         trailer: detailsTrailer,
       } = await getDetails("TVShows", router.query.jbv);
-      // setShowPlayer({ isShown: true, playerID: null, row: null });
+      // setTrailerShow({ isShown: true, playerID: null, row: null });
       setItem(detailsData);
       setTrailer(detailsTrailer);
       setCast(castData);
-      //   setShowPlayer({ isShown: true, playerID: null, row: null });
+      setPlayerLoaded(true);
+      //   setTrailerShow({ isShown: true, playerID: null, row: null });
     };
     if (router.query.jbv) getPreviewDetail();
     return () => {
-      setShowPlayer({ isShown: false, playerID: null, row: null });
+      setTrailerShow(false);
     }; // for temporary
   }, [router.query.jbv]);
   const onEndedHandler = () => {
-    setShowPlayer({ isShown: false, playerID: null, row: null });
+    setTrailerShow(false);
   };
+const dispatch = useDispatch();
   const clickRef = useRef();
   useEffect(() => {
     const clickOutsideHandler = (e) => {
       if (clickRef.current && !clickRef.current.contains(e.target)) {
         setTrailer(null);
-        setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
-        setActivePlayer("billboard");
+        // setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
+        // setActivePlayer("billboard");
+        dispatch(playerActions.toggleActivePlayer("billboard"))
         router.push("/browse", undefined, { shallow: true });
       }
     };
@@ -72,21 +82,20 @@ const Details = ({ category, genreContext, detailsPoster }) => {
         <Content>
           <PreviewPlayer>
             <GradientLayerAdd />
-            {!showPlayer.isShown && (detailsPoster || item?.backdrop_path) && (
+            {!trailerShow && (detailsPoster || item?.backdrop_path) && (
               <CoverImage
                 coverPath={detailsPoster || item.backdrop_path}
                 size="w780"
               />
             )}
-            {trailer && (
+            {playerLoaded && (
               <Player
                 trailer={trailer}
-                muted={muted}
                 playing={true}
                 player="billboard"
                 onEnded={onEndedHandler}
                 onStart={() => {
-                  setShowPlayer({ isShown: true, playerID: null, row: null });
+                  setTrailerShow(true);
                 }}
               />
             )}

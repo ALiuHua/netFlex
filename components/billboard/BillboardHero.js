@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 // import Router from "next/router";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { getBanner, getTrailer } from "../../helpers/browseHelper";
 import Player from "./Player";
 import {
@@ -45,15 +46,20 @@ const BillboardHero = ({ category, onShowMore }) => {
   const [showPlayer, setShowPlayer] = useState(false);
   const [playing, setPlaying] = useState(true); //only here
   const vPlayer = useRef();
+  const router = useRouter();
   const playHandler = () => {
     onShowMore(`/play/${banner.id}`);
   };
   const moreInfoHandler = () => {
     onShowMore(`/browse?jbv=${banner.id}`, banner.backdrop_path, banner.id);
     console.log(vPlayer.current.getCurrentTime()); // to get the played time
-    dispatch(
-      playerActions.setPlayedTime(Math.floor(vPlayer?.current.getCurrentTime()))
-    );
+    console.log(vPlayer?.current);
+    if (trailer)
+      dispatch(
+        playerActions.setPlayedTime(
+          Math.floor(vPlayer?.current.getCurrentTime())
+        )
+      );
     dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
   };
   const onEndedHandler = () => {
@@ -63,6 +69,7 @@ const BillboardHero = ({ category, onShowMore }) => {
   console.log("billboard running");
   useEffect(() => {
     console.log("billboard useEffect running 1");
+
     let timeoutId;
     const fetchBillboard = async () => {
       console.log("fetched");
@@ -89,11 +96,18 @@ const BillboardHero = ({ category, onShowMore }) => {
   }, [category]);
   useEffect(() => {
     setPlaying(true);
+    // if (router.query.jbv)
+    //   dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
     if (activePlayer !== "billboard" && showPlayer) {
       setPlaying(false);
     }
     console.log("billboard useEffect running 2");
   }, [activePlayer, showPlayer]);
+  useEffect(() => {
+    if (router.query.jbv)
+      dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
+  }, [router.query.jbv]);
+
   const replayHandler = () => {
     setTrailer(trailer);
     setPlayCompleted(false);

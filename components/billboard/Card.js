@@ -105,14 +105,41 @@ const Card = ({ category, item, onShowMore }) => {
     setTrailerShow(false);
     dispatch(playerActions.toggleActivePlayer("billboard"));
   };
-  const moreInfoHandler = () => {
+  const moreInfoHandler = (e) => {
+    console.log(" moreInfoHandler running");
     onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
     dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
-    dispatch(
-      playerActions.setPlayedTime(Math.floor(vPlayer?.current.getCurrentTime()))
-    );
+    if (playerLoaded)
+      dispatch(
+        playerActions.setPlayedTime(
+          Math.floor(vPlayer?.current.getCurrentTime())
+        )
+      );
     setPlayerLoaded(false);
     setTrailerShow(false);
+    //
+    if (!e) e = window.event;
+    e.cancelBubble = true;
+    if (e.stopPropagation) e.stopPropagation();
+  };
+  // this is not working, 1. what kind of situation will trigger clashing. 2. why e.stop can work.
+  // 2. why media play not print out
+  const moreInfoHandler2 = (e) => {
+    console.log(" moreInfoHandler2 running");
+    onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
+    dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
+    if (playerLoaded)
+      dispatch(
+        playerActions.setPlayedTime(
+          Math.floor(vPlayer?.current.getCurrentTime())
+        )
+      );
+    setPlayerLoaded(false);
+    setTrailerShow(false);
+    //
+    // if (!e) e = window.event;
+    // e.cancelBubble = true;
+    // if (e.stopPropagation) e.stopPropagation();
   };
   const isBannerShow = !playerLoaded || !trailerShow;
   // const isPlayerShow = playerLoaded;
@@ -132,7 +159,13 @@ const Card = ({ category, item, onShowMore }) => {
       ref={cardRef}
       location={location}
     >
-      <MediaContent className="mediaContent">
+      <MediaContent
+        className="mediaContent"
+        onClick={() => {
+          console.log("clicked"), playHandler();
+          mouseLeaveHandler();
+        }}
+      >
         {isBannerShow && (
           <ImgWrapper>
             {isNewRelease(item) && <IsNew>New</IsNew>}
@@ -170,12 +203,28 @@ const Card = ({ category, item, onShowMore }) => {
           </>
         )}
       </MediaContent>
-      <MediaInfo className="mediaInfo">
+      <MediaInfo
+        className="mediaInfo"
+        onClick={() => {
+          console.log("media info out");
+          moreInfoHandler();
+        }}
+      >
         <ActionWrapper>
-          <CirclePlayButton onClick={playHandler}>
+          <CirclePlayButton
+            onClick={() => {
+              console.log("media play");
+              playHandler();
+            }}
+          >
             <PlayIcon />
           </CirclePlayButton>
-          <DetailButton onClick={moreInfoHandler}>
+          <DetailButton
+            onClick={() => {
+              console.log("media info");
+              moreInfoHandler();
+            }}
+          >
             <DetailIcon />
           </DetailButton>
         </ActionWrapper>

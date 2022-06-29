@@ -5,7 +5,7 @@ export const MediaInfo = styled.div`
   opacity: 0;
   transition: all 0.1s ease-in;
   font-size: 1rem;
-  /* padding: 0; */
+  cursor: pointer;
   * {
     display: none;
   }
@@ -54,6 +54,7 @@ export const MediaContent = styled.div`
   border-radius: 4px;
   overflow: hidden;
   background-color: #141414;
+  cursor: pointer;
 `;
 export const ImgWrapper = styled.div`
   position: relative;

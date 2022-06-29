@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Slider from "./Slider";
 import { TMDB } from "../../data/dynamic/tmdbEndpoints";
-const Lolomo = ({ category = "TVShows", onShowMore }) => {
+// eslint-disable-next-line react/display-name
+const Lolomo = React.memo(({ category = "TVShows", onShowMore }) => {
   const [rowNumber, setRowNumber] = useState(4);
   useEffect(() => {
     const onScrollHandler = () => {
@@ -35,7 +36,7 @@ const Lolomo = ({ category = "TVShows", onShowMore }) => {
       )}
     </SliderWrapper>
   );
-};
+});
 export default Lolomo;
 
 const SliderWrapper = styled.div`

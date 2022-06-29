@@ -23,7 +23,6 @@ import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
 
 import Player from "./Player";
 import { GenreContext } from "../../pages/browse";
-import { createModifiersFromModifierFlags } from "typescript";
 
 const Card = ({ category, item, onShowMore }) => {
   const dispatch = useDispatch();
@@ -35,6 +34,10 @@ const Card = ({ category, item, onShowMore }) => {
   const vPlayer = useRef();
   const cardRef = useRef();
   const [location, setLocation] = useState("middle");
+  const [mouseOnCard, setMouseOnCard] = useState(false);
+  const mouseOnCardRef = useRef();
+  mouseOnCardRef.current = mouseOnCard;
+
   const playHandler = () => {
     onShowMore(`/play/${item.id}`);
     console.log("handler running");
@@ -42,18 +45,22 @@ const Card = ({ category, item, onShowMore }) => {
   };
 
   const hoverHandler = (e) => {
-    const redc = e.target.getBoundingClientRect();
-    if (redc.x < redc.width) setLocation("left");
-    if (redc.x + 2 * redc.width > document.body.offsetWidth)
-      setLocation("right");
+    setMouseOnCard(true);
     const delayPlay = setTimeout(() => {
       const fetchCardData = async () => {
         try {
+          console.log("fetch card");
           const fetchedTrailer = await getTrailer(category, item.id);
           // "675353"
-          dispatch(trailerActions.setTrailer(fetchedTrailer));
-          setPlayerLoaded(true);
-          console.log("fetch card");
+          console.log(mouseOnCardRef.current);
+          if (mouseOnCardRef.current) {
+            console.log(mouseOnCardRef.current);
+            dispatch(trailerActions.setTrailer(fetchedTrailer));
+            console.log("fetch card2");
+            dispatch(playerActions.toggleActivePlayer("card"));
+            console.log("fetch card3");
+            setPlayerLoaded(true);
+          }
         } catch (err) {
           if (err.response) {
             console.log(err.response); // response status not at 200 range
@@ -63,13 +70,12 @@ const Card = ({ category, item, onShowMore }) => {
         }
       };
       fetchCardData();
-      dispatch(playerActions.toggleActivePlayer("card"));
-      // const redc = e.target.getBoundingClientRect();
-      // if (redc.x < redc.width) setLocation("left");
-      // if (redc.x + 2 * redc.width > document.body.offsetWidth)
-      //   setLocation("right");
-      // console.log(redc, document.body.offsetWidth);
-    }, 500);
+    }, 2000);
+    const redc = e.target.getBoundingClientRect();
+    if (redc.x < redc.width) setLocation("left");
+    if (redc.x + 2 * redc.width > document.body.offsetWidth)
+      setLocation("right");
+
     setTimer(delayPlay);
   };
   const onTrailerStart = () => {
@@ -78,9 +84,17 @@ const Card = ({ category, item, onShowMore }) => {
   };
   const mouseLeaveHandler = (e) => {
     // e.stopPropagation();
-    console.log("mouseLeave");
+    console.log("mouseLeave1");
+    setMouseOnCard(false);
     clearTimeout(timer);
+    console.log("mouseLeave2");
     dispatch(trailerActions.setTrailer(null));
+    console.log("mouseLeave3");
+    //need prevent the following code when clicked the more info button
+    //werid bug:  maybe because 当我们鼠标移开时，settimeout中的函数已经开始调用，但这个函数是异步的，
+    //即使后面取消了timer也无法阻止当异步fetch完成时fetched data被更新在redux中；
+    if (window.location.href.includes("jbv=")) return;
+    console.log("mouseLeave4");
     setPlayerLoaded(false);
     setTrailerShow(false);
     dispatch(playerActions.toggleActivePlayer("billboard"));
@@ -94,6 +108,9 @@ const Card = ({ category, item, onShowMore }) => {
   const moreInfoHandler = () => {
     onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
     dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
+    dispatch(
+      playerActions.setPlayedTime(Math.floor(vPlayer?.current.getCurrentTime()))
+    );
     setPlayerLoaded(false);
     setTrailerShow(false);
   };

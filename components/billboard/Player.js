@@ -16,7 +16,7 @@ const Player = React.forwardRef((props, ref) => {
   } = props;
   // const player = useRef();
   const trailer = useSelector((state) => state.trailer.trailer);
-
+  // const seekTime = useSelector((state) => state.player.playedTime);
   let realTrailer = propsTrailer;
   if (!propsTrailer) realTrailer = trailer;
   const muted = useSelector((state) => state.player.mute);

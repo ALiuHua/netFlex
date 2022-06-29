@@ -4,6 +4,7 @@ const playerSlice = createSlice({
   initialState: {
     mute: true,
     activePlayer: "billboard",
+    playedTime: 0,
   },
   reducers: {
     toggleMuted(state) {
@@ -11,6 +12,9 @@ const playerSlice = createSlice({
     },
     toggleActivePlayer(state, action) {
       state.activePlayer = action.payload;
+    },
+    setPlayedTime(state,action) {
+      state.playedTime = action.payload;
     },
   },
 });

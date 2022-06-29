@@ -1,20 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { getSeasons } from "../../helpers/browseHelper";
 import Image from "next/image";
 import { briefInfo } from "../billboard/BillboardHero";
+import { DetailButton, DetailIcon } from "../billboard/CardStyle";
 const Episodes = ({ details }) => {
   console.log("Episode", details);
-  const [seasonData, setSeasonData] = useState(null);
+  const [seasonData, setSeasonData] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState(1);
+  const [showMore, setShowMore] = useState(false);
   useEffect(() => {
     const fetchSeasons = async () => {
       const seasons = await getSeasons(details?.id, selectedSeason);
+
       setSeasonData(seasons);
     };
     fetchSeasons();
   }, [details?.id, selectedSeason]);
-
+  const episodeRef = useRef();
   const seasonSelectedHandler = (e) => {
     const selectedItem = details?.seasons.find(
       (data) => data.name === e.target.value
@@ -23,7 +26,7 @@ const Episodes = ({ details }) => {
   };
   return (
     <EpisodesWrapper>
-      <HeadInfo>
+      <HeadInfo ref={episodeRef}>
         {console.log(selectedSeason)}
         {console.log(seasonData)}
         <span>Episodes</span>
@@ -38,35 +41,51 @@ const Episodes = ({ details }) => {
       {seasonData &&
         seasonData.map((data, index) => {
           return (
-            <EpisodeContent key={index}>
-              <span>{data.episode_number}</span>
-              <Poster>
-                <div>
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w185${
-                      data.still_path || details.backdrop_path
-                    }`}
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </div>
-              </Poster>
-              <Description>
-                <div>
-                  <SubTitle>{data.name}</SubTitle>
-                  {data?.runtime !== 0 && data?.runtime && (
-                    <Duration>{data.runtime}m</Duration>
-                  )}
-                </div>
-                <p>
-                  {briefInfo(data.overview, 20) ||
-                    `No available content yet, will released at ${data.air_date}`}
-                </p>
-              </Description>
-            </EpisodeContent>
+            (showMore || index < 10) && (
+              <EpisodeContent key={index}>
+                <span>{data.episode_number}</span>
+                <Poster>
+                  <div>
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w185${
+                        data.still_path || details.backdrop_path
+                      }`}
+                      alt=""
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </div>
+                </Poster>
+                <Description>
+                  <div>
+                    <SubTitle>{data.name}</SubTitle>
+                    {data?.runtime !== 0 && data?.runtime && (
+                      <Duration>{data.runtime}m</Duration>
+                    )}
+                  </div>
+                  <p>
+                    {briefInfo(data.overview, 20) ||
+                      `No available content yet, will released at ${data.air_date}`}
+                  </p>
+                </Description>
+              </EpisodeContent>
+            )
           );
         })}
+      {seasonData.length > 10 && (
+        <ButtonWrapper showMore={showMore}>
+          <DetailButton
+            onClick={() => {
+              setShowMore((prev) => !prev);
+
+              if (showMore)
+                episodeRef.current.scrollIntoView({ behaviour: "smooth" });
+            }}
+          >
+            <DetailIcon />
+          </DetailButton>
+        </ButtonWrapper>
+      )}
     </EpisodesWrapper>
   );
 };
@@ -158,4 +177,31 @@ const SubTitle = styled.span`
 `;
 const Duration = styled.span`
   font-size: 1em;
+`;
+export const ButtonWrapper = styled.div`
+  position: relative;
+  /* border-top: 2px solid #aaa; */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-top: 2px solid #555;
+    z-index: 1;
+  }
+
+  button {
+    position: absolute;
+    left: 50%;
+    transform: scale(1.5) translate(-50%, -50%) rotate(0deg);
+    transform-origin: 0% 0%;
+    color: #aaa;
+    z-index: 2;
+    ${({ showMore }) =>
+      showMore &&
+      css`
+        transform: scale(1.5) translate(50%, 50%) rotate(180deg);
+      `};
+  }
 `;

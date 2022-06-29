@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import playerSlice from "../../store/player-slice";
 import { useSelector, useDispatch } from "react-redux";
 import { playerActions } from "../../store/player-slice";
 const EmbedButtonBox = ({
@@ -10,7 +9,6 @@ const EmbedButtonBox = ({
 }) => {
   const muted = useSelector((state) => state.player.mute);
   const dispatch = useDispatch();
-
   return (
     <ButtonBox scaled={scaled}>
       {showMuteToggling && (

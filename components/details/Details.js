@@ -53,6 +53,8 @@ const Details = ({ category, genreContext, detailsPoster }) => {
   };
   const dispatch = useDispatch();
   const clickRef = useRef();
+  const vPlayer = useRef();
+  const seetToTime = useSelector((state) => state.player.playedTime);
   useEffect(() => {
     const clickOutsideHandler = (e) => {
       if (clickRef.current && !clickRef.current.contains(e.target)) {
@@ -83,11 +85,13 @@ const Details = ({ category, genreContext, detailsPoster }) => {
             )}
             {playerLoaded && (
               <Player
+                ref={vPlayer}
                 trailer={trailer}
                 playing={true}
                 player="billboard"
                 onEnded={onEndedHandler}
                 onStart={() => {
+                  vPlayer.current.seekTo(seetToTime);
                   setTrailerShow(true);
                 }}
               />

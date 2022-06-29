@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 // import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -21,6 +21,7 @@ import {
   InfoIcon,
 } from "./BillboardHeroStyle";
 import EmbedButtonBox from "./BillboardHeroStyle";
+import { playerActions } from "../../store/player-slice";
 export const briefInfo = (infoText, num) => {
   let shortInfo;
   if (infoText) {
@@ -38,21 +39,22 @@ export const briefInfo = (infoText, num) => {
 const BillboardHero = ({ category, onShowMore }) => {
   const activePlayer = useSelector((state) => state.player.activePlayer);
   const dispatch = useDispatch();
-
   const [banner, setBanner] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [playCompleted, setPlayCompleted] = useState(false);
   const [showPlayer, setShowPlayer] = useState(false);
   const [playing, setPlaying] = useState(true); //only here
-  // const [getDistracted,setGetDistracted] = useState(false);
-  // const router = useRouter();
+  const vPlayer = useRef();
   const playHandler = () => {
-    // setActivePlayer("videoPlayer");
     onShowMore(`/play/${banner.id}`);
-    // router.push(`/play/${banner.id}`); //60574
   };
   const moreInfoHandler = () => {
     onShowMore(`/browse?jbv=${banner.id}`, banner.backdrop_path, banner.id);
+    console.log(vPlayer.current.getCurrentTime()); // to get the played time
+    dispatch(
+      playerActions.setPlayedTime(Math.floor(vPlayer?.current.getCurrentTime()))
+    );
+    dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
   };
   const onEndedHandler = () => {
     setPlayCompleted(true);
@@ -61,8 +63,6 @@ const BillboardHero = ({ category, onShowMore }) => {
   console.log("billboard running");
   useEffect(() => {
     console.log("billboard useEffect running 1");
-    // setActivePlayer("billboard");
-    // dispatch(playerActions.toggleActivePlayer());
     let timeoutId;
     const fetchBillboard = async () => {
       console.log("fetched");
@@ -72,7 +72,6 @@ const BillboardHero = ({ category, onShowMore }) => {
         const fetchedTrailer = await getTrailer(category, bannerData.id);
         timeoutId = setTimeout(() => {
           setTrailer(fetchedTrailer);
-          // setShowPlayer(true);
           setPlayCompleted(false);
         }, 1000);
       } catch (err) {
@@ -94,27 +93,23 @@ const BillboardHero = ({ category, onShowMore }) => {
       setPlaying(false);
     }
     console.log("billboard useEffect running 2");
-    // if (activePlayer !== "billboard" && showPlayer) {
-    //   setBillboard(false);
-    // }
   }, [activePlayer, showPlayer]);
   const replayHandler = () => {
     setTrailer(trailer);
     setPlayCompleted(false);
     console.log(trailer, showPlayer);
-    // setShowPlayer(true);
   };
   return (
     <BillboardWrapper>
       <BillboardContent>
         <GradientLayerAdd />
-        {/* {showPlayer && trailer && ( */}
         {!playCompleted && trailer && (
           <Player
             trailer={trailer}
             onEnded={onEndedHandler}
             playing={playing}
             player="billboard"
+            ref={vPlayer}
             onStart={() => {
               if (trailer) {
                 setShowPlayer(true);

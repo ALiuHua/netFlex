@@ -51,8 +51,9 @@ export const MediaContent = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 16/9;
-  border-radius: 2px;
+  border-radius: 4px;
   overflow: hidden;
+  background-color: #141414;
 `;
 export const ImgWrapper = styled.div`
   position: relative;
@@ -71,33 +72,36 @@ export const CardWrapper = styled.div`
   position: relative;
   /* box-shadow: rgb(0 0 0 / 75%) 0px 3px 10px; */
   aspect-ratio: 16/9;
-  box-shadow: 5px 5px 1.5rem rgba(20, 20, 20, 0.85);
+
+  box-shadow: 2px 2px 1rem rgba(20, 20, 20, 0.85);
   transform-origin: ${({ location }) =>
     location === "left"
       ? "0% 85%"
       : location === "right"
       ? "100% 85%"
       : "50% 85%"};
-  transition: all 0.1s ease-in;
+  transition: all 0.3s ease-in;
   &:hover {
     transform: scale(1.5);
-    transition: all 0.2s ease-in;
+    /* transition: all 0.3s ease-in; */
     transition-delay: 0.5s; // this will only effect with hover state instead of both hover and unhover
   }
 
   &:hover .mediaContent {
-    transition-delay: 0.5s; //???
-    border-radius: 2px 2px 0 0;
+    /* transition-delay: 0.5s; //??? */
+    border-radius: 4px 4px 0 0;
   }
   &:hover .mediaInfo {
     opacity: 1;
-    height: 80px;
-    transition: opacity 0.2s ease-in;
+    height: 70px;
+    transition: opacity 0.3s ease-in;
     transition-delay: 0.5s;
     padding: 6px 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    border-radius: 0 0 4px 4px;
+
     * {
       display: block;
     }

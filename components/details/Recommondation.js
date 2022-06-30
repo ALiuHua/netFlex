@@ -45,14 +45,21 @@ const Recommendation = ({ category, details }) => {
                     </Poster>
                     <Description>
                       <div>
-                        <SubTitle>{data.name}</SubTitle>
+                        <SubTitle>{data.title || data.name}</SubTitle>
                         <span>
-                          {new Date(data.first_air_date).getFullYear()}
+                          {new Date(
+                            data.first_air_date || data.release_date
+                          ).getFullYear() || ""}
                         </span>
                       </div>
                       <p>
                         {briefInfo(data.overview, 25) ||
-                          `No available content yet, will released at ${data.first_air_date}`}
+                          `No available content yet. ${
+                            (data.first_air_date || data.release_date) &&
+                            `This will be released at ${
+                              data.first_air_date || data.release_date
+                            }`
+                          }`}
                       </p>
                     </Description>
                   </EpisodeContent>

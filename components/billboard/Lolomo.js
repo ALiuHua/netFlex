@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Slider from "./Slider";
 import { TMDB } from "../../data/dynamic/tmdbEndpoints";
 // eslint-disable-next-line react/display-name
-const Lolomo = React.memo(({ category = "TVShows", onShowMore }) => {
+const Lolomo = React.memo(({ category, onShowMore }) => {
   const [rowNumber, setRowNumber] = useState(4);
   useEffect(() => {
     const onScrollHandler = () => {

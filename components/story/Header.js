@@ -19,6 +19,7 @@ import {
 const Header = ({ pathname }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const searchRef = useRef();
+  const [category, setCategory] = useState("movies");
   useEffect(() => {
     const clickHandler = (e) => {
       if (pathname !== "/browse") return;
@@ -61,13 +62,13 @@ const Header = ({ pathname }) => {
               <MenuList>
                 <ul>
                   <li>
-                    <StyledLink href="#">Home</StyledLink>
+                    <StyledLink href="/browse">Movies</StyledLink>
                   </li>
                   <li>
-                    <StyledLink href="#">Series</StyledLink>
+                    <StyledLink href="/browse">TV Shows</StyledLink>
                   </li>
                   <li>
-                    <StyledLink href="#">Films</StyledLink>
+                    <StyledLink href="/play/780609">Films</StyledLink>
                   </li>
                   <li>
                     <StyledLink href="#">New & Popular</StyledLink>

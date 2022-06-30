@@ -38,6 +38,7 @@ export const briefInfo = (infoText, num) => {
 };
 
 const BillboardHero = ({ category, onShowMore }) => {
+  //category ==movies/Tvshows
   const activePlayer = useSelector((state) => state.player.activePlayer);
   const dispatch = useDispatch();
   const [banner, setBanner] = useState(null);
@@ -52,7 +53,7 @@ const BillboardHero = ({ category, onShowMore }) => {
   };
   const moreInfoHandler = () => {
     onShowMore(`/browse?jbv=${banner.id}`, banner.backdrop_path, banner.id);
-    if (trailer)
+    if (showPlayer)
       dispatch(
         playerActions.setPlayedTime(
           Math.floor(vPlayer?.current.getCurrentTime())

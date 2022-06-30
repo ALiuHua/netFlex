@@ -42,7 +42,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
         details: detailsData,
         castData,
         trailer: detailsTrailer,
-      } = await getDetails("TVShows", router.query.jbv);
+      } = await getDetails(category, router.query.jbv);
       setItem(detailsData);
       setTrailer(detailsTrailer);
       setCast(castData);
@@ -102,10 +102,15 @@ const Details = ({ category, genreContext, detailsPoster }) => {
                 playing={true}
                 player="billboard"
                 onEnded={onEndedHandler}
-                onStart={() => {
+                onReady={() => {
+                  // use onReady to avoid the very first skip which bringed up by seetTo
                   if (seetToTime > 0) vPlayer.current.seekTo(seetToTime);
                   setTrailerShow(true);
                 }}
+                // onStart={() => {
+                //   if (seetToTime > 0) vPlayer.current.seekTo(seetToTime);
+                //   setTrailerShow(true);
+                // }}
               />
             )}
           </PreviewPlayer>
@@ -152,7 +157,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
             genreContext={genreContext}
             cast={cast}
           />
-          {item && <Episodes details={item} />}
+          {item && category === "TVShows" && <Episodes details={item} />}
           {item && <Recommendation details={item} category={category} />}
         </RelatedInfoContainer>
       </ContentWrapper>

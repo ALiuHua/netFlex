@@ -17,7 +17,7 @@ export const TMDB = {
         endpoint: `/discover/tv?api_key=${API_KEY}&with_genres=10768&with_watch_providers=8&watch_region=AU`,
       },
       {
-        title: "Hotflix Original",
+        title: "Netflex Original",
         endpoint: `/discover/tv?api_key=${API_KEY}&with_networks=213&with_watch_providers=8&watch_region=AU`,
         size: "large",
       },
@@ -74,6 +74,7 @@ export const TMDB = {
       fetchCredits: `/tv/_id/aggregate_credits?api_key=${API_KEY}`,
       fetchRecommendations: `/tv/_id/recommendations?api_key=${API_KEY}`,
       fetchTVSeason: `/tv/_id/season/_seasonNumber?api_key=${API_KEY}`,
+      fetchSimilar: `/tv/_id/similar?api_key=${API_KEY}&language=en-US&page=1`,
       // searchTV: `/search/tv?api_key=${API_KEY}&query=_query`,
       // fetchTVGenres: `genre/tv/list?api_key=${API_KEY}`,
       // fetchTVTrailers: `/tv/_id/videos?api_key=${API_KEY}`,
@@ -98,7 +99,7 @@ export const TMDB = {
         endpoint: `/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1&region=AU`,
       },
       {
-        title: "Hotflix Original",
+        title: "NetFlex Original",
         endpoint: `/discover/movie?api_key=${API_KEY}&with_networks=213&with_watch_providers=8&watch_region=AU`,
         size: "large",
       },
@@ -178,6 +179,7 @@ export const TMDB = {
       fetchDetails: `/movie/_id?api_key=${API_KEY}`,
       fetchRecommendations: `/movie/_id/recommendations?api_key=${API_KEY}`,
       fetchCredits: `/movie/_id/credits?api_key=${API_KEY}`,
+      fetchSimilar: `/movie/_id/similar?api_key=${API_KEY}&language=en-US&page=1`,
       // searchMovie: `/search/movie?api_key=${API_KEY}&query=_query`,
       // fetchMovieGenres: `genre/movie/list?api_key=${API_KEY}`,
       // fetchMovieTrailers: `/movie/_id/videos?api_key=${API_KEY}`,

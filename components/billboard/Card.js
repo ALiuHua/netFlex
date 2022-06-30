@@ -169,7 +169,9 @@ const Card = ({ category, item, onShowMore }) => {
         {isBannerShow && (
           <ImgWrapper>
             {isNewRelease(item) && <IsNew>New</IsNew>}
-            <MiniTile>{item?.name.split(":")[0]}</MiniTile>
+            <MiniTile>
+              {item?.title?.split(":")[0] || item?.name?.split(":")[0]}
+            </MiniTile>
             <GradientLayer />
             <Image
               src={`https://image.tmdb.org/t/p/w342/${item?.backdrop_path}`}

@@ -10,7 +10,14 @@ const Description = ({ category, details, cast }) => {
           <DescriptionWrapper>
             <h1>{details?.original_name && details?.name}</h1>
             <div>
-              <span>2016</span>
+              {console.log(details)}
+              <span>
+                {new Date(
+                  details.release_date ||
+                    details.air_date ||
+                    details.first_air_date
+                ).getFullYear()}
+              </span>
               <span>{details?.number_of_seasons} Seasons</span>
               <Rate rate={details?.vote_average}>
                 Rate: {details?.vote_average}

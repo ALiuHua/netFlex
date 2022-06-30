@@ -131,7 +131,7 @@ export const isNewRelease = (item) => {
   const releaseDate = new Date(item?.release_date || item?.first_air_date);
   const currentDate = new Date();
   const gap = currentDate.getTime() - releaseDate.getTime();
-  return Math.ceil(gap / (1000 * 3600 * 24)) <= 100;
+  return Math.ceil(gap / (1000 * 3600 * 24)) <= 30;
 };
 export const getSeasons = async (id, seasonNum) => {
   const {
@@ -146,11 +146,19 @@ export const getSeasons = async (id, seasonNum) => {
 };
 
 export const getRecommendation = async (category, id) => {
+  const contentCheck = (item) => item.overview !== "" && item.backdrop_path;
+  let filteredResults;
   const {
     data: { results },
   } = await tmdb.get(
     TMDB[category].helpers.fetchRecommendations.replace("_id", id)
   );
-  console.log(results);
-  return results;
+  filteredResults = results.filter(contentCheck);
+  if (filteredResults.length > 3) return filteredResults;
+  const {
+    data: { results: similarResults },
+  } = await tmdb.get(TMDB[category].helpers.fetchSimilar.replace("_id", id));
+  filteredResults = [...results, ...similarResults].filter(contentCheck);
+  console.log(filteredResults);
+  return filteredResults;
 };

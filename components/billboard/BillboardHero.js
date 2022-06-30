@@ -43,7 +43,7 @@ const BillboardHero = ({ category, onShowMore }) => {
   const [banner, setBanner] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [playCompleted, setPlayCompleted] = useState(false);
-  const [showPlayer, setShowPlayer] = useState(false);
+  const [showPlayer, setShowPlayer] = useState(false); // this playce has a bug
   const [playing, setPlaying] = useState(true); //only here
   const vPlayer = useRef();
   const router = useRouter();
@@ -52,8 +52,6 @@ const BillboardHero = ({ category, onShowMore }) => {
   };
   const moreInfoHandler = () => {
     onShowMore(`/browse?jbv=${banner.id}`, banner.backdrop_path, banner.id);
-    console.log(vPlayer.current.getCurrentTime()); // to get the played time
-    console.log(vPlayer?.current);
     if (trailer)
       dispatch(
         playerActions.setPlayedTime(

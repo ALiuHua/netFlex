@@ -6,7 +6,11 @@ import Player from "../billboard/Player";
 // import { CardContext } from "../../store/cardContext";
 // import { PlayerContext } from "../../store/playerContext";
 import { ActionWrapper } from "../billboard/CardStyle";
-import { CirclePlayButton, PlayIcon } from "../Billboard/BillboardHeroStyle";
+import {
+  CirclePlayButton,
+  PlayIcon,
+  StyledCloseButton,
+} from "../Billboard/BillboardHeroStyle";
 import EmbedButtonBox from "../billboard/BillboardHeroStyle";
 import { GradientLayerAdd } from "../billboard/BillboardHeroStyle";
 import Description from "./Description";
@@ -33,6 +37,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
   useEffect(() => {
     console.log("More info useEffect");
     const getPreviewDetail = async () => {
+      console.log("get detail data============================");
       const {
         details: detailsData,
         castData,
@@ -64,6 +69,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
 
         router.push("/browse", undefined, { shallow: true });
         dispatch(playerActions.toggleActivePlayer("billboard"));
+        dispatch(playerActions.setPlayedTime(0));
       }
     };
     document.body.addEventListener("click", clickOutsideHandler);
@@ -74,7 +80,13 @@ const Details = ({ category, genreContext, detailsPoster }) => {
   return (
     <MoreInfoWrapper>
       <ContentWrapper ref={clickRef}>
-        <Content>
+        <Content
+          onClick={() => {
+            console.log("close button clicked 1");
+            playHandler();
+            //此处为事件委托。 {//单独部件如mute button此处没有发现bublling  需要证实？}
+          }}
+        >
           <PreviewPlayer>
             <GradientLayerAdd />
             {!trailerShow && (detailsPoster || item?.backdrop_path) && (
@@ -91,7 +103,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
                 player="billboard"
                 onEnded={onEndedHandler}
                 onStart={() => {
-                  vPlayer.current.seekTo(seetToTime);
+                  if (seetToTime > 0) vPlayer.current.seekTo(seetToTime);
                   setTrailerShow(true);
                 }}
               />
@@ -100,7 +112,13 @@ const Details = ({ category, genreContext, detailsPoster }) => {
 
           <ActionsBox>
             <ActionWrapper>
-              <CirclePlayButton onClick={playHandler}>
+              <CirclePlayButton
+                onClick={() => {
+                  console.log("play clicked");
+                  // playHandler();
+                  // don‘t need this with 事件委托
+                }}
+              >
                 <PlayIcon />
               </CirclePlayButton>
             </ActionWrapper>
@@ -116,6 +134,16 @@ const Details = ({ category, genreContext, detailsPoster }) => {
               <EmbedButtonBox showMuteToggling={true} scaled={0.45} />
             </div>
           </ActionsBox>
+          <StyledCloseButton
+            onClick={(e) => {
+              // this part is kind of weird why we need onClick on CloseButton as props
+              setTrailer(null);
+              router.push("/browse", undefined, { shallow: true });
+              dispatch(playerActions.toggleActivePlayer("billboard"));
+              dispatch(playerActions.setPlayedTime(0));
+              e.stopPropagation();
+            }}
+          />
         </Content>
         <RelatedInfoContainer>
           <Description
@@ -164,7 +192,7 @@ const ContentWrapper = styled.div`
 `;
 const Content = styled.div`
   position: relative;
-
+  cursor: pointer;
   width: 100%;
 `;
 const RelatedInfoContainer = styled.div`

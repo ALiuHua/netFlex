@@ -298,3 +298,50 @@ export const ReplayIcon = () => (
     ></path>
   </svg>
 );
+export const CloseIcon = () => {
+  return (
+    <svg viewBox="0 0 512 512">
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="32"
+        d="M368 368L144 144M368 144L144 368"
+      />
+    </svg>
+  );
+};
+export const CloseButton = ({ className, onClick }) => {
+  return (
+    <button className={className} onClick={onClick}>
+      <CloseIcon />
+    </button>
+    // why i need to pass into this onclick otherwise i can not triggler it on the StyledCloseButton in details component
+  );
+};
+export const StyledCloseButton = styled(CloseButton)`
+  position: absolute;
+  z-index: 200;
+  top: 20px;
+  right: 20px;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: #181818;
+  /* cursor: pointer; */
+`;
+// export const CloseIcon = () => {
+//   <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+//     <title>Close</title>
+//     <path
+//       fill="none"
+//       stroke="currentColor"
+//       stroke-linecap="round"
+//       stroke-linejoin="round"
+//       stroke-width="32"
+//       d="M368 368L144 144M368 144L144 368"
+//     />
+//   </svg>;
+// };

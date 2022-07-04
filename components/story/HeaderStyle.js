@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
+import { CloseButton } from "../billboard/BillboardHeroStyle";
 export const HeaderWrapper = styled.header`
   max-width: 192rem;
   padding-top: 2rem;
@@ -8,7 +9,7 @@ export const HeaderWrapper = styled.header`
   transition: background-color 0.5s linear;
 
   ${({ pathname }) =>
-    pathname === "/browse" &&
+    (pathname.includes("/browse") || pathname.includes("/search")) &&
     css`
       height: 7rem;
       padding-top: 0;
@@ -35,7 +36,7 @@ export const HeaderContent = styled.div`
   margin: 0 5.6rem;
   /* position: fixed; */
   ${({ pathname }) =>
-    pathname.startsWith("/browse") &&
+    (pathname.includes("/browse") || pathname.includes("/search")) &&
     css`
       /* position: fixed; */
       height: 100%;
@@ -51,7 +52,7 @@ export const HeaderContent = styled.div`
     //in this case we can get access to the pathname. but we can't get
     //access to this variant in LogoWrapper if we dont't pass in.
     ${({ pathname }) =>
-      pathname.startsWith("/browse") &&
+      (pathname.includes("/browse") || pathname.includes("/search")) &&
       css`
         flex-grow: 1;
       `}
@@ -66,7 +67,7 @@ export const LogoWrapper = styled.div`
   align-items: center;
   /* margin-right: auto; */
   ${({ pathname }) =>
-    pathname.startsWith("/browse") &&
+    (pathname.includes("/browse") || pathname.includes("/search")) &&
     css`
       height: 25px;
       width: 92.5px;
@@ -220,4 +221,11 @@ export const SearchBox = styled.div`
       background-color: rgba(0, 0, 0, 0.2);
       background-clip: border-box;
     `}
+`;
+export const StyledCloseButton = styled(CloseButton)`
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-100%, -50%);
 `;

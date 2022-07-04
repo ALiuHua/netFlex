@@ -52,7 +52,11 @@ const BillboardHero = ({ category, onShowMore }) => {
     onShowMore(`/play/${banner.id}`);
   };
   const moreInfoHandler = () => {
-    onShowMore(`/browse?jbv=${banner.id}`, banner.backdrop_path, banner.id);
+    onShowMore(
+      `/browse?jbv=${banner.id}`,
+      banner.backdrop_path,
+      banner.category
+    );
     if (showPlayer)
       dispatch(
         playerActions.setPlayedTime(

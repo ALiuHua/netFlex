@@ -162,3 +162,24 @@ export const getRecommendation = async (category, id) => {
   console.log(filteredResults);
   return filteredResults;
 };
+export const getSearchResult = async (query) => {
+  const {
+    data: { results: tvResults },
+  } = await tmdb.get(TMDB.TVShows.helpers.search.replace("_query", query));
+  const tagedTvResults = tvResults
+    .filter((item) => item.overview !== "" && item.backdrop_path)
+    .map((item) => {
+      return { ...item, category: "TVShows" };
+    });
+  const {
+    data: { results: movieResults },
+  } = await tmdb.get(TMDB.movies.helpers.search.replace("_query", query));
+  const tagedMoviesResults = movieResults
+    .filter((item) => item.overview !== "" && item.backdrop_path)
+    .map((item) => {
+      return { ...item, category: "movies" };
+    });
+  const tagedResults = [...tagedMoviesResults, ...tagedTvResults];
+
+  return tagedResults;
+};

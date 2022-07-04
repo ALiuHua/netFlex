@@ -19,7 +19,7 @@ const Browse = ({ category = "movies", movieGenres, tvGenres }) => {
   const router = useRouter();
   // const { setActivePlayer } = useContext(PlayerContext);
   const onShowDetailsHandler = useCallback(
-    (url, bannerPath = null, id = null) => {
+    (url, bannerPath = null, itemCategory = null) => {
       // router.push(url, undefined, { shallow: true });
       router.push(url, undefined, { shallow: true });
       // if (id) router.push(`/browse/?jbv=${id}`, undefined, { shallow: true });

@@ -5,6 +5,7 @@ import { trailerActions } from "../../store/trailer-slice";
 import { playerActions } from "../../store/player-slice";
 import { getTrailer, isNewRelease } from "../../helpers/browseHelper";
 import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
+import { useRouter } from "next/router";
 import {
   MediaInfo,
   MiniTile,
@@ -107,7 +108,18 @@ const Card = ({ category, item, onShowMore }) => {
   };
   const moreInfoHandler = (e) => {
     console.log(" moreInfoHandler running");
-    onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
+    // const router = useRouter(); this can not use cus will trigger card rendering;
+    console.log(window.location.pathname);
+    const urlPath = window.location.pathname;
+    let updatedUrlPath;
+    if (window.location.pathname.includes("?")) {
+      updatedUrlPath = `${window.location.pathname}&jbv=${item.id}`;
+    } else {
+      updatedUrlPath = `${window.location.pathname}?jbv=${item.id}`;
+    }
+
+    onShowMore(updatedUrlPath, item.backdrop_path, item.category);
+    // onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
     dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
     if (playerLoaded)
       dispatch(
@@ -143,7 +155,8 @@ const Card = ({ category, item, onShowMore }) => {
   };
   const isBannerShow = !playerLoaded || !trailerShow;
   // const isPlayerShow = playerLoaded;
-  const isPlayerShow = playerLoaded && withinSliderRange(cardRef.current);
+  const isPlayerShow = playerLoaded;
+  // const isPlayerShow = playerLoaded && withinSliderRange(cardRef.current);
   // const isPlayerShow = playerLoaded
   // useEffect(() => {
   //   const redc = cardRef.getBoundingClientRect();

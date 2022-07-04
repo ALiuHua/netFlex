@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { getSeasons } from "../helpers/browseHelper";
+import { getSearchResult } from "../helpers/browseHelper";
 const Test = () => {
   useEffect(() => {
     const fetchSeasonsInfo = async () => {
-      const result = await getSeasons(71738, 1);
+      const result = await getSearchResult("friends");
       console.log(result);
     };
+
     fetchSeasonsInfo();
   }, []);
   return <div>T</div>;

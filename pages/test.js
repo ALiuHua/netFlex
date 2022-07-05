@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { getSearchResult } from "../helpers/browseHelper";
+import { getTrailer } from "../helpers/browseHelper";
 const Test = () => {
   useEffect(() => {
     const fetchSeasonsInfo = async () => {
-      const result = await getSearchResult("friends");
+      const result = await getTrailer("movies", 507086);
       console.log(result);
     };
 
@@ -13,6 +13,6 @@ const Test = () => {
 };
 
 export default Test;
-
+507086;
 //this is tv_id   130652 "77680" 1418
 //num  1

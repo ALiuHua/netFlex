@@ -6,6 +6,7 @@ import { playerActions } from "../../store/player-slice";
 import { getTrailer, isNewRelease } from "../../helpers/browseHelper";
 import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
 import { useRouter } from "next/router";
+import { detailsActions } from "../../store/detailsSlice";
 import {
   MediaInfo,
   MiniTile,
@@ -40,7 +41,7 @@ const Card = ({ category, item, onShowMore }) => {
   mouseOnCardRef.current = mouseOnCard;
 
   const playHandler = () => {
-    onShowMore(`/play/${item.id}`);
+    onShowMore(`/play/${item.id}?cat=${item.category}`);
     console.log("handler running");
     // onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
   };
@@ -51,7 +52,7 @@ const Card = ({ category, item, onShowMore }) => {
       const fetchCardData = async () => {
         try {
           console.log("fetch card");
-          const fetchedTrailer = await getTrailer(category, item.id);
+          const fetchedTrailer = await getTrailer(item.category, item.id);
           // "675353"
           console.log(mouseOnCardRef.current);
           if (mouseOnCardRef.current) {
@@ -113,12 +114,18 @@ const Card = ({ category, item, onShowMore }) => {
     const urlPath = window.location.pathname;
     let updatedUrlPath;
     if (window.location.pathname.includes("?")) {
-      updatedUrlPath = `${window.location.pathname}&jbv=${item.id}`;
+      updatedUrlPath = `${window.location.pathname}&jbv=${item.id}&cat=${item.category}`;
     } else {
-      updatedUrlPath = `${window.location.pathname}?jbv=${item.id}`;
+      updatedUrlPath = `${window.location.pathname}?jbv=${item.id}&cat=${item.category}`;
     }
 
-    onShowMore(updatedUrlPath, item.backdrop_path, item.category);
+    onShowMore(updatedUrlPath);
+    dispatch(
+      detailsActions.setItemDetails({
+        posterPath: item.backdrop_path,
+        // itemCategory: item.category,
+      })
+    );
     // onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
     dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
     if (playerLoaded)
@@ -244,7 +251,7 @@ const Card = ({ category, item, onShowMore }) => {
           </DetailButton>
         </ActionWrapper>
         <GenreTag>
-          {getItemGenre(item?.genre_ids, genreCtx, 3, category).map(
+          {getItemGenre(item?.genre_ids, genreCtx, 3, item.category).map(
             (data, i) => {
               return (
                 data && (

@@ -23,6 +23,7 @@ import {
 } from "./BillboardHeroStyle";
 import EmbedButtonBox from "./BillboardHeroStyle";
 import { playerActions } from "../../store/player-slice";
+import { detailsActions } from "../../store/detailsSlice";
 export const briefInfo = (infoText, num) => {
   let shortInfo;
   if (infoText) {
@@ -49,13 +50,15 @@ const BillboardHero = ({ category, onShowMore }) => {
   const vPlayer = useRef();
   const router = useRouter();
   const playHandler = () => {
-    onShowMore(`/play/${banner.id}`);
+    onShowMore(`/play/${banner.id}?cat=${banner.category}`);
   };
   const moreInfoHandler = () => {
-    onShowMore(
-      `/browse?jbv=${banner.id}`,
-      banner.backdrop_path,
-      banner.category
+    onShowMore(`/browse?jbv=${banner.id}&cat=${banner.category}`);
+    dispatch(
+      detailsActions.setItemDetails({
+        posterPath: banner.backdrop_path,
+        // itemCategory: banner.category,
+      })
     );
     if (showPlayer)
       dispatch(
@@ -78,8 +81,12 @@ const BillboardHero = ({ category, onShowMore }) => {
       console.log("fetched");
       try {
         const bannerData = await getBanner(category);
+        console.log(category, bannerData);
         setBanner(bannerData);
-        const fetchedTrailer = await getTrailer(category, bannerData.id);
+        const fetchedTrailer = await getTrailer(
+          bannerData.category,
+          bannerData.id
+        );
         timeoutId = setTimeout(() => {
           setTrailer(fetchedTrailer);
           setPlayCompleted(false);
@@ -99,8 +106,6 @@ const BillboardHero = ({ category, onShowMore }) => {
   }, [category]);
   useEffect(() => {
     setPlaying(true);
-    // if (router.query.jbv)
-    //   dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
     if (activePlayer !== "billboard" && showPlayer) {
       setPlaying(false);
     }

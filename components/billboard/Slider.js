@@ -4,16 +4,14 @@ import LolomoSlider from "./LolomoSlider";
 import Card from "./Card";
 // eslint-disable-next-line react/display-name
 const Slider = ({ category, item, onShowMore }) => {
-  console.log(item);
   const [contentItems, setContentItems] = useState([]);
   useEffect(() => {
     const fetchRow = async () => {
-      const RowItems = await getRow(item);
+      const RowItems = await getRow(category, item);
       setContentItems(RowItems);
     };
     fetchRow();
   }, []);
-  console.log("slider running");
   return (
     <LolomoSlider item={item}>
       {contentItems.map((data, index) => (

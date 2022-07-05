@@ -66,6 +66,7 @@ const SearchContainer = styled.div`
   grid-template-columns: repeat(6, 1fr);
   grid-row-gap: 6.2rem;
   grid-column-gap: 10px;
+  height: 100vh; // not opt
   @media screen and (max-width: 87.5em) {
     grid-template-columns: repeat(6, 1fr);
   }

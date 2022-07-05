@@ -4,16 +4,20 @@ export const chooseRandomBanner = (dataLength) => {
   return Math.trunc(Math.random() * dataLength);
 };
 export const getBanner = async (category) => {
-  const { data: res } = await tmdb.get(
+  const { data: res } = await tmdb.get(TMDB[category].sections[0].endpoint);
+  const { data: res2 } = await tmdb.get(
     TMDB[category].sections[1].endpoint.replace("_pageNumber", 1)
   );
-  const { data: res2 } = await tmdb.get(
-    TMDB[category].sections[1].endpoint.replace("_pageNumber", 2)
-  );
-  //   console.log(TMDB[category].sections[1].endpoint.replace("_pageNumber", 1));
-
-  const { results: results1 } = res;
-  const { results: results2 } = res2;
+  const results1 = res.results.map((item) => {
+    return category === "browse"
+      ? { ...item, category: TMDB[category].sections[0].type }
+      : { ...item, category };
+  });
+  const results2 = res2.results.map((item) => {
+    return category === "browse"
+      ? { ...item, category: TMDB[category].sections[1].type }
+      : { ...item, category };
+  });
   const resultsPool = [...results1, ...results2];
 
   const filteredResults = resultsPool.filter(
@@ -30,33 +34,31 @@ export const getBanner = async (category) => {
   console.log(banner);
   return banner;
 };
-export const getRow = async (row) => {
+export const getRow = async (category, row) => {
   const { data } = await tmdb.get(
     row.endpoint.replace("&page=_pageNumber", "")
   );
   const { results: sliderItems } = data;
-  const filteredSliderItems = sliderItems.filter(
-    ({ backdrop_path, poster_path }) => backdrop_path && poster_path
-    // original_language === "en" && backdrop_path && poster_path
-  );
+  const filteredSliderItems = sliderItems
+    .filter(
+      ({ backdrop_path, poster_path }) => backdrop_path && poster_path
+      // original_language === "en" && backdrop_path && poster_path
+    )
+    .map((item) => {
+      return category === "browse"
+        ? { ...item, category: row.type }
+        : { ...item, category: category };
+    });
   return filteredSliderItems;
 };
 
 export const getTrailer = async (category, itemId) => {
-  //can be better we make name more geneic in tmdbEndpoint
-  // const method =
-  //   category === "TVShows" ? "fetchTVTrailers" : "fetchMovieTrailers";
-
-  // const trailerEndPoint = TMDB[category].helpers[method].replace("_id", itemId);
   const trailerEndPoint = TMDB[category].helpers.fetchTrailers.replace(
     "_id",
     itemId
   );
   let trailer = null;
   const res = await tmdb.get(trailerEndPoint);
-  // const {
-  //   data: { results },
-  // } = await tmdb.get(trailerEndPoint);
   const {
     data: { results },
   } = res;

@@ -11,23 +11,15 @@ export const GenreContext = React.createContext({
   movies: [],
   TVShows: [],
 });
-const Browse = ({ category = "movies", movieGenres, tvGenres }) => {
+const Browse = ({ category = "browse", movieGenres, tvGenres }) => {
   const genreContextValue = useMemo(() => {
     return { movies: movieGenres, TVShows: tvGenres };
   }, []);
-  const [detailsPoster, setDetailsPoster] = useState(null);
   const router = useRouter();
-  // const { setActivePlayer } = useContext(PlayerContext);
-  const onShowDetailsHandler = useCallback(
-    (url, bannerPath = null, itemCategory = null) => {
-      // router.push(url, undefined, { shallow: true });
-      router.push(url, undefined, { shallow: true });
-      // if (id) router.push(`/browse/?jbv=${id}`, undefined, { shallow: true });
-      // setActivePlayer("previewPlayer");
-      setDetailsPoster(bannerPath);
-    },
-    []
-  );
+  console.log(router);
+  const onShowDetailsHandler = useCallback((url) => {
+    router.push(url, undefined, { shallow: true });
+  }, []);
   // useEffect(() => {
   //   console.log(router);
   //   if (router.asPath.includes("jbv")) setShowMoreInfo(true);
@@ -40,9 +32,11 @@ const Browse = ({ category = "movies", movieGenres, tvGenres }) => {
         <Details
           category={category}
           genreContext={genreContextValue}
-          detailsPoster={detailsPoster}
+          // detailsPoster={itemDetail}
         />
       )}
+
+      {/* <Details category={category} genreContext={genreContextValue} /> */}
     </GenreContext.Provider>
   );
 };
@@ -61,16 +55,3 @@ export const getStaticProps = async () => {
     },
   };
 };
-// export const getServerSideProps = async () => {
-//   const moviesData = await fetch(
-//     "https://api.themoviedb.org/3/discover/tv?api_key=75d815a7423ee9ff009585239a370212&with_genres=10768&with_watch_providers=8&watch_region=AU"
-//   );
-//   const { results } = await moviesData.json();
-//   console.log(results);
-//   return { props: { results } };
-// };
-
-// const Wrapper = styled.div`
-//   background-color: orangered;
-//   margin-top: -70px;
-// `;

@@ -3,8 +3,6 @@ import { CoverImage } from "../billboard/BillboardHero";
 import { useRouter } from "next/router";
 import styled, { createGlobalStyle } from "styled-components";
 import Player from "../billboard/Player";
-// import { CardContext } from "../../store/cardContext";
-// import { PlayerContext } from "../../store/playerContext";
 import { ActionWrapper } from "../billboard/CardStyle";
 import {
   CirclePlayButton,
@@ -21,7 +19,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { playerActions } from "../../store/player-slice";
 
-const Details = ({ category, genreContext, detailsPoster }) => {
+const Details = ({ category, genreContext }) => {
   //   const scrollbarWidth = window.innerWidth - document.body.offsetWidth; //need to be at customizehook
   //   console.log(scrollbarWidth);
   const router = useRouter();
@@ -30,19 +28,22 @@ const Details = ({ category, genreContext, detailsPoster }) => {
   const [cast, setCast] = useState(null);
   const [playerLoaded, setPlayerLoaded] = useState(false);
   const [trailerShow, setTrailerShow] = useState(false);
+  const detailsPoster = useSelector((state) => state.details.posterPath);
+  const itemCategory = router.query.cat;
+  // const itemCategory = useSelector((state) => state.details.itemCategory);
   const playHandler = () => {
-    router.push(`/play/${item.id}`);
+    router.push(`/play/${item.id}?cat=${itemCategory}`);
   };
   console.log("details running");
   useEffect(() => {
-    console.log("More info useEffect");
+    console.log("More info useEffect", itemCategory, router.query.jbv);
     const getPreviewDetail = async () => {
       console.log("get detail data============================");
       const {
         details: detailsData,
         castData,
         trailer: detailsTrailer,
-      } = await getDetails(category, router.query.jbv);
+      } = await getDetails(itemCategory, router.query.jbv);
       setItem(detailsData);
       setTrailer(detailsTrailer);
       setCast(castData);
@@ -52,7 +53,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
     return () => {
       setTrailerShow(false);
     }; // for temporary
-  }, [router.query.jbv]);
+  }, [itemCategory, router.query.jbv]);
   const onEndedHandler = () => {
     setTrailerShow(false);
   };
@@ -62,6 +63,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
   const seetToTime = useSelector((state) => state.player.playedTime);
   useEffect(() => {
     const clickOutsideHandler = (e) => {
+      console.log("clcick");
       if (clickRef.current && !clickRef.current.contains(e.target)) {
         setTrailer(null);
         // setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
@@ -74,7 +76,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
     };
     document.body.addEventListener("click", clickOutsideHandler);
     return () => {
-      removeEventListener("click", clickOutsideHandler);
+      document.body.removeEventListener("click", clickOutsideHandler);
     };
   }, []);
   return (
@@ -91,7 +93,7 @@ const Details = ({ category, genreContext, detailsPoster }) => {
             <GradientLayerAdd />
             {!trailerShow && (detailsPoster || item?.backdrop_path) && (
               <CoverImage
-                coverPath={detailsPoster || item.backdrop_path}
+                coverPath={detailsPoster || item?.backdrop_path}
                 size="w780"
               />
             )}
@@ -157,8 +159,10 @@ const Details = ({ category, genreContext, detailsPoster }) => {
             genreContext={genreContext}
             cast={cast}
           />
-          {item && category === "TVShows" && <Episodes details={item} />}
-          {item && <Recommendation details={item} category={category} />}
+          {item && itemCategory === "TVShows" && <Episodes details={item} />}
+          {item && (
+            <Recommendation details={item} itemCategory={itemCategory} />
+          )}
         </RelatedInfoContainer>
       </ContentWrapper>
       <NoScrollBar scrollbar={17} />

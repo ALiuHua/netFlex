@@ -12,7 +12,7 @@ export const PlayerPage = () => {
       try {
         console.log(router.query.trailerId);
         const fetchedTrailer = await getTrailer(
-          "movies",
+          router.query.cat,
           router.query.trailerId
         );
         // "675353"

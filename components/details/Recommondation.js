@@ -5,18 +5,18 @@ import Image from "next/image";
 import { briefInfo } from "../billboard/BillboardHero";
 import { DetailButton, DetailIcon } from "../billboard/CardStyle";
 import { ButtonWrapper } from "./Episodes";
-const Recommendation = ({ category, details }) => {
+const Recommendation = ({ itemCategory, details }) => {
   console.log("Episode", details);
   const [recommendData, setRecommendData] = useState([]);
   const [showMore, setShowMore] = useState(false);
   const RecommondRef = useRef();
   useEffect(() => {
     const fetchRecommendtion = async () => {
-      const seasons = await getRecommendation(category, details?.id);
+      const seasons = await getRecommendation(itemCategory, details?.id);
       if (seasons) setRecommendData(seasons);
     };
     fetchRecommendtion();
-  }, [category, details?.id]);
+  }, [itemCategory, details?.id]);
   console.log(recommendData);
   return (
     <>

@@ -8,6 +8,7 @@ import Details from "../components/details/Details";
 const Search = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [category, setCategory] = useState(null);
+  const [urlOriginal, setUrlOriginal] = useState("/browse");
   const router = useRouter();
   const searchQuery = router.query.q;
   console.log(searchQuery);
@@ -27,9 +28,10 @@ const Search = () => {
     }, 500);
     return () => (currentRender = false);
   }, [searchQuery]);
-  const onShowMore = (url, bannerPath = null, itemCategory = null) => {
+  const onShowMore = (url, urlOriginal) => {
     router.push(url, undefined, { shallow: true });
-    setCategory(itemCategory);
+    setUrlOriginal(urlOriginal);
+    // setCategory(itemCategory);
   };
   return (
     <>
@@ -49,7 +51,8 @@ const Search = () => {
       </SearchContainer>
       {router.query.jbv && (
         <Details
-          category={category}
+          // category={category}
+          urlOriginal={urlOriginal}
           //   genreContext={genreContextValue}
           //   detailsPoster={detailsPoster}
         />

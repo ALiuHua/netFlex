@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { playerActions } from "../../store/player-slice";
 
-const Details = ({ category, genreContext }) => {
+const Details = ({ category, urlOriginal, genreContext }) => {
   //   const scrollbarWidth = window.innerWidth - document.body.offsetWidth; //need to be at customizehook
   //   console.log(scrollbarWidth);
   const router = useRouter();
@@ -30,6 +30,7 @@ const Details = ({ category, genreContext }) => {
   const [trailerShow, setTrailerShow] = useState(false);
   const detailsPoster = useSelector((state) => state.details.posterPath);
   const itemCategory = router.query.cat;
+  const genresCtx = useSelector((state) => state.genre.genres);
   // const itemCategory = useSelector((state) => state.details.itemCategory);
   const playHandler = () => {
     router.push(`/play/${item.id}?cat=${itemCategory}`);
@@ -69,7 +70,7 @@ const Details = ({ category, genreContext }) => {
         // setShowPlayer({ isShown: false, playerID: null, row: null }); // for temporary
         // setActivePlayer("billboard");
 
-        router.push("/browse", undefined, { shallow: true });
+        router.push(urlOriginal, undefined, { shallow: true });
         dispatch(playerActions.toggleActivePlayer("billboard"));
         dispatch(playerActions.setPlayedTime(0));
       }
@@ -145,7 +146,7 @@ const Details = ({ category, genreContext }) => {
             onClick={(e) => {
               // this part is kind of weird why we need onClick on CloseButton as props
               setTrailer(null);
-              router.push("/browse", undefined, { shallow: true });
+              router.push(urlOriginal, undefined, { shallow: true });
               dispatch(playerActions.toggleActivePlayer("billboard"));
               dispatch(playerActions.setPlayedTime(0));
               e.stopPropagation();
@@ -156,7 +157,7 @@ const Details = ({ category, genreContext }) => {
           <Description
             category={category}
             details={item}
-            genreContext={genreContext}
+            genreContext={genresCtx}
             cast={cast}
           />
           {item && itemCategory === "TVShows" && <Episodes details={item} />}

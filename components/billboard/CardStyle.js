@@ -61,6 +61,7 @@ export const ImgWrapper = styled.div`
   z-index: 3;
   width: 100%;
   height: 100%;
+  background-color: #333;
   img {
     width: 100%;
     height: 100%;

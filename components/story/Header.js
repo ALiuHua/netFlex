@@ -18,6 +18,10 @@ const Header = () => {
   const [stickyHeader, setStickHeader] = useState(false);
   const router = useRouter();
   const { pathname } = router;
+  const isNavShown =
+    pathname.includes("/browse") ||
+    pathname.includes("/search") ||
+    pathname.includes("/mylist");
   useEffect(() => {
     // sticky header and background-color change
     const scrollHandler = () => {
@@ -33,9 +37,9 @@ const Header = () => {
     };
   }, []);
   return (
-    <HeaderWrapper pathname={pathname} stickyHeader={stickyHeader}>
-      <HeaderContent pathname={pathname}>
-        <LogoWrapper pathname={pathname}>
+    <HeaderWrapper isNavShown={isNavShown} stickyHeader={stickyHeader}>
+      <HeaderContent isNavShown={isNavShown}>
+        <LogoWrapper isNavShown={isNavShown}>
           {pathname === "/" ? (
             <img src="/images/misc/logo.png" />
           ) : (
@@ -45,23 +49,18 @@ const Header = () => {
           )}
         </LogoWrapper>
         <nav>
-          {(pathname.includes("/browse") ||
-            pathname.includes("/search") ||
-            pathname.includes("/mylist")) && (
+          {isNavShown && (
             <>
               <MenuList>
                 <ul>
                   <li>
-                    <StyledLink href="/browse">Movies</StyledLink>
+                    <StyledLink href="/browse">Home</StyledLink>
                   </li>
                   <li>
-                    <StyledLink href="/browse">TV Shows</StyledLink>
+                    <StyledLink href="/browse/tv">TV Shows</StyledLink>
                   </li>
                   <li>
-                    <StyledLink href="/play/780609">Films</StyledLink>
-                  </li>
-                  <li>
-                    <StyledLink href="#">New & Popular</StyledLink>
+                    <StyledLink href="/browse/movie">Films</StyledLink>
                   </li>
                   <li>
                     <StyledLink href="/mylist">My List</StyledLink>
@@ -92,3 +91,4 @@ const Header = () => {
 };
 
 export default Header;
+const navList = ({}) => {};

@@ -120,7 +120,7 @@ export const Carousel = styled(Slider)`
       } */
     }
     .slick-slide {
-      width: 100/6%;
+      /* width: 16.666%; */
       position: relative;
       transition: all 1s;
       aspect-ratio: 16/9;
@@ -132,7 +132,7 @@ export const Carousel = styled(Slider)`
         width: 25%;
       }
       @media (min-width: 50em) {
-        width: 100/3%;
+        width: 33.333%;
       }
     }
     .slick-slide:hover {

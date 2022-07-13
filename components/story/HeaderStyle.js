@@ -8,8 +8,8 @@ export const HeaderWrapper = styled.header`
   position: relative;
   transition: background-color 0.5s linear;
 
-  ${({ pathname }) =>
-    (pathname.includes("/browse") || pathname.includes("/search")) &&
+  ${({ isNavShown }) =>
+    isNavShown &&
     css`
       height: 7rem;
       padding-top: 0;
@@ -35,8 +35,8 @@ export const HeaderWrapper = styled.header`
 export const HeaderContent = styled.div`
   margin: 0 5.6rem;
   /* position: fixed; */
-  ${({ pathname }) =>
-    (pathname.includes("/browse") || pathname.includes("/search")) &&
+  ${({ isNavShown }) =>
+    isNavShown &&
     css`
       /* position: fixed; */
       height: 100%;
@@ -51,8 +51,8 @@ export const HeaderContent = styled.div`
     /* ${({ pathname }) => console.log(pathname)} */
     //in this case we can get access to the pathname. but we can't get
     //access to this variant in LogoWrapper if we dont't pass in.
-    ${({ pathname }) =>
-      (pathname.includes("/browse") || pathname.includes("/search")) &&
+    ${({ isNavShown }) =>
+      isNavShown &&
       css`
         flex-grow: 1;
       `}
@@ -66,8 +66,8 @@ export const LogoWrapper = styled.div`
   justify-content: center;
   align-items: center;
   /* margin-right: auto; */
-  ${({ pathname }) =>
-    (pathname.includes("/browse") || pathname.includes("/search")) &&
+  ${({ isNavShown }) =>
+    isNavShown &&
     css`
       height: 25px;
       width: 92.5px;

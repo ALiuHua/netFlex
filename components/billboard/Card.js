@@ -7,6 +7,7 @@ import { getTrailer, isNewRelease } from "../../helpers/browseHelper";
 import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
 import { useRouter } from "next/router";
 import { detailsActions } from "../../store/detailsSlice";
+import { useSelector } from "react-redux";
 import {
   MediaInfo,
   MiniTile,
@@ -31,7 +32,8 @@ const Card = ({ category, item, onShowMore }) => {
   console.log("card runnning");
   const [playerLoaded, setPlayerLoaded] = useState(false);
   const [trailerShow, setTrailerShow] = useState(false);
-  const genreCtx = useContext(GenreContext);
+  // const genreCtx = useContext(GenreContext);
+  const genreCtx = useSelector((state) => state.genre.genres);
   const [timer, setTimer] = useState(null);
   const vPlayer = useRef();
   const cardRef = useRef();
@@ -110,16 +112,16 @@ const Card = ({ category, item, onShowMore }) => {
   const moreInfoHandler = (e) => {
     console.log(" moreInfoHandler running");
     // const router = useRouter(); this can not use cus will trigger card rendering;
-    console.log(window.location.pathname);
-    const urlPath = window.location.pathname;
+    console.log(window.location);
+    const urlPathOriginal = `${window.location.pathname}${window.location.search}`;
     let updatedUrlPath;
-    if (window.location.pathname.includes("?")) {
-      updatedUrlPath = `${window.location.pathname}&jbv=${item.id}&cat=${item.category}`;
+    if (urlPathOriginal.includes("?")) {
+      updatedUrlPath = `${urlPathOriginal}&jbv=${item.id}&cat=${item.category}`;
     } else {
-      updatedUrlPath = `${window.location.pathname}?jbv=${item.id}&cat=${item.category}`;
+      updatedUrlPath = `${urlPathOriginal}?jbv=${item.id}&cat=${item.category}`;
     }
 
-    onShowMore(updatedUrlPath);
+    onShowMore(updatedUrlPath,urlPathOriginal);
     dispatch(
       detailsActions.setItemDetails({
         posterPath: item.backdrop_path,

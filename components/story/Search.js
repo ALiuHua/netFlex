@@ -14,8 +14,8 @@ const Search = ({ pathname, router }) => {
   const searchRef = useRef();
   // const router = useRouter();
   // const { pathname } = router;
+  console.log("search runninh");
   useEffect(() => {
-    console.log("search qURY 11");
     const clickOutsideHandler = (e) => {
       if (!pathname.includes("/browse") && !pathname.includes("/search"))
         return;
@@ -31,14 +31,17 @@ const Search = ({ pathname, router }) => {
   useEffect(() => {
     console.log("search qURY");
     if (searchQuery) {
-      router.push(`search?q=${searchQuery}`);
-    } else {
-      if (showSearchBar) {
-        router.push(urlState); // this is to avoid redirect to browse when i paste details url.
-        console.log("search router push");
-      }
+      console.log("11111", `search?q=${searchQuery}`);
+      router.push(`/search?q=${searchQuery}`, undefined, { shallow: true });
+      //absolote path and relative path at rouet.push
+      //but again we got quick 11 true into 1 issue
     }
-  }, [searchQuery]);
+    if (!searchQuery && showSearchBar) {
+      console.log("11111", urlState);
+      router.push(urlState); // this is to avoid redirect to browse when i paste details url.
+      console.log("search router push");
+    }
+  }, [searchQuery, showSearchBar, urlState]);
   return (
     <SearchBox showSearchBar={showSearchBar} ref={searchRef}>
       <SearchInput
@@ -52,10 +55,10 @@ const Search = ({ pathname, router }) => {
       />
       <SearchButton
         onClick={() => {
-          if (!router.pathname.includes("/search")) setUrlState(urlState);
-          if (!searchQuery) {
-            setShowSearchBar((prev) => !prev);
-          }
+          console.log(router.pathname, !router.pathname.includes("/search"));
+          if (!router.pathname.includes("/search"))
+            setUrlState(router.pathname);
+          if (!searchQuery) setShowSearchBar((prev) => !prev);
         }}
       >
         <SearchIcon />

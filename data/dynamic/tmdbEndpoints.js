@@ -201,12 +201,22 @@ export const TMDB = {
         type: "movies",
       },
       {
-        title: "Trending Now",
-        endpoint: `/trending/tv/day?api_key=${API_KEY}&page=_pageNumber`,
+        title: "Top rated movies",
+        endpoint: `movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`,
+        type: "movies",
+      },
+      {
+        title: "Popular TV Shows This Week",
+        endpoint: `/trending/tv/week?api_key=${API_KEY}&page=_pageNumber`,
         type: "TVShows",
       },
       {
-        title: "Upcoming",
+        title: "Popular Movies This Week",
+        endpoint: `/trending/movie/week?api_key=${API_KEY}&page=_pageNumber`,
+        type: "movies",
+      },
+      {
+        title: "Upcoming Movies",
         endpoint: `/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1&region=AU`,
         type: "movies",
       },

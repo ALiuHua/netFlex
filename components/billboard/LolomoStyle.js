@@ -57,10 +57,18 @@ export const CarouselWrapper = styled.div`
   }
 `;
 export const Carousel = styled(Slider)`
-  /* padding: 25px 45px; */
   width: 100%;
   margin: 0 auto;
-  /* background-color: red; */
+  aspect-ratio: 75/8;
+  @media (max-width: 87.5em) {
+    aspect-ratio: 45/4;
+  }
+  @media (min-width: 68.75em) {
+    aspect-ratio: 225/16;
+  }
+  @media (min-width: 50em) {
+    aspect-ratio: 75/4;
+  }
 
   .slick-dots {
     position: absolute;
@@ -134,6 +142,7 @@ export const Carousel = styled(Slider)`
       @media (min-width: 50em) {
         width: 33.333%;
       }
+      
     }
     .slick-slide:hover {
       position: relative;

@@ -3,6 +3,7 @@ const gap = 0; //unit "rem"
 export const SectionContainer = styled.section`
   padding: 7rem 4.5rem;
   border-bottom: 0.8rem solid ${({ theme }) => theme.borderBottomColor};
+  background-color: #000;
   @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
     padding: 7.5rem 5rem;
   }

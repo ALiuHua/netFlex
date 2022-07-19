@@ -1,18 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import { BackgroundImage } from "../components/story/hero/HeroStyles";
-import SignIn from "../components/story/signIn/SignIn";
+// import { BackgroundImage } from "../components/story/hero/HeroStyles";
+import UserAuth from "../components/story/user/UserAuth";
+import { getSession } from "next-auth/react";
 const Login = () => {
-  return (
-    <>
-      <BackgroundImage />
-      {/*set body into relative position */}
-      <SignIn />
-    </>
-  );
+  return <UserAuth />;
 };
 
 export default Login;
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/browse",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: { session } };
+}
 
 const BackgroundImgWrapper = styled.div`
   position: absolute;

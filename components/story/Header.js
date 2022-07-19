@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import {
   HeaderWrapper,
@@ -73,7 +74,7 @@ const Header = () => {
                   <BellIcon />
                 </BellButton>
                 <ProfileWrapper>
-                  <p>我</p>
+                  <p onClick={() => signOut({ callbackUrl: "/login" })}>我</p>
                 </ProfileWrapper>
               </AccountTool>
             </>

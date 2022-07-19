@@ -8,6 +8,7 @@ import Questions from "./Questions";
 const QuestionSection = styled.section`
   padding: 7rem 4.5rem;
   border-bottom: 0.8rem solid ${({ theme }) => theme.borderBottomColor};
+  background-color: #000;
   @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
     padding: 7rem 0;
   }

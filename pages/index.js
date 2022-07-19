@@ -3,7 +3,7 @@ import Feature from "../components/story/feature/Feature";
 import Header from "../components/story/Header";
 import Hero from "../components/story/hero/Hero";
 import Question from "../components/story/question/Question";
-import Footer from "../components/story/footer/Footer";
+import { getSession } from "next-auth/react";
 export default function Home() {
   return (
     <>
@@ -17,3 +17,17 @@ export default function Home() {
   );
 }
 // we should always try to keep page componnet lean
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/browse",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: { session } };
+}

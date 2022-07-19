@@ -1,25 +1,28 @@
 import styled, { css } from "styled-components";
 
 export const BackgroundImage = styled.div`
-  /* min-height: 100%;
-  min-width: 100%; */
   position: absolute;
   top: -110px;
   left: 0;
   bottom: 0;
   width: 100%;
   background: rgba(0, 0, 0, 0.4);
-  background-image: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.8) 0,
-      rgba(0, 0, 0, 0.4) 60%,
-      rgba(0, 0, 0, 0.8) 100%
-    ),
-    url("../images/misc/background.jpg");
-
+  overflow: hidden;
   z-index: -1;
-  background-position: bottom;
-  background-size: cover;
+`;
+export const GradientLayer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0,
+    rgba(0, 0, 0, 0.4) 60%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
 `;
 export const HeroSection = styled.section`
   position: relative;
@@ -100,7 +103,7 @@ export const FormContent = styled.div`
   @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 `;
 export const InputFiled = styled.div`
@@ -192,4 +195,10 @@ export const FormButton = styled.button`
     padding: 5.6px 16px;
     height: 40px;
   }
+`;
+export const Error = styled.p`
+  padding: 6px 3px;
+  font-size: 1.3rem;
+  color: #b92d2b;
+  text-align: left;
 `;

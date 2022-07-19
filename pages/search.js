@@ -4,7 +4,7 @@ import { getSearchResult } from "../helpers/browseHelper";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Details from "../components/details/Details";
-
+import { getSession } from "next-auth/react";
 const Search = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [category, setCategory] = useState(null);
@@ -62,6 +62,20 @@ const Search = () => {
 };
 
 export default Search;
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: { session } };
+}
 const SearchContainer = styled.div`
   margin: 8rem auto;
   padding: 0 4%;
@@ -69,7 +83,9 @@ const SearchContainer = styled.div`
   grid-template-columns: repeat(6, 1fr);
   grid-row-gap: 6.2rem;
   grid-column-gap: 10px;
-  height: 100vh; // not opt
+  min-height: 100vh; // not opt
+  grid-auto-rows: min-content; // avoid row occupy whole grid container.
+  align-items: start;
   @media screen and (max-width: 87.5em) {
     grid-template-columns: repeat(6, 1fr);
   }

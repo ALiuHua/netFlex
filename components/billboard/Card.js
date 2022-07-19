@@ -39,6 +39,7 @@ const Card = ({ category, item, onShowMore }) => {
   const cardRef = useRef();
   const [location, setLocation] = useState("middle");
   const [mouseOnCard, setMouseOnCard] = useState(false);
+  const [isInMyList, setIsInMyList] = useState(false);
   const mouseOnCardRef = useRef();
   mouseOnCardRef.current = mouseOnCard;
 
@@ -74,6 +75,7 @@ const Card = ({ category, item, onShowMore }) => {
         }
       };
       fetchCardData();
+      const checkListed = async () => {};
     }, 2000);
     const redc = e.target.getBoundingClientRect();
     if (redc.x < redc.width) setLocation("left");
@@ -109,6 +111,16 @@ const Card = ({ category, item, onShowMore }) => {
     setTrailerShow(false);
     dispatch(playerActions.toggleActivePlayer("billboard"));
   };
+  const addToListHandler = async () => {
+    console.log("handlerRunning");
+    const response = await fetch("/api/auth/addToList", {
+      method: "POST",
+      body: JSON.stringify(item),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await response.json();
+    console.log(response, data);
+  };
   const moreInfoHandler = (e) => {
     console.log(" moreInfoHandler running");
     // const router = useRouter(); this can not use cus will trigger card rendering;
@@ -121,7 +133,7 @@ const Card = ({ category, item, onShowMore }) => {
       updatedUrlPath = `${urlPathOriginal}?jbv=${item.id}&cat=${item.category}`;
     }
 
-    onShowMore(updatedUrlPath,urlPathOriginal);
+    onShowMore(updatedUrlPath, urlPathOriginal);
     dispatch(
       detailsActions.setItemDetails({
         posterPath: item.backdrop_path,
@@ -145,23 +157,7 @@ const Card = ({ category, item, onShowMore }) => {
   };
   // this is not working, 1. what kind of situation will trigger clashing. 2. why e.stop can work.
   // 2. why media play not print out
-  const moreInfoHandler2 = (e) => {
-    console.log(" moreInfoHandler2 running");
-    onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
-    dispatch(playerActions.toggleActivePlayer("detailsPlayer"));
-    if (playerLoaded)
-      dispatch(
-        playerActions.setPlayedTime(
-          Math.floor(vPlayer?.current.getCurrentTime())
-        )
-      );
-    setPlayerLoaded(false);
-    setTrailerShow(false);
-    //
-    // if (!e) e = window.event;
-    // e.cancelBubble = true;
-    // if (e.stopPropagation) e.stopPropagation();
-  };
+
   const isBannerShow = !playerLoaded || !trailerShow;
   // const isPlayerShow = playerLoaded;
   const isPlayerShow = playerLoaded;
@@ -197,7 +193,7 @@ const Card = ({ category, item, onShowMore }) => {
             <GradientLayer />
             <Image
               src={`https://image.tmdb.org/t/p/w342/${item?.backdrop_path}`}
-              alt="to be continue"
+              alt={item?.name}
               layout="fill"
               objectFit="cover"
             />
@@ -243,6 +239,7 @@ const Card = ({ category, item, onShowMore }) => {
           >
             <PlayIcon />
           </CirclePlayButton>
+          <button onClick={addToListHandler}>1</button>
           <DetailButton
             onClick={() => {
               console.log("media info");

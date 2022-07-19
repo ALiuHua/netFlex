@@ -145,7 +145,7 @@ const BillboardHero = ({ category, onShowMore }) => {
         )} */}
 
         {!showPlayer && banner && (
-          <CoverImage coverPath={banner?.backdrop_path} size="original" />
+          <CoverImage coverPath={banner?.backdrop_path} size="original" altInfo={banner?.name}/>
         )}
       </BillboardContent>
       <BillboardDetail>
@@ -178,13 +178,13 @@ const BillboardHero = ({ category, onShowMore }) => {
 };
 
 export default BillboardHero;
-export const CoverImage = ({ coverPath, size, children }) => {
+export const CoverImage = ({ coverPath, size, altInfo,children }) => {
   return (
     <BillboardBackground>
       {children}
       <Image
         src={`https://image.tmdb.org/t/p/${size}${coverPath}`}
-        alt="billboard banner"
+        alt={altInfo}
         layout="fill"
         objectFit="cover"
         priority

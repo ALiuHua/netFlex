@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 const FooterWrapper = styled.footer`
   padding: 7rem 4.5rem;
   font-size: 13px;
+  background-color: #000;
   @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
     padding: 6.25rem 5%;
   }

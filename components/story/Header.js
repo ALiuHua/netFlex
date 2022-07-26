@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import { getGenres } from "../../helpers/browseHelper";
+import { genreActions } from "../../store/genreSlice";
+import { useDispatch } from "react-redux";
 import {
   HeaderWrapper,
   HeaderContent,
@@ -36,6 +39,23 @@ const Header = () => {
     return () => {
       window.removeEventListener("scroll", scrollHandler);
     };
+  }, []);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    //fetch genres data
+    console.log("useEffect header genre");
+    const getGenresInfo = async () => {
+      const movieGenres = await getGenres("movies");
+      const tvGenres = await getGenres("TVShows");
+      console.log("dispatch genres");
+      //it's too late to dispatch generes in the end... at the page we can do this because we fetched genre at backend.
+      //but we can skip use genres when it's not dispatched yet.
+      // the reason why i want it here is thate we can avoid to fetch genres everywhere.
+      dispatch(
+        genreActions.setGenre({ movies: movieGenres, TVShows: tvGenres })
+      );
+    };
+    getGenresInfo();
   }, []);
   return (
     <HeaderWrapper isNavShown={isNavShown} stickyHeader={stickyHeader}>

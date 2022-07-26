@@ -29,6 +29,23 @@ export default NextAuth({
       },
     }),
   ],
+  //add info to the session
+  callbacks: {
+    session: async ({ session }) => {
+      if (!session) return;
+      const client = await connectToDatabase();
+      const usersCollection = client.db().collection("users");
+      const userData = await usersCollection.findOne({
+        email: session.user.email,
+      });
+      return {
+        user: {
+          email: userData.email,
+          profiles: userData.profiles,
+        },
+      };
+    },
+  },
   secret: process.env.AUTH_SECRET,
 });
 // in API route we need to return a function

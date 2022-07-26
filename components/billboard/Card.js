@@ -37,6 +37,7 @@ const Card = ({ category, item, onShowMore }) => {
   const [trailerShow, setTrailerShow] = useState(false);
   // const genreCtx = useContext(GenreContext);
   const genreCtx = useSelector((state) => state.genre.genres);
+
   const [timer, setTimer] = useState(null);
   const vPlayer = useRef();
   const cardRef = useRef();
@@ -61,6 +62,7 @@ const Card = ({ category, item, onShowMore }) => {
           const fetchedTrailer = await getTrailer(item.category, item.id);
           // "675353"
           console.log(mouseOnCardRef.current);
+
           if (mouseOnCardRef.current) {
             console.log(mouseOnCardRef.current);
             dispatch(trailerActions.setTrailer(fetchedTrailer));
@@ -231,6 +233,7 @@ const Card = ({ category, item, onShowMore }) => {
           </>
         )}
       </MediaContent>
+
       <MediaInfo
         className="mediaInfo"
         onClick={() => {
@@ -247,7 +250,13 @@ const Card = ({ category, item, onShowMore }) => {
           >
             <PlayIcon />
           </CirclePlayButton>
-          <button onClick={addToListHandler}>1</button>
+          <button
+            onClick={(e) => {
+              addToListHandler(), e.stopPropagation();
+            }}
+          >
+            1
+          </button>
           <DetailButton
             onClick={() => {
               console.log("media info");
@@ -257,22 +266,25 @@ const Card = ({ category, item, onShowMore }) => {
             <DetailIcon />
           </DetailButton>
         </ActionWrapper>
-        <GenreTag>
-          {getItemGenre(item?.genre_ids, genreCtx, 3, item.category).map(
-            (data, i) => {
-              return (
-                data && (
-                  <React.Fragment key={i}>
-                    {i !== 0 && <span className="dot">&bull;</span>}
-                    <span className="genreName">
-                      {data?.name.split("&")[0]}
-                    </span>
-                  </React.Fragment>
-                )
-              );
-            }
-          )}
-        </GenreTag>
+
+        {mouseOnCard && (
+          <GenreTag>
+            {getItemGenre(item?.genre_ids, genreCtx, 3, item.category).map(
+              (data, i) => {
+                return (
+                  data && (
+                    <React.Fragment key={i}>
+                      {i !== 0 && <span className="dot">&bull;</span>}
+                      <span className="genreName">
+                        {data?.name.split("&")[0]}
+                      </span>
+                    </React.Fragment>
+                  )
+                );
+              }
+            )}
+          </GenreTag>
+        )}
       </MediaInfo>
     </CardWrapper>
   );

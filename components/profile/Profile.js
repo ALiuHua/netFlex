@@ -4,8 +4,11 @@ import styled, { css } from "styled-components";
 import { useSession } from "next-auth/react";
 import ProfileCard from "./ProfileCard";
 import Image from "next/image";
+
 import { AvatarWrapper } from "./ProfileCard";
 import { EditOverlay } from "./ProfileCard";
+import { userActions } from "../../store/userSlice";
+import { useDispatch } from "react-redux";
 const getAvatars = () => {
   let avatars = [];
   for (let i = 1; i < 12; i++) {
@@ -17,8 +20,9 @@ const getAvatars = () => {
   return avatars;
 };
 
-const Profile = () => {
+const Profile = ({ selectedProfile, setSelectedProfile }) => {
   const { data: session } = useSession();
+  const dispatch = useDispatch();
   // useEffect(() => {
   //   const postProfiles = async () => {
   //     const client = await db();
@@ -26,7 +30,19 @@ const Profile = () => {
   //     console.log(result);
   //   };
   // }, [profiles]);
+
   console.log(session);
+  useEffect(() => {
+    console.log("123");
+    localStorage.setItem(
+      "netflex",
+      JSON.stringify({
+        email: session?.user.email,
+        profile: selectedAvatar,
+      })
+    );
+    console.log(JSON.parse(localStorage.getItem("netflex")));
+  }, [selectedAvatar]);
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [profiles, setProfiles] = useState([]);
   const [isAdd, setIsAdd] = useState(false); // add new avatar
@@ -39,17 +55,7 @@ const Profile = () => {
   }); //switch to profile editing
   // const inputNameRef = useRef();
   // const [inputName, setInputName] = useState("");
-  useEffect(() => {
-    console.log("123");
-    localStorage.setItem(
-      "netflex",
-      JSON.stringify({
-        email: session?.user.email,
-        profile: selectedAvatar,
-      })
-    );
-    console.log(JSON.parse(localStorage.getItem("netflex")));
-  }, [selectedAvatar]);
+
   const updateProfilesData = async (profiles, user) => {
     // const profilesData = profiles.map((profile) => {
     //   return { ...profile, user };
@@ -72,7 +78,9 @@ const Profile = () => {
         return { isEdit: true, editedProfile: param, originalProfile: param };
       });
     } else {
-      setSelectedAvatar(param);
+      // setSelectedAvatar(param);
+
+      dispatch(userActions.setSelectedProfile(param));
     }
   };
   const cancelButtonHandler = () => {

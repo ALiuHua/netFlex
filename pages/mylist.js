@@ -13,15 +13,15 @@ const mylist = () => {
     setUrlOriginal(urlOriginal);
     // setCategory(itemCategory);
   };
-  useEffect(() => {
-    const getListItems = async () => {
-      const res = await fetch("/api/auth/addToList", { method: "GET" });
-      const { list } = await res.json();
-      console.log(list);
-      setMyList(list);
-    };
-    getListItems();
-  }, []);
+  // useEffect(() => {
+  //   const getListItems = async () => {
+  //     const res = await fetch("/api/auth/addToList", { method: "GET" });
+  //     const { list } = await res.json();
+  //     console.log(list);
+  //     setMyList(list);
+  //   };
+  //   getListItems();
+  // }, []);
   return (
     <>
       <SearchContainer>

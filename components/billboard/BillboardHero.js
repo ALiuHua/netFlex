@@ -53,7 +53,16 @@ const BillboardHero = ({ category, onShowMore }) => {
     onShowMore(`/play/${banner.id}?cat=${banner.category}`);
   };
   const moreInfoHandler = () => {
-    onShowMore(`/browse?jbv=${banner.id}&cat=${banner.category}`);
+    const urlPathOriginal = `${window.location.pathname}${window.location.search}`;
+    let updatedUrlPath;
+    if (urlPathOriginal.includes("?")) {
+      updatedUrlPath = `${urlPathOriginal}&jbv=${banner.id}&cat=${banner.category}`;
+    } else {
+      updatedUrlPath = `${urlPathOriginal}?jbv=${banner.id}&cat=${banner.category}`;
+    }
+
+    onShowMore(updatedUrlPathurlPathOriginal);
+
     dispatch(
       detailsActions.setItemDetails({
         posterPath: banner.backdrop_path,
@@ -145,7 +154,11 @@ const BillboardHero = ({ category, onShowMore }) => {
         )} */}
 
         {!showPlayer && banner && (
-          <CoverImage coverPath={banner?.backdrop_path} size="original" altInfo={banner?.name}/>
+          <CoverImage
+            coverPath={banner?.backdrop_path}
+            size="original"
+            altInfo={banner?.name}
+          />
         )}
       </BillboardContent>
       <BillboardDetail>
@@ -178,7 +191,7 @@ const BillboardHero = ({ category, onShowMore }) => {
 };
 
 export default BillboardHero;
-export const CoverImage = ({ coverPath, size, altInfo,children }) => {
+export const CoverImage = ({ coverPath, size, altInfo, children }) => {
   return (
     <BillboardBackground>
       {children}

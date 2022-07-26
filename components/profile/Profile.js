@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+// import { db } from "../../lib/db";
 import styled, { css } from "styled-components";
 import { useSession } from "next-auth/react";
 import ProfileCard from "./ProfileCard";
@@ -10,7 +11,7 @@ const getAvatars = () => {
   for (let i = 1; i < 12; i++) {
     avatars.push({
       src: `/images/avatars/Avatar_${i}.png`,
-      avatarId: `${i}`,
+      avatarId: `avatar_${i}`,
     });
   }
   return avatars;
@@ -18,6 +19,13 @@ const getAvatars = () => {
 
 const Profile = () => {
   const { data: session } = useSession();
+  // useEffect(() => {
+  //   const postProfiles = async () => {
+  //     const client = await db();
+  //     const result = await db.collections("profiles").insetMany(profiles);
+  //     console.log(result);
+  //   };
+  // }, [profiles]);
   console.log(session);
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [profiles, setProfiles] = useState([]);
@@ -31,7 +39,33 @@ const Profile = () => {
   }); //switch to profile editing
   // const inputNameRef = useRef();
   // const [inputName, setInputName] = useState("");
+  useEffect(() => {
+    console.log("123");
+    localStorage.setItem(
+      "netflex",
+      JSON.stringify({
+        email: session?.user.email,
+        profile: selectedAvatar,
+      })
+    );
+    console.log(JSON.parse(localStorage.getItem("netflex")));
+  }, [selectedAvatar]);
+  const updateProfilesData = async (profiles, user) => {
+    // const profilesData = profiles.map((profile) => {
+    //   return { ...profile, user };
+    // });
+    const response = await fetch("/api/auth/profileData", {
+      method: "POST",
+      body: JSON.stringify({ profiles, user }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await response.json();
+    console.log(data);
+    if (!response.ok) throw new Error(data.message || "something goes wrong");
+    return data;
+  };
   const profileEditHandler = (param) => {
+    console.log("profileHandler");
     if (isManaging) {
       // 获取并设定选中的编辑目标
       setEditProfile((prev) => {
@@ -42,19 +76,14 @@ const Profile = () => {
     }
   };
   const cancelButtonHandler = () => {
+    console.log("cancelButtonHandler");
     // 取消编辑
     setEditProfile((prev) => {
       return { ...prev, isEdit: false };
     });
   };
   const saveButtonHandler = () => {
-    //验证是否有重复，否则返回
-    if (
-      profiles.find(
-        (profile) => profile.avatarId === editProfile.editedProfile.avatarId
-      )
-    )
-      return console.error("already exist");
+    console.log("saveButtonHandler");
     //确认编辑 回到managing页面
     setEditProfile((prev) => {
       // console.log({
@@ -68,8 +97,23 @@ const Profile = () => {
     });
     console.log(editProfile.editedProfile); // not up to date value
     if (isAdd) {
+      //验证是否有重复，否则返回(也应该在创建页面)
+      if (
+        profiles.find(
+          (profile) => profile.avatarId === editProfile.editedProfile.avatarId
+        )
+      )
+        // normally would not happen, because we already filter out used avatars.
+        return console.error("avatar already exist");
       //check if its already exist
-
+      if (
+        profiles.find(
+          (profile) =>
+            profile.profileName === editProfile.editedProfile.profileName
+        ) ||
+        editProfile.editedProfile.profileName === ""
+      )
+        return console.error("name already exist or not blank name");
       setProfiles(
         (prev) => [...prev, { ...editProfile.editedProfile }]
         // prev.push(editProfile.editedProfile)
@@ -92,6 +136,7 @@ const Profile = () => {
     );
   };
   const deleteProfileButtonHandler = () => {
+    console.log("deleteProfileButtonHandler");
     //确认编辑 回到managing页面
     setEditProfile((prev) => {
       return { ...prev, isEdit: false };
@@ -104,13 +149,16 @@ const Profile = () => {
     );
   };
   const createProfileHandler = () => {
+    console.log("createProfileHandler");
+    if (profiles.length === 0) setIsManaging(true);
+    // we may not need this;
     // setInputName("");
     //设定默认的add选项
     setEditProfile({
       isEdit: true,
       editedProfile: {
-        src: "/images/avatars/Avatar_01.png",
-        avatarId: "1",
+        src: `/images/avatars/placeholder_${profiles.length + 1}.png`,
+        avatarId: `placeholder_${profiles.length + 1}`,
         profileName: "",
       },
       originalProfile: {},
@@ -119,6 +167,7 @@ const Profile = () => {
   };
   console.log(profiles);
   const setAvatarHandler = (avatar) => {
+    console.log("setAvatarHandler");
     setEditAvatar(false);
     //设定选中的目标
     setEditProfile((prev) => {
@@ -163,7 +212,19 @@ const Profile = () => {
           </FlexContainer>
           <Button
             styled={isManaging}
-            onClick={() => setIsManaging((prev) => !prev)}
+            onClick={() => {
+              // const postProfiles = async () => {
+              //   const client = await db();
+              //   const result = await db
+              //     .collections("profiles")
+              //     .insetMany(profiles);
+              //   console.log(result);
+              // };
+              // if (isManaging) postProfiles();
+              console.log("toggle is managing");
+              setIsManaging((prev) => !prev);
+              updateProfilesData(profiles, session.user.email);
+            }}
           >
             {isManaging ? "Done" : "Manage Profiles"}
           </Button>

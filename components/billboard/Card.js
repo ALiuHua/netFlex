@@ -8,6 +8,7 @@ import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
 import { useRouter } from "next/router";
 import { detailsActions } from "../../store/detailsSlice";
 import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 import {
   MediaInfo,
   MiniTile,
@@ -28,6 +29,8 @@ import Player from "./Player";
 import { GenreContext } from "../../pages/browse";
 
 const Card = ({ category, item, onShowMore }) => {
+  const session = useSession();
+  console.log(session);
   const dispatch = useDispatch();
   console.log("card runnning");
   const [playerLoaded, setPlayerLoaded] = useState(false);
@@ -115,7 +118,12 @@ const Card = ({ category, item, onShowMore }) => {
     console.log("handlerRunning");
     const response = await fetch("/api/auth/addToList", {
       method: "POST",
-      body: JSON.stringify(item),
+      body: JSON.stringify({
+        data: item,
+        user: JSON.parse(localStorage.getItem("netflex")).email,
+        profileName: JSON.parse(localStorage.getItem("netflex")).profile
+          .profileName,
+      }),
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();

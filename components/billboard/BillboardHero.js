@@ -61,7 +61,7 @@ const BillboardHero = ({ category, onShowMore }) => {
       updatedUrlPath = `${urlPathOriginal}?jbv=${banner.id}&cat=${banner.category}`;
     }
 
-    onShowMore(updatedUrlPathurlPathOriginal);
+    onShowMore(updatedUrlPath, urlPathOriginal);
 
     dispatch(
       detailsActions.setItemDetails({

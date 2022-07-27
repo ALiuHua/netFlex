@@ -17,9 +17,9 @@ const Browse = ({ userEmail, userProfiles }) => {
   console.log(userEmail, userProfiles, !userProfiles);
   // const dispatch = useDispatch();
   // this logic is not right for refresh////
-  useEffect(() => {
-    dispatch.userActions(userProfiles);
-  }, [userProfiles]);
+  // useEffect(() => {
+  //   dispatch(userActions.setProfiles(userProfiles));
+  // }, [userProfiles]);
   //isManagingProfiles=false || userProfiles  来判断是否显示profiles内容
   //header里的数据与page中的state数据如何交换
   const showManagingProfile = useSelector(

@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       .updateOne({ email: user }, { $set: { profiles: profiles } });
 
     //   const result = await db.collection("profiles").insertMany(profiles);
-    res.status(201).json({ message: "User created", result: result });
+    res.status(201).json({ message: "User profiles created", result: result });
   }
   if (req.method === "GET") {
     const { user } = req.query;

@@ -20,11 +20,32 @@ const getAvatars = () => {
   return avatars;
 };
 
-const Profile = () => {
+const Profile = ({ selectedProfile, setSelectedProfile }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   const postProfiles = async () => {
+  //     const client = await db();
+  //     const result = await db.collections("profiles").insetMany(profiles);
+  //     console.log(result);
+  //   };
+  // }, [profiles]);
 
+  console.log(session);
   const [selectedAvatar, setSelectedAvatar] = useState(null);
+  // useEffect(() => {
+  //   console.log("123");
+  //   localStorage.setItem(
+  //     "netflex",
+  //     JSON.stringify({
+  //       email: session?.user.email,
+  //       profile: selectedAvatar,
+  //     })
+  //   );
+  //   console.log(JSON.parse(localStorage.getItem("netflex")));
+  // }, [selectedAvatar]);
+
+  // const [profiles, setProfiles] = useState([]);
   const [isAdd, setIsAdd] = useState(false); // add new avatar
   const [isManaging, setIsManaging] = useState(false); // switch between choos and manage
   const [editAvatar, setEditAvatar] = useState(false); // switch to avatar gallery
@@ -33,10 +54,13 @@ const Profile = () => {
     editedProfile: {},
     originalProfile: {},
   }); //switch to profile editing
+  // const inputNameRef = useRef();
+  // const [inputName, setInputName] = useState("");
   const profiles = useSelector((state) => state.users.profiles);
-  console.log("profiles", profiles);
   const updateProfilesData = async (profiles, user) => {
-    console.log(profiles, user);
+    // const profilesData = profiles.map((profile) => {
+    //   return { ...profile, user };
+    // });
     const response = await fetch("/api/auth/profileData", {
       method: "POST",
       body: JSON.stringify({ profiles, user }),
@@ -110,8 +134,19 @@ const Profile = () => {
       setIsAdd(false);
       return;
     }
+    // setEditProfile((prev) => {
+    //   return { ...prev, isEdit: false };
+    // });
     // need to replace the original one
     console.log("after return");
+    //===at edit state, repalce original with new确认编辑
+    // setProfiles((prev) =>
+    //   prev.map((profile) =>
+    //     profile.avatarId === editProfile.originalProfile.avatarId
+    //       ? editProfile.editedProfile
+    //       : profile
+    //   )
+    // );
     dispatch(
       userActions.setProfiles({
         type: "EDIT_PROFILE",
@@ -125,6 +160,12 @@ const Profile = () => {
     setEditProfile((prev) => {
       return { ...prev, isEdit: false };
     });
+    // need to replace the original one ==== 删除某个profile
+    // setProfiles((prev) =>
+    //   prev.filter(
+    //     (profile) => profile.avatarId !== editProfile.originalProfile.avatarId
+    //   )
+    // );
     dispatch(
       userActions.setProfiles({
         type: "DELETE_PROFILE",

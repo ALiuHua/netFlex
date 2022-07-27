@@ -14,8 +14,8 @@ const BrowseContent = ({ category, profilesManaging, userEmail }) => {
   }, []);
   return (
     <>
-      {!profilesManaging && <Profile />}
-      {profilesManaging && (
+      {profilesManaging && <Profile />}
+      {!profilesManaging && (
         <>
           <BillboardHero
             category={category}

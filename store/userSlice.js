@@ -50,6 +50,10 @@ const userSlice = createSlice({
       console.log("setshow managing ", action, action.payload);
       state.showManagingProfile = action.payload;
     },
+    setEmail(state, action) {
+      console.log("setemail ", action);
+      state.email = action.payload;
+    },
   },
 });
 export const userActions = userSlice.actions;

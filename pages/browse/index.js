@@ -22,14 +22,35 @@ const Browse = ({ userEmail, userProfiles }) => {
     dispatch(
       userActions.setProfiles({
         type: "SET_PROFILE",
-        payload: userProfiles,
+        payload: userProfiles || [],
       })
     );
-  }, [userProfiles]);
+    console.log(userEmail);
+    dispatch(userActions.setEmail(userEmail));
+  }, [userProfiles, userEmail]);
+  useEffect(() => {
+    const localNetflexInfo = JSON.parse(localStorage.getItem("netflex"));
+    if (localNetflexInfo.email === userEmail) {
+      dispatch(userActions.setSelectedProfile(localNetflexInfo.profile));
+    } else {
+      dispatch(userActions.setSelectedProfile(userProfiles[0]));
+    }
+    //     if(localSelectedProfile)
+    // dispatch(userActions.setSelectedProfile())
+  }, []);
   //isManagingProfiles=false || userProfiles  来判断是否显示profiles内容
   //header里的数据与page中的state数据如何交换
   const showManagingProfile = useSelector(
     (state) => state.users.showManagingProfile
+  );
+  const hasProfileSelected = useSelector(
+    (state) => state.users.selectedProfile
+  );
+  console.log(
+    showManagingProfile === !!userProfiles || hasProfileSelected,
+    showManagingProfile,
+    !!userProfiles,
+    hasProfileSelected
   );
   //need to change this state at header component
 
@@ -51,10 +72,18 @@ const Browse = ({ userEmail, userProfiles }) => {
   //   //if 都没有  则是第一次注册
   //   if (userProfiles) dispatch(userActions.setProfiles(userProfiles));
   // }, []);
+  // console.log(
+  //   showManagingProfile === !!userProfiles ||
+
+  // );
   return (
     <BrowseContent
       category="browse"
-      profilesManaging={showManagingProfile === !!userProfiles}
+      profilesManaging={
+        userProfiles
+          ? showManagingProfile
+          : !!hasProfileSelected === showManagingProfile
+      }
       userEmail={userEmail}
     />
   );

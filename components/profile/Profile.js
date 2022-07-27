@@ -33,8 +33,9 @@ const Profile = () => {
     editedProfile: {},
     originalProfile: {},
   }); //switch to profile editing
-  const profiles = useSelector((state) => state.users.profiles);
-  console.log("profiles", profiles);
+  const profiles = useSelector((state) => state.users.profiles) || [];
+  const userEmail = useSelector((state) => state.users.email);
+  console.log("userEmail  profiles", userEmail, profiles);
   const updateProfilesData = async (profiles, user) => {
     console.log(profiles, user);
     const response = await fetch("/api/auth/profileData", {
@@ -59,6 +60,11 @@ const Profile = () => {
 
       dispatch(userActions.setSelectedProfile(param));
       dispatch(userActions.setShowManagingProfile(false));
+      console.log(userEmail);
+      localStorage.setItem(
+        "netflex",
+        JSON.stringify({ email: userEmail, profile: param })
+      );
     }
   };
   const cancelButtonHandler = () => {

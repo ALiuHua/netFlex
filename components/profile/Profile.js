@@ -58,6 +58,7 @@ const Profile = () => {
       // setSelectedAvatar(param);
 
       dispatch(userActions.setSelectedProfile(param));
+      dispatch(userActions.setShowManagingProfile(false));
     }
   };
   const cancelButtonHandler = () => {

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { getGenres } from "../../helpers/browseHelper";
 import { genreActions } from "../../store/genreSlice";
 import { useDispatch } from "react-redux";
+
 import {
   HeaderWrapper,
   HeaderContent,
@@ -17,6 +18,7 @@ import {
   ProfileWrapper,
 } from "./HeaderStyle";
 import Search from "./Search";
+import { userActions } from "../../store/userSlice";
 const Header = () => {
   console.log("header running");
   const [stickyHeader, setStickHeader] = useState(false);
@@ -26,6 +28,10 @@ const Header = () => {
     pathname.includes("/browse") ||
     pathname.includes("/search") ||
     pathname.includes("/mylist");
+  const dispatch = useDispatch();
+  const managingProfilesHandler = () => {
+    dispatch(userActions.setShowManagingProfile(true));
+  };
   useEffect(() => {
     // sticky header and background-color change
     const scrollHandler = () => {
@@ -40,7 +46,7 @@ const Header = () => {
       window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     //fetch genres data
     console.log("useEffect header genre");
@@ -95,6 +101,7 @@ const Header = () => {
                 </BellButton>
                 <ProfileWrapper>
                   <p onClick={() => signOut({ callbackUrl: "/login" })}>我</p>
+                  <p onClick={managingProfilesHandler}>managing</p>
                 </ProfileWrapper>
               </AccountTool>
             </>

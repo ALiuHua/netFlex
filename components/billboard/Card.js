@@ -29,10 +29,10 @@ import Player from "./Player";
 import { GenreContext } from "../../pages/browse";
 
 const Card = ({ category, item, onShowMore }) => {
-  const session = useSession();
-  console.log(session);
+  // const session = useSession();
+  // console.log(session);
   const dispatch = useDispatch();
-  console.log("card runnning");
+  console.log("card running");
   const [playerLoaded, setPlayerLoaded] = useState(false);
   const [trailerShow, setTrailerShow] = useState(false);
   // const genreCtx = useContext(GenreContext);

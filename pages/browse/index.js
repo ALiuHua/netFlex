@@ -17,9 +17,15 @@ const Browse = ({ userEmail, userProfiles }) => {
   console.log(userEmail, userProfiles, !userProfiles);
   // const dispatch = useDispatch();
   // this logic is not right for refresh////
-  // useEffect(() => {
-  //   dispatch(userActions.setProfiles(userProfiles));
-  // }, [userProfiles]);
+  useEffect(() => {
+    console.log("index of browsen useeffect running", userProfiles);
+    dispatch(
+      userActions.setProfiles({
+        type: "SET_PROFILE",
+        payload: userProfiles,
+      })
+    );
+  }, [userProfiles]);
   //isManagingProfiles=false || userProfiles  来判断是否显示profiles内容
   //header里的数据与page中的state数据如何交换
   const showManagingProfile = useSelector(
@@ -48,7 +54,7 @@ const Browse = ({ userEmail, userProfiles }) => {
   return (
     <BrowseContent
       category="browse"
-      profilesManaging={showManagingProfile || !userProfiles}
+      profilesManaging={showManagingProfile === !!userProfiles}
       userEmail={userEmail}
     />
   );

@@ -39,7 +39,16 @@ const userSlice = createSlice({
           );
           return;
         }
+        case "SET_PROFILE": {
+          console.log("SET_PROFILE", payload);
+          state.profiles = payload;
+          return;
+        }
       }
+    },
+    setShowManagingProfile(state, action) {
+      console.log("setshow managing ", action, action.payload);
+      state.showManagingProfile = action.payload;
     },
   },
 });

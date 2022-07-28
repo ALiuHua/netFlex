@@ -8,13 +8,14 @@ const BrowseContent = ({ category, profilesManaging, userEmail }) => {
   const [urlOriginal, setUrlOriginal] = useState("/browse");
   const router = useRouter();
   console.log(router);
+  console.log(userEmail);
   const onShowDetailsHandler = useCallback((url, urlOriginal) => {
     setUrlOriginal(urlOriginal);
     router.push(url, undefined, { shallow: true });
   }, []);
   return (
     <>
-      {profilesManaging && <Profile />}
+      {profilesManaging && <Profile userEmail={userEmail} />}
       {!profilesManaging && (
         <>
           <BillboardHero

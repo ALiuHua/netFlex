@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { getGenres } from "../../helpers/browseHelper";
 import { genreActions } from "../../store/genreSlice";
 import { useDispatch } from "react-redux";
-
+import { useSelector } from "react-redux";
 import {
   HeaderWrapper,
   HeaderContent,
@@ -16,8 +16,11 @@ import {
   BellButton,
   BellIcon,
   ProfileWrapper,
+  SelectedProfile,
+  ProfilesBox,
 } from "./HeaderStyle";
 import Search from "./Search";
+import Image from "next/image";
 import { userActions } from "../../store/userSlice";
 const Header = () => {
   console.log("header running");
@@ -46,7 +49,10 @@ const Header = () => {
       window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
-
+  const selectedUserProfile = useSelector(
+    (state) => state.users.selectedProfile
+  );
+  const allUserProfiles = useSelector((state) => state.users.profiles);
   useEffect(() => {
     //fetch genres data
     console.log("useEffect header genre");
@@ -100,8 +106,35 @@ const Header = () => {
                   <BellIcon />
                 </BellButton>
                 <ProfileWrapper>
-                  <p onClick={() => signOut({ callbackUrl: "/login" })}>我</p>
-                  <p onClick={managingProfilesHandler}>managing</p>
+                  <SelectedProfile>
+                    <Image
+                      src={
+                        selectedUserProfile?.src ||
+                        "/images/avatars/placerholder_1.png"
+                      }
+                      width={32}
+                      height={32}
+                    />
+                  </SelectedProfile>
+                  <ProfilesBox>
+                    {allUserProfiles
+                      .filter(
+                        (profile) =>
+                          profile.avatarId !== selectedUserProfile?.avatarId
+                      )
+                      .map((item) => (
+                        <button>
+                          <Image src={item.src} width={30} height={30} />
+                          <span>{item.profileName}</span>
+                        </button>
+                      ))}
+                    <button onClick={managingProfilesHandler}>
+                      Managing profile
+                    </button>
+                    <button onClick={() => signOut({ callbackUrl: "/login" })}>
+                      Sign out of Neflex
+                    </button>
+                  </ProfilesBox>
                 </ProfileWrapper>
               </AccountTool>
             </>

@@ -27,7 +27,7 @@ export const HeaderWrapper = styled.header`
   ${({ stickyHeader }) =>
     stickyHeader &&
     css`
-      background-color: #141414;
+      background-color: rgba(20, 20, 20);
     `}
   z-index: 10;
   /* background-color: transparent; */
@@ -168,28 +168,6 @@ export const SearchButton = styled.button`
 export const BellButton = styled.button`
   cursor: pointer;
 `;
-export const ProfileWrapper = styled.div`
-  cursor: pointer;
-  p {
-    color: red;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    &::after {
-      content: "";
-      display: inline-block;
-      width: 0;
-      height: 0;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-top: 4px solid #fff;
-      transition: transform 0.2s ease-out;
-    }
-  }
-  :hover p::after {
-    transform: rotate(180deg);
-  }
-`;
 
 export const SearchInput = styled.input`
   width: 0px;
@@ -228,4 +206,186 @@ export const StyledCloseButton = styled(CloseButton)`
   position: absolute;
   top: 50%;
   transform: translate(-100%, -50%);
+`;
+export const ProfilesBox = styled.div`
+  /* display: none; */
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+
+  position: absolute;
+  background-color: rgba(20, 20, 20, 0.9);
+  top: 45px;
+  left: -110px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 180px;
+  padding: 0;
+  transition: all 0.2s ease-in-out;
+
+  button {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    img {
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    span {
+      margin-left: 20px;
+      /* text-decoration: underline; */
+    }
+  }
+  /* margin-top: 20px; */
+  /* &:hover {
+    position: absolute;
+    width: 160px;
+    height: 300px;
+    background-color: rgba(20, 20, 20, 0.9);
+    top: 50px;
+    left: -110px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    border: 1px solid #333;
+    button {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      img {
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      span {
+        margin-left: 20px;
+      }
+    }
+    /* &::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-bottom: 8px solid #eee;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      position: absolute;
+      top: 0;
+      left: 75%;
+      transform: translateY(-105%);
+    } 
+  } */
+`;
+export const SelectedProfile = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  /* padding-bottom: 10px; */
+  ::after {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #fff;
+    transition: transform 0.2s ease-out;
+  }
+  ::before {
+    position: absolute;
+    /* display: none; */
+    bottom: -10px;
+    left: 25%;
+    content: "";
+    width: 0;
+    height: 0;
+    border: 0 solid transparent;
+    opacity: 0;
+  }
+  /* &:hover {
+    &::after {
+      transform: rotate(180deg);
+    }
+    &::before {
+      display: block;
+    }
+  } */
+
+  img {
+    border-radius: 3px;
+  }
+  /* &:hover + ${ProfilesBox} {
+    position: absolute;
+    width: 160px;
+    height: 300px;
+    background-color: rgba(20, 20, 20, 0.9);
+    top: 25px;
+    left: -110px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid #333;
+    button {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      img {
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      span {
+        margin-left: 20px;
+      }
+    }
+  } */
+`;
+export const ProfileWrapper = styled.div`
+  cursor: pointer;
+  position: relative;
+  &:hover ${SelectedProfile} {
+    &::after {
+      transform: rotate(180deg);
+    }
+    &::before {
+      /* display: block; */
+      opacity: 1;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 7px solid #fff;
+      /* border: none; */
+    }
+  }
+  &:hover ${ProfilesBox} {
+    /* position: absolute;
+    width: 180px;
+    height: 300px;
+    background-color: rgba(20, 20, 20, 0.9);
+    top: 50px;
+    left: -110px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid #333;
+    button {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      img {
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      span {
+        margin-left: 20px;
+        
+      }
+    } */
+    height: 300px;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out 100ms;
+    /* transition: height 0.2s ease-in-out 100ms; */
+    padding: 15px;
+    border: 1px solid #333;
+  }
 `;

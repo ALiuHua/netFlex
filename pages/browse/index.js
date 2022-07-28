@@ -32,7 +32,8 @@ const Browse = ({ userEmail, userProfiles }) => {
     const localNetflexInfo = JSON.parse(localStorage.getItem("netflex"));
     if (localNetflexInfo.email === userEmail) {
       dispatch(userActions.setSelectedProfile(localNetflexInfo.profile));
-    } else {
+    }
+    if (userProfiles) {
       dispatch(userActions.setSelectedProfile(userProfiles[0]));
     }
     //     if(localSelectedProfile)

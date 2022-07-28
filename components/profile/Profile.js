@@ -26,7 +26,7 @@ const Profile = () => {
 
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [isAdd, setIsAdd] = useState(false); // add new avatar
-  const [isManaging, setIsManaging] = useState(false); // switch between choos and manage
+  const [isManaging, setIsManaging] = useState(true); // switch between choos and manage
   const [editAvatar, setEditAvatar] = useState(false); // switch to avatar gallery
   const [editProfile, setEditProfile] = useState({
     isEdit: false,

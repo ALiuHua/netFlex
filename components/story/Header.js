@@ -5,6 +5,7 @@ import { getGenres } from "../../helpers/browseHelper";
 import { genreActions } from "../../store/genreSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { EditOverlay } from "../profile/ProfileCard";
 import {
   HeaderWrapper,
   HeaderContent,
@@ -105,7 +106,7 @@ const Header = () => {
                 <BellButton>
                   <BellIcon />
                 </BellButton>
-                <ProfileWrapper>
+                <ProfileWrapper profilesNum={allUserProfiles.length}>
                   <SelectedProfile>
                     <Image
                       src={
@@ -129,10 +130,14 @@ const Header = () => {
                         </button>
                       ))}
                     <button onClick={managingProfilesHandler}>
-                      Managing profile
+                      <div>
+                        <EditOverlay />
+                      </div>
+
+                      <span>Managing profile</span>
                     </button>
                     <button onClick={() => signOut({ callbackUrl: "/login" })}>
-                      Sign out of Neflex
+                      <span>Sign out of Neflex</span>
                     </button>
                   </ProfilesBox>
                 </ProfileWrapper>

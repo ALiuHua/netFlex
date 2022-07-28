@@ -214,7 +214,7 @@ export const ProfilesBox = styled.div`
   overflow: hidden;
 
   position: absolute;
-  background-color: rgba(20, 20, 20, 0.9);
+  background-color: rgba(20, 20, 20, 0.8);
   top: 45px;
   left: -110px;
   display: flex;
@@ -226,17 +226,46 @@ export const ProfilesBox = styled.div`
   transition: all 0.2s ease-in-out;
 
   button {
-    margin-bottom: 10px;
+    padding: 0 15px 0 15px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
     img {
       border-radius: 3px;
       overflow: hidden;
     }
+    div {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      background-color: transparent;
+      svg {
+        width: 95%;
+        height: 95%;
+      }
+    }
     span {
-      margin-left: 20px;
+      margin-left: 10px;
+      font-size: 0.1rem;
       /* text-decoration: underline; */
     }
+  }
+  button:hover {
+    span {
+      text-decoration: underline;
+    }
+  }
+  button:last-child {
+    /* box-sizing: border-box; */
+
+    border-top: 1px solid #888;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   /* margin-top: 20px; */
   /* &:hover {
@@ -290,7 +319,7 @@ export const SelectedProfile = styled.div`
     height: 0;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 4px solid #fff;
+    border-top: 4px solid #ddd;
     transition: transform 0.2s ease-out;
   }
   ::before {
@@ -344,6 +373,7 @@ export const SelectedProfile = styled.div`
 export const ProfileWrapper = styled.div`
   cursor: pointer;
   position: relative;
+
   &:hover ${SelectedProfile} {
     &::after {
       transform: rotate(180deg);
@@ -353,10 +383,12 @@ export const ProfileWrapper = styled.div`
       opacity: 1;
       border-left: 7px solid transparent;
       border-right: 7px solid transparent;
-      border-bottom: 7px solid #fff;
+      border-bottom: 7px solid #ddd;
+      transition: opacity 0.2s ease-in-out 200ms;
       /* border: none; */
     }
   }
+
   &:hover ${ProfilesBox} {
     /* position: absolute;
     width: 180px;
@@ -381,11 +413,16 @@ export const ProfileWrapper = styled.div`
         
       }
     } */
-    height: 300px;
+    /* height: 250px; */
+    height: ${({ profilesNum }) => {
+      console.log(profilesNum);
+      return `${(profilesNum + 1) * 40 + 10}px`;
+    }};
+    max-height: 250px;
     opacity: 1;
-    transition: opacity 0.2s ease-in-out 100ms;
+    transition: opacity 0.2s cubic-bezier(1, 0, 1, 0.3) 200ms;
     /* transition: height 0.2s ease-in-out 100ms; */
-    padding: 15px;
-    border: 1px solid #333;
+    /* padding: 15px; */
+    border: 1px solid #888;
   }
 `;

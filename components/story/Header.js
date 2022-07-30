@@ -70,6 +70,7 @@ const Header = () => {
     };
     getGenresInfo();
   }, []);
+
   return (
     <HeaderWrapper isNavShown={isNavShown} stickyHeader={stickyHeader}>
       <HeaderContent isNavShown={isNavShown}>
@@ -124,7 +125,22 @@ const Header = () => {
                           profile.avatarId !== selectedUserProfile?.avatarId
                       )
                       .map((item) => (
-                        <button>
+                        <button
+                          onClick={() => {
+                            if (pathname === "/browse") {
+                              console.log("reload the page");
+                              router.reload();
+                            } else {
+                              router.push("/browse");
+                            }
+                            // router.push("/browse");
+                            dispatch(userActions.setSelectedProfile(item));
+                            localStorage.setItem(
+                              "netflex",
+                              JSON.stringify(item)
+                            );
+                          }}
+                        >
                           <Image src={item.src} width={30} height={30} />
                           <span>{item.profileName}</span>
                         </button>
@@ -136,7 +152,12 @@ const Header = () => {
 
                       <span>Managing profile</span>
                     </button>
-                    <button onClick={() => signOut({ callbackUrl: "/login" })}>
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem("netflex");
+                        signOut({ callbackUrl: "/login" });
+                      }}
+                    >
                       <span>Sign out of Neflex</span>
                     </button>
                   </ProfilesBox>

@@ -63,7 +63,7 @@ const Profile = () => {
       console.log(userEmail);
       localStorage.setItem(
         "netflex",
-        JSON.stringify({ email: userEmail, profile: param })
+        JSON.stringify(param )
       );
     }
   };

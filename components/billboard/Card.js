@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { detailsActions } from "../../store/detailsSlice";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
+import CardDetail from "./CardDetail";
 import {
   MediaInfo,
   MiniTile,
@@ -28,8 +29,8 @@ import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
 import Player from "./Player";
 import { GenreContext } from "../../pages/browse";
 
-const Card = ({ category, item, onShowMore }) => {
-  // const session = useSession();
+const Card = ({ item, onShowMore, onUpdateList }) => {
+  // const session = useSession();//will use session trigger re-render????
   // console.log(session);
   const dispatch = useDispatch();
   console.log("card running");
@@ -43,10 +44,11 @@ const Card = ({ category, item, onShowMore }) => {
   const cardRef = useRef();
   const [location, setLocation] = useState("middle");
   const [mouseOnCard, setMouseOnCard] = useState(false);
-  const [isInMyList, setIsInMyList] = useState(false);
   const mouseOnCardRef = useRef();
+  //=====we need this value, because we may hover and leave this card reptivly..
   mouseOnCardRef.current = mouseOnCard;
-
+  // const currentUser = useSelector((state) => state.users.email);
+  // const currentProfile = useSelector((state) => state.users.selectedProfile);
   const playHandler = () => {
     onShowMore(`/play/${item.id}?cat=${item.category}`);
     console.log("handler running");
@@ -116,21 +118,24 @@ const Card = ({ category, item, onShowMore }) => {
     setTrailerShow(false);
     dispatch(playerActions.toggleActivePlayer("billboard"));
   };
-  const addToListHandler = async () => {
-    console.log("handlerRunning");
-    const response = await fetch("/api/auth/addToList", {
-      method: "POST",
-      body: JSON.stringify({
-        data: item,
-        user: JSON.parse(localStorage.getItem("netflex")).email,
-        profileName: JSON.parse(localStorage.getItem("netflex")).profile
-          .profileName,
-      }),
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await response.json();
-    console.log(response, data);
-  };
+  // const addToListHandler = async () => {
+  //   console.log("handlerRunning");
+  //   const response = await fetch("/api/auth/addToList", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       data: item,
+  //       // user: JSON.parse(localStorage.getItem("netflex")).email,
+  //       // profileName: JSON.parse(localStorage.getItem("netflex")).profile
+  //       //   .profileName,
+  //       user: currentUser,
+  //       profileName: currentProfile.profileName,
+  //       action: "remove",
+  //     }),
+  //     headers: { "Content-Type": "application/json" },
+  //   });
+  //   const data = await response.json();
+  //   console.log(response, data);
+  // };
   const moreInfoHandler = (e) => {
     console.log(" moreInfoHandler running");
     // const router = useRouter(); this can not use cus will trigger card rendering;
@@ -241,32 +246,41 @@ const Card = ({ category, item, onShowMore }) => {
           moreInfoHandler();
         }}
       >
-        <ActionWrapper>
-          <CirclePlayButton
-            onClick={() => {
-              console.log("media play");
-              playHandler();
-            }}
-          >
-            <PlayIcon />
-          </CirclePlayButton>
-          <button
-            onClick={(e) => {
-              addToListHandler(), e.stopPropagation();
-            }}
-          >
-            1
-          </button>
-          <DetailButton
-            onClick={() => {
-              console.log("media info");
-              moreInfoHandler();
-            }}
-          >
-            <DetailIcon />
-          </DetailButton>
-        </ActionWrapper>
-
+        {mouseOnCard && (
+          <CardDetail
+            onPlay={playHandler}
+            onMoreInfo={moreInfoHandler}
+            item={item}
+            onUpdateList={onUpdateList}
+          />
+        )}
+        {/* {mouseOnCard && (
+          <ActionWrapper>
+            <CirclePlayButton
+              onClick={() => {
+                console.log("media play");
+                playHandler();
+              }}
+            >
+              <PlayIcon />
+            </CirclePlayButton>
+            <button
+              onClick={(e) => {
+                addToListHandler(), e.stopPropagation();
+              }}
+            >
+              1
+            </button>
+            <DetailButton
+              onClick={() => {
+                console.log("media info");
+                moreInfoHandler();
+              }}
+            >
+              <DetailIcon />
+            </DetailButton>
+          </ActionWrapper>
+        )}
         {mouseOnCard && (
           <GenreTag>
             {getItemGenre(item?.genre_ids, genreCtx, 3, item.category).map(
@@ -284,7 +298,7 @@ const Card = ({ category, item, onShowMore }) => {
               }
             )}
           </GenreTag>
-        )}
+        )} */}
       </MediaInfo>
     </CardWrapper>
   );

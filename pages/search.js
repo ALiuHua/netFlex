@@ -5,13 +5,15 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import Details from "../components/details/Details";
 import { getSession } from "next-auth/react";
-const Search = () => {
+import useInitProfiles from "../components/hooks/useInitProfiles";
+const Search = ({ userEmail, userProfiles }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [category, setCategory] = useState(null);
   const [urlOriginal, setUrlOriginal] = useState("/browse");
   const router = useRouter();
   const searchQuery = router.query.q;
   console.log(searchQuery);
+  const { showProfilesManagingPage } = useInitProfiles(userEmail, userProfiles);
   useEffect(() => {
     console.log("search useEffect running");
     let currentRender = true;
@@ -62,9 +64,13 @@ const Search = () => {
 };
 
 export default Search;
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   const session = await getSession(context);
-
+  // const user = session.user;
+  // console.log("data", data);
+  const { email: userEmail, profiles: userProfiles } = session.user;
+  // // console.log(userEmail, userProfiles, !userProfiles);
+  // // check if it's a new user?
   if (!session) {
     return {
       redirect: {
@@ -73,9 +79,28 @@ export async function getServerSideProps(context) {
       },
     };
   }
+  return {
+    props: {
+      // data,
+      userEmail,
+      userProfiles: userProfiles || null,
+    },
+  };
+};
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context);
 
-  return { props: { session } };
-}
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/login",
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return { props: { session } };
+// }
 const SearchContainer = styled.div`
   margin: 8rem auto;
   padding: 0 4%;

@@ -4,6 +4,7 @@ import BillboardHero from "./BillboardHero";
 import Lolomo from "./Lolomo";
 import Details from "../details/Details";
 import Profile from "../profile/Profile";
+import { useSelector } from "react-redux";
 const BrowseContent = ({ category, profilesManaging, userEmail }) => {
   const [urlOriginal, setUrlOriginal] = useState("/browse");
   const router = useRouter();
@@ -13,6 +14,8 @@ const BrowseContent = ({ category, profilesManaging, userEmail }) => {
     setUrlOriginal(urlOriginal);
     router.push(url, undefined, { shallow: true });
   }, []);
+  // const currentProfile = useSelector((state) => state.users.selectedProfile);
+  // how to let page rerender when chang profile???????
   return (
     <>
       {profilesManaging && <Profile userEmail={userEmail} />}

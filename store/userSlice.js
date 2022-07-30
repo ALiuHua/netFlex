@@ -9,6 +9,7 @@ const userSlice = createSlice({
   },
   reducers: {
     setSelectedProfile(state, action) {
+      console.log("set current selected profile");
       state.selectedProfile = action.payload;
     },
     setProfiles(state, action) {

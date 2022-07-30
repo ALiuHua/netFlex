@@ -4,7 +4,9 @@ import { getSession } from "next-auth/react";
 import Card from "../components/billboard/Card";
 import styled from "styled-components";
 import Details from "../components/details/Details";
-const mylist = () => {
+import { useSelector } from "react-redux";
+import useInitProfiles from "../components/hooks/useInitProfiles";
+const mylist = ({ userEmail, userProfiles }) => {
   const router = useRouter();
   const [myList, setMyList] = useState([]);
   const [urlOriginal, setUrlOriginal] = useState("/browse");
@@ -13,6 +15,9 @@ const mylist = () => {
     setUrlOriginal(urlOriginal);
     // setCategory(itemCategory);
   };
+  const currentUser = useSelector((state) => state.users.email);
+  const currentProfile = useSelector((state) => state.users.selectedProfile);
+  const { showProfilesManagingPage } = useInitProfiles(userEmail, userProfiles);
   // useEffect(() => {
   //   const getListItems = async () => {
   //     const res = await fetch("/api/auth/addToList", { method: "GET" });
@@ -22,6 +27,25 @@ const mylist = () => {
   //   };
   //   getListItems();
   // }, []);
+  const updateListHandler = (id) => {
+    console.log(id, "mylist update runing");
+    setMyList((prevList) => prevList.filter((item) => item.id !== id));
+  };
+  const getList = async () => {
+    console.log("getlist", currentUser, currentProfile?.profileName);
+    const response = await fetch(
+      `./api/auth/addToList?user=${currentUser}&profileName=${currentProfile?.profileName}`
+    );
+    const data = await response.json();
+    console.log(data);
+
+    setMyList(data.list);
+  };
+  console.log(myList);
+  useEffect(() => {
+    console.log("this effect running", !currentProfile?.profileName);
+    if (currentProfile?.profileName) getList();
+  }, [currentUser, currentProfile?.profileName]);
   return (
     <>
       <SearchContainer>
@@ -29,10 +53,11 @@ const mylist = () => {
           <CellWrapper key={result.id}>
             <Wrapper>
               <Card
-                category={result.category}
+                // category={result.category}
                 key={result.id}
                 item={result}
                 onShowMore={onShowMore}
+                onUpdateList={updateListHandler}
               />
             </Wrapper>
           </CellWrapper>
@@ -51,9 +76,13 @@ const mylist = () => {
 };
 
 export default mylist;
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   const session = await getSession(context);
-
+  // const user = session.user;
+  // console.log("data", data);
+  const { email: userEmail, profiles: userProfiles } = session.user;
+  // // console.log(userEmail, userProfiles, !userProfiles);
+  // // check if it's a new user?
   if (!session) {
     return {
       redirect: {
@@ -62,9 +91,14 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  console.log(session);
-  return { props: { session } };
-}
+  return {
+    props: {
+      // data,
+      userEmail,
+      userProfiles: userProfiles || null,
+    },
+  };
+};
 
 const SearchContainer = styled.div`
   margin: 8rem auto;

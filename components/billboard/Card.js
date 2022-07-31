@@ -37,7 +37,7 @@ const Card = ({ item, onShowMore, onUpdateList }) => {
   const [playerLoaded, setPlayerLoaded] = useState(false);
   const [trailerShow, setTrailerShow] = useState(false);
   // const genreCtx = useContext(GenreContext);
-  const genreCtx = useSelector((state) => state.genre.genres);
+  // const genreCtx = useSelector((state) => state.genre.genres);
 
   const [timer, setTimer] = useState(null);
   const vPlayer = useRef();

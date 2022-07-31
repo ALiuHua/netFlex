@@ -9,6 +9,7 @@ import { AvatarWrapper } from "./ProfileCard";
 import { EditOverlay } from "./ProfileCard";
 import { userActions } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 const getAvatars = () => {
   let avatars = [];
   for (let i = 1; i < 12; i++) {
@@ -23,7 +24,7 @@ const getAvatars = () => {
 const Profile = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [isAdd, setIsAdd] = useState(false); // add new avatar
   const [isManaging, setIsManaging] = useState(true); // switch between choos and manage
@@ -58,13 +59,15 @@ const Profile = () => {
     } else {
       // setSelectedAvatar(param);
 
-      dispatch(userActions.setSelectedProfile(param));
-      dispatch(userActions.setShowManagingProfile(false));
+      // dispatch(userActions.setSelectedProfile(param));
+      // dispatch(userActions.setShowManagingProfile(false));
       console.log(userEmail);
-      localStorage.setItem(
-        "netflex",
-        JSON.stringify(param )
-      );
+      if (router.pathname === "/browse") {
+        router.reload();
+      } else {
+        router.push("/browse");
+      }
+      localStorage.setItem("netflex", JSON.stringify(param));
     }
   };
   const cancelButtonHandler = () => {

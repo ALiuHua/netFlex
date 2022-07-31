@@ -38,7 +38,7 @@ export const briefInfo = (infoText, num) => {
   return shortInfo;
 };
 
-const BillboardHero = ({ category, onShowMore }) => {
+const BillboardHero = ({ category, onShowMore, setIsLoading }) => {
   //category ==movies/Tvshows
   const activePlayer = useSelector((state) => state.player.activePlayer);
   const dispatch = useDispatch();
@@ -96,7 +96,9 @@ const BillboardHero = ({ category, onShowMore }) => {
           bannerData.category,
           bannerData.id
         );
+
         timeoutId = setTimeout(() => {
+          setIsLoading(false);
           setTrailer(fetchedTrailer);
           setPlayCompleted(false);
         }, 1000);

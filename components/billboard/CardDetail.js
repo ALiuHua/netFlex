@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
+import { ListButton } from "../ui/Buttons";
 import {
   MediaInfo,
   MiniTile,
@@ -73,6 +74,17 @@ const CardDetail = ({ onPlay, onMoreInfo, item, onUpdateList }) => {
           <PlayIcon />
         </CirclePlayButton>
         {listIconState && (
+          <ListButton
+            isChecked={isInMyList}
+            onClick={(e) => {
+              addToListHandler();
+              console.log(onUpdateList);
+              if (!!onUpdateList) onUpdateList(item.id);
+              e.stopPropagation();
+            }}
+          />
+        )}
+        {/* {listIconState && (
           <button
             onClick={(e) => {
               addToListHandler();
@@ -83,7 +95,7 @@ const CardDetail = ({ onPlay, onMoreInfo, item, onUpdateList }) => {
           >
             {isInMyList ? "-" : "+"}
           </button>
-        )}
+        )} */}
         <DetailButton
           onClick={() => {
             console.log("media info");

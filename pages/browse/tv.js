@@ -18,7 +18,7 @@ export const getServerSideProps = async (context) => {
   const session = await getSession(context);
   // const user = session.user;
   // console.log("data", data);
-  const { email: userEmail, profiles: userProfiles } = session.user;
+
   // // console.log(userEmail, userProfiles, !userProfiles);
   // // check if it's a new user?
   if (!session) {
@@ -29,6 +29,7 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
+  const { email: userEmail, profiles: userProfiles } = session.user;
   return {
     props: {
       // data,

@@ -17,7 +17,7 @@ const useInitProfiles = (userEmail, userProfiles) => {
   }, [userProfiles, userEmail]);
   useEffect(() => {
     const localNetflexInfo = JSON.parse(localStorage.getItem("netflex"));
-    if (localNetflexInfo) {
+    if (localNetflexInfo && userProfiles.length !== 0) {
       dispatch(userActions.setSelectedProfile(localNetflexInfo));
     }
     if (!localNetflexInfo && userProfiles) {
@@ -33,6 +33,8 @@ const useInitProfiles = (userEmail, userProfiles) => {
   const showProfilesManagingPage = userProfiles
     ? showManagingProfile
     : !!hasProfileSelected === showManagingProfile;
+  // const showProfilesManagingPage = !userProfiles || showManagingProfile;
+
   return { showProfilesManagingPage };
 };
 

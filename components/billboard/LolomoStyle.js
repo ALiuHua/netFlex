@@ -60,6 +60,8 @@ export const Carousel = styled(Slider)`
   width: 100%;
   margin: 0 auto;
   aspect-ratio: 75/8;
+  position: relative;
+  z-index: 1;
   @media (max-width: 87.5em) {
     aspect-ratio: 45/4;
   }
@@ -142,7 +144,6 @@ export const Carousel = styled(Slider)`
       @media (min-width: 50em) {
         width: 33.333%;
       }
-      
     }
     .slick-slide:hover {
       position: relative;

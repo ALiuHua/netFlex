@@ -9,6 +9,7 @@ import useInitProfiles from "../components/hooks/useInitProfiles";
 const mylist = ({ userEmail, userProfiles }) => {
   const router = useRouter();
   const [myList, setMyList] = useState([]);
+  const [notification, setNotification] = useState(null);
   const [urlOriginal, setUrlOriginal] = useState("/browse");
   const onShowMore = (url, urlOriginal) => {
     router.push(url, undefined, { shallow: true });
@@ -80,7 +81,8 @@ export const getServerSideProps = async (context) => {
   const session = await getSession(context);
   // const user = session.user;
   // console.log("data", data);
-  const { email: userEmail, profiles: userProfiles } = session.user;
+  console.log(session);
+
   // // console.log(userEmail, userProfiles, !userProfiles);
   // // check if it's a new user?
   if (!session) {
@@ -91,9 +93,10 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
+  const { email: userEmail, profiles: userProfiles } = session.user;
   return {
     props: {
-      // data,
+      // session,
       userEmail,
       userProfiles: userProfiles || null,
     },

@@ -1,7 +1,7 @@
 import React from "react";
-import Profile from "../components/profile/Profile";
+import LoadingOverlay from "../components/ui/LoadingOverlay";
 const Test1 = () => {
-  return <Profile />;
+  return <LoadingOverlay />;
 };
 
 export default Test1;

@@ -19,7 +19,7 @@ export default function Home() {
 // we should always try to keep page componnet lean
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-
+  console.log(session);
   if (session) {
     return {
       redirect: {

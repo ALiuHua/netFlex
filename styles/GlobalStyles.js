@@ -27,6 +27,7 @@ export const GlobalStyles = createGlobalStyle`
 html{
 /* display: block; */
     font-size: 62.5%; //10px
+    background-color: #141414;
     /* -webkit-text-size-adjust: 100%; */
     @media only screen and (max-width:${({ theme }) => theme.mediaSmall}) {
         font-size: 50%;
@@ -40,6 +41,7 @@ body{
     font-family: sans-serif;
     font-weight: 400;
     line-height:1.1;
+  
     font-size:1.6rem;
     box-sizing: border-box;
     background-color:${({ theme }) => theme.backgroundColor};

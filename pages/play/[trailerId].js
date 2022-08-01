@@ -10,7 +10,6 @@ export const PlayerPage = () => {
   useEffect(() => {
     const fetchCardData = async () => {
       try {
-        console.log(router.query.trailerId);
         const fetchedTrailer = await getTrailer(
           router.query.cat,
           router.query.trailerId
@@ -26,12 +25,11 @@ export const PlayerPage = () => {
         }
       }
     };
-    console.log(trailer);
     fetchCardData();
     return () => {
       setTrailer(null);
     };
-  }, [router.query.trailerId]);
+  }, [router.query.trailerId, router.query.cat]);
 
   //x7Krla_UxRg   6sosTNRw_uQ    TWTfhyvzTx0   b9EkMc79ZSU
   return (

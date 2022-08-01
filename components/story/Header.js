@@ -35,6 +35,13 @@ const Header = () => {
   const dispatch = useDispatch();
   const managingProfilesHandler = () => {
     dispatch(userActions.setShowManagingProfile(true));
+    router.push("/browse");
+    // if (pathname === "/browse") {
+    //   console.log("reload the page");
+    //   router.reload();
+    // } else {
+    //   router.push("/browse");
+    // }
   };
   useEffect(() => {
     // sticky header and background-color change
@@ -126,6 +133,7 @@ const Header = () => {
                       )
                       .map((item) => (
                         <button
+                          key={item.avatarId}
                           onClick={() => {
                             if (pathname === "/browse") {
                               console.log("reload the page");
@@ -134,7 +142,7 @@ const Header = () => {
                               router.push("/browse");
                             }
                             // router.push("/browse");
-                            dispatch(userActions.setSelectedProfile(item));
+                            // dispatch(userActions.setSelectedProfile(item));
                             localStorage.setItem(
                               "netflex",
                               JSON.stringify(item)

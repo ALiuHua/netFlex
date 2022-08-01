@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Details from "../components/details/Details";
 import { useSelector } from "react-redux";
 import useInitProfiles from "../components/hooks/useInitProfiles";
-const mylist = ({ userEmail, userProfiles }) => {
+const Mylist = ({ userEmail, userProfiles }) => {
   const router = useRouter();
   const [myList, setMyList] = useState([]);
   const [notification, setNotification] = useState(null);
@@ -32,38 +32,42 @@ const mylist = ({ userEmail, userProfiles }) => {
     console.log(id, "mylist update runing");
     setMyList((prevList) => prevList.filter((item) => item.id !== id));
   };
-  const getList = async () => {
-    console.log("getlist", currentUser, currentProfile?.profileName);
-    const response = await fetch(
-      `./api/auth/addToList?user=${currentUser}&profileName=${currentProfile?.profileName}`
-    );
-    const data = await response.json();
-    console.log(data);
 
-    setMyList(data.list);
-  };
-  console.log(myList);
   useEffect(() => {
+    const getList = async () => {
+      console.log("getlist", currentUser, currentProfile?.profileName);
+      const response = await fetch(
+        `./api/auth/addToList?user=${currentUser}&profileName=${currentProfile?.profileName}`
+      );
+      const data = await response.json();
+      console.log(data);
+      if (data.list.length > 0) {
+        return setMyList(data.list);
+      }
+      setNotification("You haven't added any titles to your list yet.");
+    };
     console.log("this effect running", !currentProfile?.profileName);
     if (currentProfile?.profileName) getList();
   }, [currentUser, currentProfile?.profileName]);
   return (
-    <>
-      <SearchContainer>
-        {myList.map((result) => (
-          <CellWrapper key={result.id}>
-            <Wrapper>
-              <Card
-                // category={result.category}
-                key={result.id}
-                item={result}
-                onShowMore={onShowMore}
-                onUpdateList={updateListHandler}
-              />
-            </Wrapper>
-          </CellWrapper>
-        ))}
-      </SearchContainer>
+    <GalleryWrapper>
+      {myList.length > 0 && (
+        <SearchContainer>
+          {myList.map((result) => (
+            <CellWrapper key={result.id}>
+              <Wrapper>
+                <Card
+                  // category={result.category}
+                  key={result.id}
+                  item={result}
+                  onShowMore={onShowMore}
+                  onUpdateList={updateListHandler}
+                />
+              </Wrapper>
+            </CellWrapper>
+          ))}
+        </SearchContainer>
+      )}
       {router.query.jbv && (
         <Details
           // category={category}
@@ -72,11 +76,16 @@ const mylist = ({ userEmail, userProfiles }) => {
           //   detailsPoster={detailsPoster}
         />
       )}
-    </>
+      {notification && (
+        <Notification>
+          <p>{notification}</p>
+        </Notification>
+      )}
+    </GalleryWrapper>
   );
 };
 
-export default mylist;
+export default Mylist;
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
   // const user = session.user;
@@ -102,15 +111,17 @@ export const getServerSideProps = async (context) => {
     },
   };
 };
-
-const SearchContainer = styled.div`
-  margin: 8rem auto;
+const GalleryWrapper = styled.div`
+  height: 100vh;
   padding: 0 4%;
+  margin: 8rem auto;
+`;
+const SearchContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-row-gap: 6.2rem;
   grid-column-gap: 10px;
-  height: 100vh; // not opt
+  /* height: 100vh; // not opt */
   grid-auto-rows: min-content; // avoid row occupy whole grid container.
   align-items: start;
   @media screen and (max-width: 87.5em) {
@@ -142,4 +153,10 @@ const Wrapper = styled.div`
   &:hover {
     z-index: 10;
   }
+`;
+const Notification = styled.div`
+  padding-top: 18rem;
+  color: #666;
+  font-size: 1.8rem;
+  text-align: center;
 `;

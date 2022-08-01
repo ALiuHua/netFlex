@@ -73,11 +73,12 @@ export default async function handler(req, res) {
     } else {
       const listItems = await db
         .collection("mylist")
-        .find({ user: user, profileName: profileName })
-        .toArray();
+        .findOne({ user: user, profileName: profileName });
 
       console.log("listItems", listItems);
-      res.status(201).json({ list: listItems[0].mylist || [] });
+      //1. new profile, return undefine  2. have mylist but a []  3 mylist [....]
+      res.status(201).json({ list: listItems?.mylist || [] });
+      //can not json a undefined value, otherwise will throw a error.
     }
 
     client.close();

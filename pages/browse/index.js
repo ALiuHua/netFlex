@@ -10,41 +10,8 @@ import useInitProfiles from "../../components/hooks/useInitProfiles";
 
 const Browse = ({ userEmail, userProfiles }) => {
   const { showProfilesManagingPage } = useInitProfiles(userEmail, userProfiles);
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   console.log("index of browsen useeffect running", userProfiles);
-  //   dispatch(
-  //     userActions.setProfiles({
-  //       type: "SET_PROFILE",
-  //       payload: userProfiles || [],
-  //     })
-  //   );
-  //   console.log(userEmail);
-  //   dispatch(userActions.setEmail(userEmail)); // we may not need this
-  // }, [userProfiles, userEmail]);
-  // useEffect(() => {
-  //   const localNetflexInfo = JSON.parse(localStorage.getItem("netflex"));
-  //   if (localNetflexInfo) {
-  //     dispatch(userActions.setSelectedProfile(localNetflexInfo));
-  //   }
-  //   if (!localNetflexInfo && userProfiles) {
-  //     dispatch(userActions.setSelectedProfile(userProfiles[0]));
-  //   }
-  // }, []);
 
-  // const showManagingProfile = useSelector(
-  //   (state) => state.users.showManagingProfile
-  // );
-  // const hasProfileSelected = useSelector(
-  //   (state) => state.users.selectedProfile
-  // );
-  // console.log(
-  //   showManagingProfile === !!userProfiles || hasProfileSelected,
-  //   showManagingProfile,
-  //   !!userProfiles,
-  //   hasProfileSelected
-  // );
-
+  console.log("borwse index running");
   return (
     <BrowseContent
       category="browse"

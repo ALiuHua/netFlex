@@ -180,120 +180,122 @@ const Profile = () => {
   // useEffect to define if there is no profiles we need to set it into isManaging into true.
   return (
     <ProfileWrapper>
-      {!editProfile.isEdit && (
-        <>
-          <p>{isManaging ? "Manage profiles" : "Who's watching?"}</p>
-          <FlexContainer>
-            {profiles.map((profile) => (
-              <ProfileCard
-                key={profile.avatarId}
-                isManaging={isManaging}
-                avatarSrc={profile.src}
-                width={200}
-                height={200}
-                avatarId={profile.avatarId}
-                profileId={profile.profileName}
-                onClick={profileEditHandler.bind(undefined, profile)}
-              />
-            ))}
+      <ProfileContent>
+        {" "}
+        {!editProfile.isEdit && (
+          <>
+            <p>{isManaging ? "Manage profiles" : "Who's watching?"}</p>
+            <FlexContainer>
+              {profiles.map((profile) => (
+                <ProfileCard
+                  key={profile.avatarId}
+                  isManaging={isManaging}
+                  avatarSrc={profile.src}
+                  width={200}
+                  height={200}
+                  avatarId={profile.avatarId}
+                  profileId={profile.profileName}
+                  onClick={profileEditHandler.bind(undefined, profile)}
+                />
+              ))}
 
-            {profiles.length < 5 && (
-              <CreateNewUserButton onClick={createProfileHandler}>
-                <PlusIcon />
-                <span>Add profile</span>
-              </CreateNewUserButton>
-            )}
-          </FlexContainer>
-          <Button
-            styled={isManaging}
-            onClick={() => {
-              // const postProfiles = async () => {
-              //   const client = await db();
-              //   const result = await db
-              //     .collections("profiles")
-              //     .insetMany(profiles);
-              //   console.log(result);
-              // };
-              // if (isManaging) postProfiles();
-              console.log("toggle is managing");
-              setIsManaging((prev) => !prev);
-              updateProfilesData(profiles, session.user.email);
-            }}
-          >
-            {isManaging ? "Done" : "Manage Profiles"}
-          </Button>
-        </>
-      )}
-
-      {editProfile.isEdit && (
-        <>
-          {!editAvatar && (
-            <>
-              <FlexContainer flexDirection="column">
-                <p>Edit Profile</p>
-                <ProfileContainer>
-                  <AvatarWrapper
-                    onClick={() => {
-                      setEditAvatar(true);
-                    }}
-                  >
-                    <Image
-                      src={editProfile.editedProfile.src}
-                      width={200}
-                      height={200}
-                    />
-                    <EditOverlay />
-                  </AvatarWrapper>
-                  <Input
-                    type="text"
-                    placeholder="Name"
-                    value={editProfile.editedProfile.profileName}
-                    onChange={(e) =>
-                      setEditProfile((prev) => {
-                        return {
-                          ...prev,
-                          editedProfile: {
-                            ...prev.editedProfile,
-                            profileName: e.target.value,
-                          },
-                        };
-                      })
-                    }
-                  />
-                </ProfileContainer>
-                <ButtonBox>
-                  <Button styled={true} onClick={saveButtonHandler}>
-                    Save
-                  </Button>
-                  <Button onClick={cancelButtonHandler}>Cancel</Button>
-                  <Button onClick={deleteProfileButtonHandler}>
-                    Delete profile
-                  </Button>
-                </ButtonBox>
-              </FlexContainer>
-            </>
-          )}
-          {editAvatar && (
-            <>
-              <p>choose your avatar icon</p>
-              <FlexContainer>
-                {getAvatars().map((avatar) => {
-                  return profiles.find(
-                    (profile) => profile.avatarId === avatar.avatarId
-                  ) ? null : (
+              {profiles.length < 5 && (
+                <CreateNewUserButton onClick={createProfileHandler}>
+                  <PlusIcon />
+                  <span>Add profile</span>
+                </CreateNewUserButton>
+              )}
+            </FlexContainer>
+            <Button
+              styled={isManaging}
+              onClick={() => {
+                // const postProfiles = async () => {
+                //   const client = await db();
+                //   const result = await db
+                //     .collections("profiles")
+                //     .insetMany(profiles);
+                //   console.log(result);
+                // };
+                // if (isManaging) postProfiles();
+                console.log("toggle is managing");
+                setIsManaging((prev) => !prev);
+                updateProfilesData(profiles, session.user.email);
+              }}
+            >
+              {isManaging ? "Done" : "Manage Profiles"}
+            </Button>
+          </>
+        )}
+        {editProfile.isEdit && (
+          <>
+            {!editAvatar && (
+              <>
+                <FlexContainer flexDirection="column">
+                  <p>Edit Profile</p>
+                  <ProfileContainer>
                     <AvatarWrapper
-                      key={avatar.avatarId}
-                      onClick={setAvatarHandler.bind(undefined, avatar)}
+                      onClick={() => {
+                        setEditAvatar(true);
+                      }}
                     >
-                      <Image src={avatar.src} width={200} height={200} />
+                      <Image
+                        src={editProfile.editedProfile.src}
+                        width={200}
+                        height={200}
+                      />
+                      <EditOverlay />
                     </AvatarWrapper>
-                  );
-                })}
-              </FlexContainer>
-            </>
-          )}
-        </>
-      )}
+                    <Input
+                      type="text"
+                      placeholder="Name"
+                      value={editProfile.editedProfile.profileName}
+                      onChange={(e) =>
+                        setEditProfile((prev) => {
+                          return {
+                            ...prev,
+                            editedProfile: {
+                              ...prev.editedProfile,
+                              profileName: e.target.value,
+                            },
+                          };
+                        })
+                      }
+                    />
+                  </ProfileContainer>
+                  <ButtonBox>
+                    <Button styled={true} onClick={saveButtonHandler}>
+                      Save
+                    </Button>
+                    <Button onClick={cancelButtonHandler}>Cancel</Button>
+                    <Button onClick={deleteProfileButtonHandler}>
+                      Delete profile
+                    </Button>
+                  </ButtonBox>
+                </FlexContainer>
+              </>
+            )}
+            {editAvatar && (
+              <>
+                <p>choose your avatar icon</p>
+                <FlexContainer>
+                  {getAvatars().map((avatar) => {
+                    return profiles.find(
+                      (profile) => profile.avatarId === avatar.avatarId
+                    ) ? null : (
+                      <AvatarWrapper
+                        key={avatar.avatarId}
+                        onClick={setAvatarHandler.bind(undefined, avatar)}
+                      >
+                        <Image src={avatar.src} width={200} height={200} />
+                      </AvatarWrapper>
+                    );
+                  })}
+                </FlexContainer>
+              </>
+            )}
+          </>
+        )}
+      </ProfileContent>
     </ProfileWrapper>
   );
 };
@@ -301,11 +303,30 @@ const Profile = () => {
 export default Profile;
 export const ProfileWrapper = styled.div`
   /* width: 80%; */
-  padding: 0 4.5rem;
-  margin: 20px auto;
+  /* padding: 0 4.5rem; */
+  /* margin: 20px auto; */
   text-align: center;
   font-size: 3rem;
-  font-weight: 700; ;
+  font-weight: 700;
+
+  //
+  /* padding-top: 150px; */
+  height: 100vh;
+  position: absolute;
+  background-color: #141414;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1500;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+`;
+export const ProfileContent = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 export const FlexContainer = styled.div`
   display: flex;

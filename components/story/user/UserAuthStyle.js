@@ -128,7 +128,13 @@ export const FormButton = styled.button`
         height: 100%;
       }
       &::after {
-        content: "◝";
+        content: "";
+        width: 30px;
+        height: 30px;
+        border-top: 2px solid #fff;
+        border-radius: 50%;
+        border-left: 1px solid #fff;
+        border-right: 2px solid transparent;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -163,8 +169,9 @@ export const SignUpButton = styled.button`
   display: inline-block;
   padding: 0 3px;
   color: #eee;
+  font-size: 1.6rem;
 `;
-export const ErrorInfo = styled.p`
+export const Message = styled.p`
   width: 100%;
   background-color: #e87c03;
   padding: 5px 20px;

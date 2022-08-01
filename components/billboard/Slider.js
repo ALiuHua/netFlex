@@ -11,7 +11,7 @@ const Slider = ({ category, item, onShowMore }) => {
       setContentItems(RowItems);
     };
     fetchRow();
-  }, []);
+  }, [category, item]);
   return (
     <LolomoSlider item={item}>
       {contentItems.map((data, index) => (

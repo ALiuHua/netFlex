@@ -42,6 +42,14 @@ const Search = ({ pathname, router }) => {
       console.log("search router push");
     }
   }, [searchQuery, showSearchBar, urlState]);
+
+  //new to resolve the problem when we router from search page without close search bar
+  useEffect(() => {
+    if (pathname !== "/search") {
+      setShowSearchBar(false);
+      setSearchQuery("");
+    }
+  }, [pathname]);
   return (
     <SearchBox showSearchBar={showSearchBar} ref={searchRef}>
       <SearchInput

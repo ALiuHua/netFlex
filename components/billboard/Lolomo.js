@@ -18,7 +18,7 @@ const Lolomo = React.memo(({ category, onShowMore }) => {
     return () => {
       removeEventListener("scroll", onScrollHandler);
     };
-  }, []);
+  }, [category]);
   console.log("lolomo running");
   console.log(rowNumber);
   return (

@@ -23,7 +23,9 @@ async function handler(req, res) {
   const result = await db
     .collection("users")
     .insertOne({ email, password: hashedPassword });
-  res.status(201).json({ message: "User created" });
+  res
+    .status(201)
+    .json({ message: "Account has been created. you can sign in now." });
   client.close();
 }
 export default handler;

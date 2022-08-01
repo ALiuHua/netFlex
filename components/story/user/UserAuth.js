@@ -10,7 +10,7 @@ import {
   AlertInfo,
   SignUpNow,
   SignUpButton,
-  ErrorInfo,
+  Message,
 } from "./UserAuthStyle";
 import { Background } from "../hero/Hero";
 import UserInput from "./UserInput";
@@ -67,7 +67,7 @@ const UserAuth = () => {
   const [isPasswordTouched, setIsPasswordTouched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSignin, setIsSignin] = useState(true);
-  const [err, setErr] = useState(null);
+  const [message, setMessage] = useState(null);
   const router = useRouter();
   const query = router.query;
   console.log(query);
@@ -100,14 +100,13 @@ const UserAuth = () => {
         email: emailState.enteredEmail,
         password: passwordState.enteredPassword,
       });
-      console.log(result);
-      console.log(result.error);
       // setIsLoading(false);
       if (!result.error) {
         // setIsLoading(false);
         router.replace(`/browse`);
       } else {
-        setErr(
+        // console.log(JSON.stringify(result.error));
+        setMessage(
           "Sorry, we can not log this account in. Please input correct email and password."
         );
         setIsLoading(false);
@@ -123,11 +122,13 @@ const UserAuth = () => {
           passwordState.enteredPassword
         );
         console.log(result);
+        setMessage(result.message);
         setIsLoading(false);
+        setIsSignin(true);
       } catch (err) {
         console.error(err);
         setIsLoading(false);
-        setErr(err.message);
+        setMessage(err.message);
       }
     }
   }
@@ -139,8 +140,8 @@ const UserAuth = () => {
       <Background src={heroImage} altInfo="film poster collections" />
       <SignInWrapper>
         <SignInContent>
-          <h2>{isSignin ? "Sign in" : "Sign Up"}</h2>
-          {err && <ErrorInfo>{err}</ErrorInfo>}
+          <h2>{isSignin ? "Sign In" : "Sign Up"}</h2>
+          {message && <Message>{message}</Message>}
           <Form>
             <UserInput
               type="email"
@@ -188,21 +189,20 @@ const UserAuth = () => {
               isLoading={isLoading}
               type="submit"
               onClick={submitHandler}
+              disabled={isLoading}
             >
-              {isSignin ? "Sign in" : "Sign Up"}
+              {isSignin ? "Sign In" : "Sign Up"}
             </FormButton>
           </Form>
           <SignUpNow>
-            {isSignin
-              ? " Need to create an account?"
-              : "Already have an account?"}
+            {isSignin ? " New to Netflex?" : "Already have an account?"}
             <SignUpButton
               onClick={() => {
                 setIsSignin((prev) => !prev);
-                if (err) setErr(null);
+                if (message) setMessage(null);
               }}
             >
-              {isSignin ? "Sign up" : "Sign in"}
+              {isSignin ? "Sign Up" : "Sign In"}
             </SignUpButton>
           </SignUpNow>
           <AlertInfo>

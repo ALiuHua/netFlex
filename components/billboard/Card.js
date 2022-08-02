@@ -21,11 +21,12 @@ import {
   // ActionWrapper,
   GradientLayer,
 } from "./CardStyle";
-import EmbedButtonBox from "../ui/Buttons";
+import EmbedButtonBox, { MuteButton } from "../ui/Buttons";
 // import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
 
 import Player from "./Player";
 import { GenreContext } from "../../pages/browse";
+import styled from "styled-components";
 
 const Card = ({ item, onShowMore, onUpdateList }) => {
   // const session = useSession();//will use session trigger re-render????
@@ -222,17 +223,9 @@ const Card = ({ item, onShowMore, onUpdateList }) => {
               playing={true}
               player="card"
             />
-            <div
-              style={{
-                position: "absolute",
-                zIndex: "5",
-                bottom: "0",
-                right: "0",
-                opacity: "0.5",
-              }}
-            >
-              <EmbedButtonBox showMuteToggling={trailerShow} scaled="0.35" />
-            </div>
+            <ButtonWrapper>
+              <EmbedButtonBox showMuteToggling={trailerShow} />
+            </ButtonWrapper>
           </>
         )}
       </MediaContent>
@@ -303,3 +296,14 @@ const Card = ({ item, onShowMore, onUpdateList }) => {
 };
 
 export default Card;
+
+export const ButtonWrapper = styled.div`
+  position: absolute;
+  z-index: 5;
+  bottom: 0px;
+  right: 0px;
+
+  button {
+    transform: scale(0.45);
+  }
+`;

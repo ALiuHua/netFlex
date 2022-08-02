@@ -133,11 +133,12 @@ const Details = ({ category, urlOriginal, genreContext }) => {
                   // playHandler();
                   // don‘t need this with 事件委托
                 }}
-              >
-                <PlayIcon />
-              </CirclePlayButton>
+              />
             </ButtonBox>
-            <div
+
+            <EmbedButtonBox showMuteToggling={true} scaled={0.5} />
+
+            {/* <div
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -147,7 +148,7 @@ const Details = ({ category, urlOriginal, genreContext }) => {
               }}
             >
               <EmbedButtonBox showMuteToggling={true} scaled={0.5} />
-            </div>
+            </div> */}
           </ActionsBox>
           <CloseButton
             onClick={(e) => {

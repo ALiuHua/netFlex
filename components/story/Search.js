@@ -7,7 +7,8 @@ import {
   SearchBox,
   // CloseButton,
 } from "./HeaderStyle";
-import { CloseButton } from "../ui/Buttons";
+// import { CloseButton } from "../ui/Buttons";
+import { SearchCloseButton } from "./HeaderStyle";
 const Search = ({ pathname, router }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -74,7 +75,7 @@ const Search = ({ pathname, router }) => {
         <SearchIcon />
       </SearchButton>
       {searchQuery && (
-        <CloseButton
+        <SearchCloseButton
           onClick={() => {
             setShowSearchBar(false);
             setSearchQuery("");

@@ -113,27 +113,28 @@ export const ActionWrapper = styled.div`
   width: 100%;
   display: flex !important;
   justify-content: space-between !important;
+  align-items: center;
 `;
 
-export const DetailButton = styled.button`
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: 50%;
-  border: 1px solid currentColor;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  :hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  /* transform: scale(0.35); */
-  svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-    padding: 0.2rem;
-    display: inline-block;
-  }
-`;
+// export const DetailButton = styled.button`
+//   width: 2.4rem;
+//   height: 2.4rem;
+//   border-radius: 50%;
+//   border: 1px solid currentColor;
+//   cursor: pointer;
+//   transition: background-color 0.2s;
+//   :hover {
+//     background-color: rgba(255, 255, 255, 0.1);
+//   }
+//   /* transform: scale(0.35); */
+//   svg {
+//     width: 100%;
+//     height: 100%;
+//     fill: currentColor;
+//     padding: 0.2rem;
+//     display: inline-block;
+//   }
+// `;
 export const GradientLayer = styled.div`
   position: absolute;
   left: 0;

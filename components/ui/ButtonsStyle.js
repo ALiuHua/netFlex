@@ -1,16 +1,20 @@
 import styled from "styled-components";
 // This is the icon button for add/remove from mylist
 export const ToggleListButton = styled.button`
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   border-radius: 50%;
   border: 1px solid #fff;
   margin-right: auto;
   margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   svg {
-    width: 2rem;
-    height: 2rem;
-    padding: 4px;
+    // this is also a good way to align the svg in the center of button , because we can not use display:flex here cause of dispaly:none
+    width: 100%;
+    height: 100%;
+    padding: 0.2rem;
   }
 `;
 export const StyledCloseButton = styled.button`
@@ -109,6 +113,25 @@ export const StyledMoreInfoButton = styled(StyledPlayButton)`
   }
 `;
 export const StyledDetailButton = styled.button`
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  :hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  /* transform: scale(0.35); */
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    padding: 0.2rem;
+    display: inline-block;
+  }
+`;
+export const StyledCirclePlayButton = styled.button`
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 50%;

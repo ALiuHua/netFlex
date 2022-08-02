@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { CloseButton } from "../ui/Buttons";
 import Link from "next/link";
 // import { StyledCloseButton } from "../ui/ButtonsStyle";
 export const HeaderWrapper = styled.header`
@@ -283,6 +284,7 @@ export const ProfilesBox = styled.div`
     align-items: center;
     justify-content: center;
   }
+
   /* margin-top: 20px; */
   /* &:hover {
     position: absolute;
@@ -321,6 +323,11 @@ export const ProfilesBox = styled.div`
       transform: translateY(-105%);
     } 
   } */
+`;
+export const SearchCloseButton = styled(CloseButton)`
+  background-color: transparent;
+  top: 0;
+  right: 0;
 `;
 export const SelectedProfile = styled.div`
   position: relative;

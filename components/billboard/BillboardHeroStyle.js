@@ -135,7 +135,7 @@ export const DescriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 3rem;
+  /* gap: 1rem; */
 `;
 export const Description = styled.div`
   /* width: 36%;
@@ -145,12 +145,14 @@ export const Description = styled.div`
   h1 {
     font-size: 6.4rem;
     transition: all 1.3s ease-in 1.2s;
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
+    padding-bottom: 3rem;
     @media (max-width: 68.75em) {
       font-size: 5rem;
     }
     @media (max-width: 50em) {
-      font-size: 4rem;
+      font-size: 3.5rem;
+      padding-bottom: 1.5rem;
     }
     ${({ showPlayer }) =>
       showPlayer &&
@@ -158,7 +160,7 @@ export const Description = styled.div`
         /* font-size: 3.2rem; */
         transform: scale(0.55);
         transform-origin: bottom left;
-        margin-bottom: -4.5%;
+        padding-bottom: 0;
       `}
   }
   p {
@@ -178,7 +180,9 @@ export const Description = styled.div`
 
 export const ActionBox = styled.div`
   display: flex;
-  width: 100%;
+  /* width: 100%; */
+  // in order to use scale, because we need scale details and hero, so we just use transform-origin:center
+  transform: translateY(50%);
 `;
 // export const ButtonBox = styled.div`
 //   position: absolute;
@@ -191,14 +195,13 @@ export const ActionBox = styled.div`
 //     `}
 // `;
 export const ButtonBox = styled.div`
-  /* position: absolute;
-  bottom: 0;
-  right: 6%;
-  z-index: 2; */
+  /* width: 2.4rem;
+  height: 2.4rem; */
   ${({ scaled }) =>
+    scaled &&
     css`
       transform: scale(${scaled});
-      transform-origin: 50% 100%;
+      /* transform-origin: 50% 100%; */
       @media (max-width: 68.75em) {
         transform: scale(${scaled / 1.2});
       }
@@ -210,6 +213,11 @@ export const ButtonBox = styled.div`
       }
     `}
 `;
+// export const ButtonWrapper = styled.div`
+// position: re;
+
+// `;
+
 // export const MuteButton = styled.button`
 //   width: 5.3rem;
 //   height: 5.3rem;

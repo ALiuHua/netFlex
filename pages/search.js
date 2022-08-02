@@ -129,9 +129,12 @@ export const getServerSideProps = async (context) => {
 // }
 const GalleryWrapper = styled.div`
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   padding: 0 4%;
   margin: 8rem auto;
+  @media (max-width: 50em) {
+    min-height: 55vh;
+  }
 `;
 const SearchContainer = styled.div`
   /* margin: 8rem auto; */

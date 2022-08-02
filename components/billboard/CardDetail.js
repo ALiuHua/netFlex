@@ -1,20 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { CirclePlayButton } from "../ui/Buttons";
-import { PlayIcon, DetailIcon } from "../ui/ButtonIcons";
+import { CirclePlayButton, DetailButton } from "../ui/Buttons";
+// import { PlayIcon, DetailIcon } from "../ui/ButtonIcons";
 import { ListButton } from "../ui/Buttons";
-import {
-  MediaInfo,
-  MiniTile,
-  IsNew,
-  GenreTag,
-  MediaContent,
-  ImgWrapper,
-  CardWrapper,
-  ActionWrapper,
-  DetailButton,
-  GradientLayer,
-} from "./CardStyle";
+import { GenreTag, ActionWrapper } from "./CardStyle";
 import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
 const CardDetail = ({ onPlay, onMoreInfo, item, onUpdateList }) => {
   const currentUser = useSelector((state) => state.users.email);
@@ -70,9 +59,7 @@ const CardDetail = ({ onPlay, onMoreInfo, item, onUpdateList }) => {
             console.log("media play");
             onPlay();
           }}
-        >
-          <PlayIcon />
-        </CirclePlayButton>
+        />
         {listIconState && (
           <ListButton
             isChecked={isInMyList}
@@ -84,26 +71,12 @@ const CardDetail = ({ onPlay, onMoreInfo, item, onUpdateList }) => {
             }}
           />
         )}
-        {/* {listIconState && (
-          <button
-            onClick={(e) => {
-              addToListHandler();
-              console.log(onUpdateList);
-              if (!!onUpdateList) onUpdateList(item.id);
-              e.stopPropagation();
-            }}
-          >
-            {isInMyList ? "-" : "+"}
-          </button>
-        )} */}
         <DetailButton
           onClick={() => {
             console.log("media info");
             onMoreInfo();
           }}
-        >
-          <DetailIcon />
-        </DetailButton>
+        />
       </ActionWrapper>
 
       <GenreTag>

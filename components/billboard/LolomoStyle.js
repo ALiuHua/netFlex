@@ -11,7 +11,7 @@ export const CarouselWrapper = styled.div`
   // this make scroll bar width added in. why?
 
   margin: 3vw 0;
-  padding: 0 60px; // for prev and next button
+  padding: 0 4%; // for prev and next button
 
   h2 {
     font-size: 1.4vw;

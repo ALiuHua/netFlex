@@ -8,7 +8,10 @@ export const BackgroundImage = styled.div`
   width: 100%;
   background: rgba(0, 0, 0, 0.4);
   overflow: hidden;
-  z-index: -1;
+  z-index: 1;
+  /* @media screen and (max-width: 50em) {
+    display: none;
+  } */
 `;
 export const GradientLayer = styled.div`
   position: absolute;
@@ -20,7 +23,7 @@ export const GradientLayer = styled.div`
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.8) 0,
-    rgba(0, 0, 0, 0.4) 60%,
+    rgba(0, 0, 0, 0.5) 60%,
     rgba(0, 0, 0, 0.8) 100%
   );
 `;
@@ -34,10 +37,12 @@ export const HeroSection = styled.section`
   }
 `;
 export const HeroWrapper = styled.div`
+  position: relative;
   max-width: 95rem;
   margin: 0 auto;
   padding: 7.5rem 0;
   text-align: center;
+  z-index: 2;
   @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
     padding: 3.75rem 0;
   }

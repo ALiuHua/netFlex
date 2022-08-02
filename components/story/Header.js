@@ -111,9 +111,9 @@ const Header = () => {
               </MenuList>
               <AccountTool>
                 <Search pathname={pathname} router={router} />
-                <BellButton>
+                {/* <BellButton>
                   <BellIcon />
-                </BellButton>
+                </BellButton> */}
                 <ProfileWrapper profilesNum={allUserProfiles.length}>
                   <SelectedProfile>
                     <Image

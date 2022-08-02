@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import styled, { createGlobalStyle } from "styled-components";
 import Player from "../billboard/Player";
 import { ActionWrapper } from "../billboard/CardStyle";
+import { ButtonBox } from "../Billboard/BillboardHeroStyle";
 import {
   CirclePlayButton,
   PlayIcon,
@@ -20,8 +21,6 @@ import { useDispatch } from "react-redux";
 import { playerActions } from "../../store/player-slice";
 
 const Details = ({ category, urlOriginal, genreContext }) => {
-  //   const scrollbarWidth = window.innerWidth - document.body.offsetWidth; //need to be at customizehook
-  //   console.log(scrollbarWidth);
   const router = useRouter();
   const [item, setItem] = useState(null);
   const [trailer, setTrailer] = useState(null);
@@ -31,7 +30,13 @@ const Details = ({ category, urlOriginal, genreContext }) => {
   const detailsPoster = useSelector((state) => state.details.posterPath);
   const itemCategory = router.query.cat;
   const genresCtx = useSelector((state) => state.genre.genres);
+  const [scrollBarWidth, setScrollBarWidth] = useState(0);
   // const itemCategory = useSelector((state) => state.details.itemCategory);
+  useEffect(() => {
+    const scrollbar = window.innerWidth - document.body.offsetWidth; //need to be at customizehook
+    setScrollBarWidth(scrollbar);
+    console.log(scrollbar);
+  }, []);
   const playHandler = () => {
     router.push(`/play/${item.id}?cat=${itemCategory}`);
   };
@@ -119,7 +124,7 @@ const Details = ({ category, urlOriginal, genreContext }) => {
           </PreviewPlayer>
 
           <ActionsBox>
-            <ActionWrapper>
+            <ButtonBox scaled={1}>
               <CirclePlayButton
                 onClick={() => {
                   console.log("play clicked");
@@ -129,7 +134,7 @@ const Details = ({ category, urlOriginal, genreContext }) => {
               >
                 <PlayIcon />
               </CirclePlayButton>
-            </ActionWrapper>
+            </ButtonBox>
             <div
               style={{
                 display: "flex",
@@ -139,7 +144,7 @@ const Details = ({ category, urlOriginal, genreContext }) => {
                 height: "50px",
               }}
             >
-              <EmbedButtonBox showMuteToggling={true} scaled={0.45} />
+              <EmbedButtonBox showMuteToggling={true} scaled={0.5} />
             </div>
           </ActionsBox>
           <StyledCloseButton
@@ -166,7 +171,7 @@ const Details = ({ category, urlOriginal, genreContext }) => {
           )}
         </RelatedInfoContainer>
       </ContentWrapper>
-      <NoScrollBar scrollbar={17} />
+      {scrollBarWidth && <NoScrollBar scrollbar={scrollBarWidth} />}
     </MoreInfoWrapper>
   );
 };
@@ -192,13 +197,21 @@ const MoreInfoWrapper = styled.div`
 `;
 const ContentWrapper = styled.div`
   margin: 3.6rem auto 0 auto;
-  width: 50vw;
+  /* width: 50vw; */
+  max-width: 850px;
+  width: 95%;
   border-radius: 8px;
   line-height: 1.4;
   background-color: rgba(20, 20, 20);
   min-height: 100vh;
   border-radius: 7px;
   overflow: hidden;
+  /* @media (max-width: 68.75em) {
+    width: 780px;
+  }
+  @media (max-width: 50em) {
+    width: 90%;
+  } */
 `;
 const Content = styled.div`
   position: relative;

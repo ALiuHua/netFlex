@@ -80,6 +80,7 @@ const UserAuth = () => {
   async function submitHandler(event) {
     console.log("submithandlerrunning");
     event.preventDefault();
+    console.log(emailState.isEmailValid, passwordState.isPasswordValid);
     if (emailState.enteredEmail === "") {
       setIsEmailTouched(true);
       dispatchEmail({ type: "ON_BLUR" });
@@ -91,6 +92,11 @@ const UserAuth = () => {
       return;
     }
     // optional :add validation
+    if (!emailState.isEmailValid || !passwordState.isPasswordValid)
+      return console.log(
+        emailState.isEmailValid,
+        passwordState.isPasswordValid
+      );
     setIsLoading(true);
     if (isSignin) {
       //sign in

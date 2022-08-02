@@ -55,6 +55,7 @@ const Search = ({ pathname, router }) => {
       <SearchInput
         value={searchQuery}
         type="text"
+        placeholder="Titles, people, genres"
         showSearchBar={showSearchBar}
         focused
         onChange={(e) => {

@@ -118,14 +118,18 @@ export const BillboardDetail = styled.div`
   /* right: 0; */
   width: 100%;
   height: 55%;
-  padding: 0 45px;
+  padding: 0 4%;
   z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: end;
 `;
 export const DescriptionContainer = styled.div`
-  width: 36%;
+  width: 40%;
+  @media (max-width: 68.75em) {
+    width: 55%;
+  }
+
   height: 100%;
   /* background-color: green; */
   display: flex;
@@ -137,10 +141,17 @@ export const Description = styled.div`
   /* width: 36%;
     height: 100%;
     background-color: green; */
+  width: 100%;
   h1 {
     font-size: 6.4rem;
     transition: all 1.3s ease-in 1.2s;
     margin-bottom: 3rem;
+    @media (max-width: 68.75em) {
+      font-size: 5rem;
+    }
+    @media (max-width: 50em) {
+      font-size: 4rem;
+    }
     ${({ showPlayer }) =>
       showPlayer &&
       css`
@@ -167,6 +178,7 @@ export const Description = styled.div`
 
 export const ActionBox = styled.div`
   display: flex;
+  width: 100%;
 `;
 // export const ButtonBox = styled.div`
 //   position: absolute;
@@ -186,6 +198,16 @@ export const ButtonBox = styled.div`
   ${({ scaled }) =>
     css`
       transform: scale(${scaled});
+      transform-origin: 50% 100%;
+      @media (max-width: 68.75em) {
+        transform: scale(${scaled / 1.2});
+      }
+      @media (max-width: 50em) {
+        transform: scale(${scaled / 1.4});
+      }
+      @media (max-width: 30em) {
+        transform: scale(${scaled / 1.6});
+      }
     `}
 `;
 export const MuteButton = styled.button`
@@ -217,6 +239,12 @@ export const PlayButton = styled.button`
   border-radius: 4px;
   /* font-size:6.4rem */
   transition: background-color 0.2s;
+  @media (max-width: 68.75em) {
+    padding: 0.85rem 2rem 0.85rem 1.8rem;
+  }
+  @media (max-width: 50em) {
+    padding: 0.5rem 1rem 0.5rem 1rem;
+  }
   cursor: pointer;
   :hover {
     background-color: rgba(255, 255, 255, 0.75);
@@ -225,11 +253,35 @@ export const PlayButton = styled.button`
     width: 3.5rem;
     height: 3.5rem;
     margin-right: 1.6rem;
+    @media (max-width: 87.5em) {
+      width: 3rem;
+      height: 3rem;
+      margin-right: 1rem;
+    }
+    @media (max-width: 68.75em) {
+      width: 2.2rem;
+      height: 2.2rem;
+      margin-right: 1rem;
+    }
+    @media (max-width: 50em) {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 0.6rem;
+    }
   }
   span {
     display: block;
     font-size: 2.3rem;
     font-weight: bold;
+    @media (max-width: 87.5em) {
+      font-size: 2rem;
+    }
+    @media (max-width: 68.75em) {
+      font-size: 1.8rem;
+    }
+    @media (max-width: 50em) {
+      font-size: 1.6rem;
+    }
   }
 `;
 export const CirclePlayButton = styled.button`

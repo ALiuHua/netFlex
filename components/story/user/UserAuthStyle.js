@@ -6,19 +6,31 @@ export const SignInWrapper = styled.div`
   background-color: transparent;
   min-height: 75vh;
   margin: 0 auto;
-  @media screen and (max-width: 45em) {
+  @media screen and (max-width: 30em) {
     width: 100%;
-    max-width: 72rem;
+    max-width: 60rem;
+    /* background-color: #141414; */
+    /* min-height: 100%; */
   }
 
   // 负margin造成的元素意味可能会导致窗口拖动时元素重叠。
 `;
 export const SignInContent = styled.div`
-  min-height: 660px;
+  /* min-height: 660px; */
   padding: 60px 68px 40px;
   border-radius: 5px;
   /* margin-bottom: 90px; */
   background-color: rgba(0, 0, 0, 0.75);
+  h2 {
+    font-size: 3.4rem;
+  }
+  @media screen and (max-width: 30em) {
+    /* background-color: #141414; */
+    background-color: transparent;
+    height: 100%;
+    padding: 60px 4% 40px;
+    font-size: 4.5rem;
+  }
 `;
 
 export const Form = styled.form`
@@ -28,7 +40,7 @@ export const Form = styled.form`
 export const InputFiled = styled.div`
   width: 100%;
   /* max-width: 50rem; */
-  height: 5rem;
+  height: 5.5rem;
   position: relative;
 
   border-radius: 5px;

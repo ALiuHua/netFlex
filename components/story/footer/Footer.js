@@ -3,17 +3,24 @@ import styled, { css } from "styled-components";
 import { FooterLink } from "../HeaderStyle";
 import { useRouter } from "next/router";
 const FooterWrapper = styled.footer`
+  position: relative;
   padding: 7rem 4.5rem;
   font-size: 13px;
-  background-color: #000;
+  /* background-color: #000; */
+  background-color: #141414;
+  z-index: 2;
   @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
     padding: 6.25rem 5%;
   }
   ${({ pathname }) =>
     pathname === "/login" &&
     css`
-      padding: 3rem 4.5rem;
       background-color: rgba(0, 0, 0, 0.75);
+      padding: 3rem 4.5rem;
+      @media screen and (max-width: 50em) {
+        border-top: 1px solid #757575;
+        background-color: transparent;
+      }
     `}
 `;
 const FooterContent = styled.div`

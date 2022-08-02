@@ -26,24 +26,43 @@ const ProfileCard = ({
 export default ProfileCard;
 export const CardWrapper = styled.div`
   /* padding: 0 1rem; */
+  position: relative;
   cursor: pointer;
   font-size: 1.6rem;
   font-weight: 400;
   color: #aaa;
-  div {
+  div::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #fff;
+    display: none;
+  }
+  /* div {
     border: 2px solid transparent;
     // 解决border出现时的flicking问题，也可以通过伪元素来实现，如netflix
-  }
-  &:hover {
+  } */
+  &:hover div::after {
     color: #eee;
-    div {
+    display: block;
+    /* div::after {
       border: 2px solid #eee;
-    }
+    } */
   }
 `;
 export const AvatarWrapper = styled.div`
-  width: 12rem;
-  height: 12rem;
+  /* width: 12rem;
+  height: 12rem; */
+  width: 10vw;
+  height: 10vw;
+  min-height: 84px;
+  max-height: 135px;
+  min-width: 84px;
+  max-width: 135px;
   border-radius: 3px;
   overflow: hidden;
   cursor: pointer;
@@ -52,6 +71,8 @@ export const AvatarWrapper = styled.div`
 export const ProfileName = styled.span`
   padding: 12px 0;
   display: block;
+  line-height: 1.6;
+  font-size: 16px;
 `;
 export const Overlay = styled.div`
   position: absolute;

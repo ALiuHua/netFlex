@@ -185,6 +185,7 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
             showReplay={!showPlayer && playCompleted}
             showMuteToggling={showPlayer}
             replayHandler={replayHandler}
+            scaled={1}
           />
         </div>
       </BillboardDetail>

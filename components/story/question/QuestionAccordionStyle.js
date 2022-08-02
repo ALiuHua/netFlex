@@ -5,14 +5,15 @@ export const AccordionWrapper = styled.div`
   }
 `;
 export const AccordionHeader = styled.div`
-  padding: 2.08rem 3.12rem;
+  padding: 2.08rem 4%;
+  /* padding: 2.08rem 3.12rem; */
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2px;
   background-color: #303030;
   cursor: pointer;
-  @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+  /* @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
     padding: 1.6rem 4.4rem;
   }
   @media only screen and (max-width: ${({ theme }) => theme.mediaSmall}) {
@@ -20,7 +21,7 @@ export const AccordionHeader = styled.div`
   }
   @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
     padding: 1.8rem 4.95rem;
-  }
+  } */
   h3 {
     font-size: 2.6rem;
     font-weight: 400;
@@ -36,7 +37,7 @@ export const AccordionHeader = styled.div`
   }
 `;
 export const ContentWrapper = styled.div`
-  padding: 1.28rem 3.52rem;
+  padding: 1.28rem 4%;
   font-size: 2.6rem;
   font-weight: 400;
   background-color: #303030;

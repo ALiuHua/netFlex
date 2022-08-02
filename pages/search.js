@@ -78,8 +78,8 @@ const Search = ({ userEmail, userProfiles }) => {
           <p>{notification.title}</p>
           <span>{notification.subTitle}</span>
           <ul>
-            {notification.suggestions.map((item) => (
-              <li>{item}</li>
+            {notification.suggestions.map((item, index) => (
+              <li key={index}>{item}</li>
             ))}
           </ul>
         </Notification>

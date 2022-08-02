@@ -1,15 +1,16 @@
 import styled, { css } from "styled-components";
 const gap = 0; //unit "rem"
 export const SectionContainer = styled.section`
-  padding: 7rem 4.5rem;
+  /* padding: 7rem 4.5rem; */
+  padding: 7rem 4%;
   border-bottom: 0.8rem solid ${({ theme }) => theme.borderBottomColor};
   background-color: #000;
-  @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
+  /* @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
     padding: 7.5rem 5rem;
   }
   @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
     padding: 6.25rem 5%;
-  }
+  } */
 `;
 export const ContentContainer = styled.div`
   max-width: 110rem;

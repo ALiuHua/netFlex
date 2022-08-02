@@ -19,6 +19,10 @@ export default CloseIcon;
 export const StyledCloseIcon = styled(CloseIcon)`
   width: 36px;
   height: 36px;
+  @media (max-width: 50em) {
+    width: 26px;
+    height: 26px;
+  }
   ${({ qState }) => qState && "transform:rotate(45deg)"}
 `;
 // 我们使用svg创建components时，需要把svg中de变量名更该为camel case。

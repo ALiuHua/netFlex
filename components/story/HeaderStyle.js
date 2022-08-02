@@ -33,7 +33,7 @@ export const HeaderWrapper = styled.header`
   /* background-color: transparent; */
 `;
 export const HeaderContent = styled.div`
-  margin: 0 5.6rem;
+  margin: 0 4%;
   /* position: fixed; */
   ${({ isNavShown }) =>
     isNavShown &&
@@ -71,6 +71,10 @@ export const LogoWrapper = styled.div`
     css`
       height: 25px;
       width: 92.5px;
+      @media (max-width: 30em) {
+        height: 14px;
+        width: 51.8px;
+      }
     `}
   img {
     width: 100%;
@@ -105,19 +109,27 @@ export const ButtonLink = styled(LinkN)`
 
 export const MenuList = styled.div`
   margin-right: auto;
-  font-size: 14px;
+  font-size: 1.4rem;
+  @media (max-width: 68.75em) {
+    font-size: 1.2rem;
+  }
+
   ul {
     display: flex;
     align-items: center;
     li {
       margin-left: 20px;
+      @media (max-width: 50em) {
+        margin-left: 10px;
+      }
     }
   }
 `;
 export const AccountTool = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 14px;
 `;
 //  search
 export const SearchIcon = () => {
@@ -182,12 +194,16 @@ export const SearchInput = styled.input`
   ${({ showSearchBar }) =>
     showSearchBar &&
     css`
-      width: 280px;
+      width: 210px;
       transition-delay: 0.4s;
     `}
 `;
+
 export const SearchBox = styled.div`
-  position: relative;
+  position: absolute;
+  left: -14px;
+  top: 0;
+  transform: translateX(-100%);
   padding-left: 40px;
   border: 1px solid rgba(238, 238, 238, 0);
   transition: all 0.4s ease-out;
@@ -196,7 +212,7 @@ export const SearchBox = styled.div`
     showSearchBar &&
     css`
       border: 1px solid rgba(238, 238, 238, 1);
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.4);
       background-clip: border-box;
     `}
 `;

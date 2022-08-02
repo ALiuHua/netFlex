@@ -323,6 +323,7 @@ export const ProfileWrapper = styled.div`
   transform: translate(-50%, -50%); */
 `;
 export const ProfileContent = styled.div`
+  width: 90vw;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -336,11 +337,13 @@ export const FlexContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2.4rem;
+  flex-wrap: wrap;
+  /* align-items: flex-start; */
 `;
 
 export const ProfileContainer = styled.div`
   padding: 2rem 0;
-  width: 40%;
+  width: 80%;
   border-top: 1px solid #333;
   border-bottom: 1px solid #333;
   margin-top: 1rem;
@@ -348,10 +351,10 @@ export const ProfileContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-export const Avatar = styled.div`
-  width: 30rem;
-  height: 30rem;
-`;
+// export const Avatar = styled.div`
+//   width: 30rem;
+//   height: 30rem;
+// `;
 export const Input = styled.input`
   width: 12rem;
   margin-top: 2rem;
@@ -410,11 +413,14 @@ export const Button = styled.button`
 //   }
 // `;
 export const CreateNewUserButton = styled.button`
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
   cursor: pointer;
   font-size: 1.6rem;
   font-weight: 400;
   color: #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   &:hover {
     color: #eee;
     svg {
@@ -423,14 +429,22 @@ export const CreateNewUserButton = styled.button`
   }
   svg {
     padding: 20px;
-    width: 120px;
-    height: 120px;
+    width: 10vw;
+    height: 10vw;
+    min-height: 84px;
+    max-height: 135px;
+    min-width: 84px;
+    max-width: 135px;
+    /* width: 120px;
+    height: 120px; */
     fill: #aaa;
     border-radius: 3px;
   }
   span {
     padding: 12px 0;
     display: block;
+    line-height: 1.6;
+    font-size: 16px;
   }
 `;
 export const PlusIcon = () => {

@@ -29,7 +29,13 @@ html{
     font-size: 62.5%; //10px
     background-color: #141414;
     /* -webkit-text-size-adjust: 100%; */
-    @media only screen and (max-width:${({ theme }) => theme.mediaSmall}) {
+    /* @media only screen and (max-width:${({ theme }) => theme.mediaSmall}) {
+        font-size: 50%;
+    } */
+    @media only screen and (max-width:87.5em) {
+        font-size: 56.25%;
+    }
+    @media only screen and (max-width:50em) {
         font-size: 50%;
     }
     /* overflow-x: hidden; */

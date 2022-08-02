@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { getRecommendation } from "../../helpers/browseHelper";
 import Image from "next/image";
 import { briefInfo } from "../billboard/BillboardHero";
-import { DetailButton, DetailIcon } from "../billboard/CardStyle";
+// import { DetailButton, DetailIcon } from "../billboard/CardStyle";
+import { DetailButton } from "../ui/Buttons";
 import { ButtonWrapper } from "./Episodes";
 const Recommendation = ({ itemCategory, details }) => {
   console.log("Episode", details);
@@ -69,7 +70,7 @@ const Recommendation = ({ itemCategory, details }) => {
           </Content>
           {recommendData.length > 12 && (
             <ButtonWrapper showMore={showMore}>
-              <DetailButton
+              {/* <DetailButton
                 onClick={() => {
                   setShowMore((prev) => !prev);
                   if (showMore)
@@ -79,7 +80,16 @@ const Recommendation = ({ itemCategory, details }) => {
                 }}
               >
                 <DetailIcon />
-              </DetailButton>
+              </DetailButton> */}
+              <DetailButton
+                onClick={() => {
+                  setShowMore((prev) => !prev);
+                  if (showMore)
+                    RecommondRef.current.scrollIntoView({
+                      behaviour: "smooth",
+                    });
+                }}
+              />
             </ButtonWrapper>
           )}
         </RecommendationWrapper>

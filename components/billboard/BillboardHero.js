@@ -16,12 +16,15 @@ import {
   DescriptionContainer,
   Description,
   ActionBox,
-  PlayButton,
-  PlayIcon,
-  MoreInfoButton,
-  InfoIcon,
+  // PlayButton,
+  // PlayIcon,
+  // MoreInfoButton,
+  // InfoIcon,
 } from "./BillboardHeroStyle";
-import EmbedButtonBox from "./BillboardHeroStyle";
+import { PlayButton, MoreInfoButton } from "../ui/Buttons";
+import { PlayIcon, InfoIcon } from "../ui/ButtonIcons";
+// import EmbedButtonBox from "./BillboardHeroStyle";
+import EmbedButtonBox from "../ui/Buttons";
 import { playerActions } from "../../store/player-slice";
 import { detailsActions } from "../../store/detailsSlice";
 export const briefInfo = (infoText, num) => {
@@ -171,12 +174,18 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
               <p>{briefInfo(banner.overview, 20)}</p>
             </Description>
             <ActionBox>
-              <PlayButton onClick={playHandler}>
+              {/* <PlayButton onClick={playHandler}>
                 <PlayIcon /> <span>Play</span>
+              </PlayButton> */}
+              <PlayButton onClick={playHandler}>
+                <span>Play</span>
               </PlayButton>
               <MoreInfoButton onClick={moreInfoHandler}>
-                <InfoIcon /> <span>More Info</span>
+                <span>More Info</span>
               </MoreInfoButton>
+              {/* <MoreInfoButton onClick={moreInfoHandler}>
+                <InfoIcon /> <span>More Info</span>
+              </MoreInfoButton> */}
             </ActionBox>
           </DescriptionContainer>
         )}

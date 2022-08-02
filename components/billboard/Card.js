@@ -18,13 +18,11 @@ import {
   MediaContent,
   ImgWrapper,
   CardWrapper,
-  ActionWrapper,
-  DetailIcon,
-  DetailButton,
+  // ActionWrapper,
   GradientLayer,
 } from "./CardStyle";
-import EmbedButtonBox from "./BillboardHeroStyle";
-import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
+import EmbedButtonBox from "../ui/Buttons";
+// import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
 
 import Player from "./Player";
 import { GenreContext } from "../../pages/browse";

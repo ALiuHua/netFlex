@@ -17,7 +17,7 @@ const FooterWrapper = styled.footer`
     css`
       background-color: rgba(0, 0, 0, 0.75);
       padding: 3rem 4.5rem;
-      @media screen and (max-width: 50em) {
+      @media screen and (max-width: 30em) {
         border-top: 1px solid #757575;
         background-color: transparent;
       }

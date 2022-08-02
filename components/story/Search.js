@@ -5,8 +5,9 @@ import {
   SearchButton,
   SearchInput,
   SearchBox,
-  StyledCloseButton,
+  // CloseButton,
 } from "./HeaderStyle";
+import { CloseButton } from "../ui/Buttons";
 const Search = ({ pathname, router }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -73,7 +74,7 @@ const Search = ({ pathname, router }) => {
         <SearchIcon />
       </SearchButton>
       {searchQuery && (
-        <StyledCloseButton
+        <CloseButton
           onClick={() => {
             setShowSearchBar(false);
             setSearchQuery("");

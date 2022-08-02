@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
-import { CloseButton } from "../billboard/BillboardHeroStyle";
+// import { StyledCloseButton } from "../ui/ButtonsStyle";
 export const HeaderWrapper = styled.header`
   max-width: 192rem;
   padding-top: 2rem;
@@ -216,13 +216,13 @@ export const SearchBox = styled.div`
       background-clip: border-box;
     `}
 `;
-export const StyledCloseButton = styled(CloseButton)`
-  width: 27px;
-  height: 27px;
-  position: absolute;
-  top: 50%;
-  transform: translate(-100%, -50%);
-`;
+// export const CloseButton = styled.StyledCloseButton`
+//   width: 27px;
+//   height: 27px;
+//   position: absolute;
+//   top: 50%;
+//   transform: translate(-100%, -50%);
+// `;
 export const ProfilesBox = styled.div`
   /* display: none; */
   opacity: 0;

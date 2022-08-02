@@ -5,12 +5,14 @@ import styled, { createGlobalStyle } from "styled-components";
 import Player from "../billboard/Player";
 import { ActionWrapper } from "../billboard/CardStyle";
 import { ButtonBox } from "../Billboard/BillboardHeroStyle";
-import {
-  CirclePlayButton,
-  PlayIcon,
-  StyledCloseButton,
-} from "../Billboard/BillboardHeroStyle";
-import EmbedButtonBox from "../billboard/BillboardHeroStyle";
+// import {
+//   CirclePlayButton,
+//   // StyledCloseButton,// a component
+//   // PlayIcon,
+// } from "../Billboard/BillboardHeroStyle";
+import { CloseButton, CirclePlayButton } from "../ui/Buttons";
+import { PlayIcon } from "../ui/ButtonIcons";
+import EmbedButtonBox from "../ui/Buttons";
 import { GradientLayerAdd } from "../billboard/BillboardHeroStyle";
 import Description from "./Description";
 import { getDetails } from "../../helpers/browseHelper";
@@ -147,7 +149,7 @@ const Details = ({ category, urlOriginal, genreContext }) => {
               <EmbedButtonBox showMuteToggling={true} scaled={0.5} />
             </div>
           </ActionsBox>
-          <StyledCloseButton
+          <CloseButton
             onClick={(e) => {
               // this part is kind of weird why we need onClick on CloseButton as props
               setTrailer(null);

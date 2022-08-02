@@ -3,7 +3,8 @@ import styled, { css } from "styled-components";
 import { getSeasons } from "../../helpers/browseHelper";
 import Image from "next/image";
 import { briefInfo } from "../billboard/BillboardHero";
-import { DetailButton, DetailIcon } from "../billboard/CardStyle";
+// import { DetailButton, DetailIcon } from "../billboard/CardStyle";
+import { DetailButton } from "../ui/Buttons";
 const Episodes = ({ details }) => {
   console.log("Episode", details);
   const [seasonData, setSeasonData] = useState([]);
@@ -74,7 +75,7 @@ const Episodes = ({ details }) => {
         })}
       {seasonData.length > 10 && (
         <ButtonWrapper showMore={showMore}>
-          <DetailButton
+          {/* <DetailButton
             onClick={() => {
               setShowMore((prev) => !prev);
 
@@ -83,7 +84,15 @@ const Episodes = ({ details }) => {
             }}
           >
             <DetailIcon />
-          </DetailButton>
+          </DetailButton> */}
+          <DetailButton
+            onClick={() => {
+              setShowMore((prev) => !prev);
+
+              if (showMore)
+                episodeRef.current.scrollIntoView({ behaviour: "smooth" });
+            }}
+          />
         </ButtonWrapper>
       )}
     </EpisodesWrapper>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
+import { CirclePlayButton } from "../ui/Buttons";
+import { PlayIcon, DetailIcon } from "../ui/ButtonIcons";
 import { ListButton } from "../ui/Buttons";
 import {
   MediaInfo,
@@ -11,7 +12,6 @@ import {
   ImgWrapper,
   CardWrapper,
   ActionWrapper,
-  DetailIcon,
   DetailButton,
   GradientLayer,
 } from "./CardStyle";

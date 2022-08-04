@@ -3,17 +3,8 @@ import { CoverImage } from "../billboard/BillboardHero";
 import { useRouter } from "next/router";
 import styled, { createGlobalStyle } from "styled-components";
 import Player from "../billboard/Player";
-import { ActionWrapper } from "../billboard/CardStyle";
-import { ButtonBox } from "../Billboard/BillboardHeroStyle";
 import ActionBox from "./ActionBox";
-// import {
-//   CirclePlayButton,
-//   // StyledCloseButton,// a component
-//   // PlayIcon,
-// } from "../Billboard/BillboardHeroStyle";
-import { CloseButton, CirclePlayButton, ListButton } from "../ui/Buttons";
-import { PlayIcon } from "../ui/ButtonIcons";
-import EmbedButtonBox from "../ui/Buttons";
+import { CloseButton } from "../ui/Buttons";
 import { GradientLayerAdd } from "../billboard/BillboardHeroStyle";
 import Description from "./Description";
 import { getDetails } from "../../helpers/browseHelper";

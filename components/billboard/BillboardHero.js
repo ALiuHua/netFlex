@@ -16,19 +16,11 @@ import {
   DescriptionContainer,
   Description,
   ActionBox,
-  // ButtonWrapper
-  // PlayButton,
-  // PlayIcon,
-  // MoreInfoButton,
-  // InfoIcon,
 } from "./BillboardHeroStyle";
 import { PlayButton, MoreInfoButton } from "../ui/Buttons";
-import { PlayIcon, InfoIcon } from "../ui/ButtonIcons";
-// import EmbedButtonBox from "./BillboardHeroStyle";
 import EmbedButtonBox from "../ui/Buttons";
 import { playerActions } from "../../store/player-slice";
 import { detailsActions } from "../../store/detailsSlice";
-import { ButtonWrapper } from "./Card";
 export const briefInfo = (infoText, num) => {
   let shortInfo;
   if (infoText) {

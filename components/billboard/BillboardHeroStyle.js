@@ -197,6 +197,7 @@ export const ActionBox = styled.div`
 export const ButtonBox = styled.div`
   /* width: 2.4rem;
   height: 2.4rem; */
+  /* margin-right: auto; */
   ${({ scaled }) =>
     scaled &&
     css`
@@ -206,10 +207,10 @@ export const ButtonBox = styled.div`
         transform: scale(${scaled / 1.2});
       }
       @media (max-width: 50em) {
-        transform: scale(${scaled / 1.4});
+        transform: scale(${scaled / 1.25});
       }
       @media (max-width: 30em) {
-        transform: scale(${scaled / 1.6});
+        transform: scale(${scaled / 1.3});
       }
     `}
 `;

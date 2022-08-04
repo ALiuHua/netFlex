@@ -23,7 +23,7 @@ import {
   CloseIcon,
   DetailIcon,
 } from "./ButtonIcons";
-import { ButtonBox } from "../billboard/BillboardHeroStyle";
+import { ButtonBox } from "../ui/ButtonsStyle";
 // why i put calssName here is because we can styled this components
 
 const EmbedButtonBox = ({
@@ -34,7 +34,6 @@ const EmbedButtonBox = ({
 }) => {
   const muted = useSelector((state) => state.player.mute);
   const dispatch = useDispatch();
-  console.log(MuteButton);
   return (
     <ButtonBox scaled={scaled}>
       {showMuteToggling && (

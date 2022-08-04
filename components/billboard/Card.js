@@ -53,7 +53,14 @@ const Card = ({ item, onShowMore, onUpdateList }) => {
     console.log("handler running");
     // onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
   };
-
+  useEffect(() => {
+    // this is the way we resolce the problem that we may update the list when we remove the card in mylist page. without we will get
+    //error because we may update trailer info after we delete the card
+    return () => {
+      console.log("mouseLeave1");
+      setMouseOnCard(false);
+    };
+  }, []);
   const hoverHandler = (e) => {
     setMouseOnCard(true);
     const delayPlay = setTimeout(() => {
@@ -71,6 +78,8 @@ const Card = ({ item, onShowMore, onUpdateList }) => {
             dispatch(playerActions.toggleActivePlayer("card"));
             console.log("fetch card3");
             setPlayerLoaded(true);
+          } else {
+            console.log("cancled");
           }
         } catch (err) {
           if (err.response) {
@@ -81,7 +90,7 @@ const Card = ({ item, onShowMore, onUpdateList }) => {
         }
       };
       fetchCardData();
-      const checkListed = async () => {};
+      // const checkListed = async () => {};
     }, 2000);
     const redc = e.target.getBoundingClientRect();
     if (redc.x < redc.width) setLocation("left");

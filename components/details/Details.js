@@ -5,12 +5,13 @@ import styled, { createGlobalStyle } from "styled-components";
 import Player from "../billboard/Player";
 import { ActionWrapper } from "../billboard/CardStyle";
 import { ButtonBox } from "../Billboard/BillboardHeroStyle";
+import ActionBox from "./ActionBox";
 // import {
 //   CirclePlayButton,
 //   // StyledCloseButton,// a component
 //   // PlayIcon,
 // } from "../Billboard/BillboardHeroStyle";
-import { CloseButton, CirclePlayButton } from "../ui/Buttons";
+import { CloseButton, CirclePlayButton, ListButton } from "../ui/Buttons";
 import { PlayIcon } from "../ui/ButtonIcons";
 import EmbedButtonBox from "../ui/Buttons";
 import { GradientLayerAdd } from "../billboard/BillboardHeroStyle";
@@ -32,8 +33,7 @@ const Details = ({ category, urlOriginal, genreContext }) => {
   const detailsPoster = useSelector((state) => state.details.posterPath);
   const itemCategory = router.query.cat;
   const genresCtx = useSelector((state) => state.genre.genres);
-  const [scrollBarWidth, setScrollBarWidth] = useState(0);
-  // const itemCategory = useSelector((state) => state.details.itemCategory);
+  const [scrollBarWidth, setScrollBarWidth] = useState(null);
   useEffect(() => {
     const scrollbar = window.innerWidth - document.body.offsetWidth; //need to be at customizehook
     setScrollBarWidth(scrollbar);
@@ -124,32 +124,7 @@ const Details = ({ category, urlOriginal, genreContext }) => {
               />
             )}
           </PreviewPlayer>
-
-          <ActionsBox>
-            <ButtonBox scaled={1}>
-              <CirclePlayButton
-                onClick={() => {
-                  console.log("play clicked");
-                  // playHandler();
-                  // don‘t need this with 事件委托
-                }}
-              />
-            </ButtonBox>
-
-            <EmbedButtonBox showMuteToggling={true} scaled={0.5} />
-
-            {/* <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "50px",
-                height: "50px",
-              }}
-            >
-              <EmbedButtonBox showMuteToggling={true} scaled={0.5} />
-            </div> */}
-          </ActionsBox>
+          <ActionBox item={item} itemCategory={itemCategory} />
           <CloseButton
             onClick={(e) => {
               // this part is kind of weird why we need onClick on CloseButton as props
@@ -174,7 +149,7 @@ const Details = ({ category, urlOriginal, genreContext }) => {
           )}
         </RelatedInfoContainer>
       </ContentWrapper>
-      {scrollBarWidth && <NoScrollBar scrollbar={scrollBarWidth} />}
+      {scrollBarWidth !== null && <NoScrollBar scrollbar={scrollBarWidth} />}
     </MoreInfoWrapper>
   );
 };
@@ -204,7 +179,7 @@ const ContentWrapper = styled.div`
   max-width: 850px;
   width: 95%;
   border-radius: 8px;
-  line-height: 1.4;
+  line-height: 1.1;
   background-color: rgba(20, 20, 20);
   min-height: 100vh;
   border-radius: 7px;
@@ -231,19 +206,4 @@ const PreviewPlayer = styled.div`
   aspect-ratio: 16/9;
   overflow: hidden;
   z-index: 1;
-`;
-const ActionsBox = styled.div`
-  position: absolute;
-  left: 0;
-  width: 100%;
-  bottom: 3vw;
-  z-index: 2;
-  padding: 0 5rem;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  button {
-    transform: scale(2);
-  }
 `;

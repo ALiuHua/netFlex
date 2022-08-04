@@ -19,7 +19,7 @@ const LoadingOverlay = ({ profileSrc }) => {
 export default LoadingOverlay;
 
 const LoadingOverlayWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0%;
   width: 100%;

@@ -137,6 +137,7 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
     setPlayCompleted(false);
     console.log(trailer, showPlayer);
   };
+  console.log(banner, trailer);
   return (
     <BillboardWrapper>
       <BillboardContent>

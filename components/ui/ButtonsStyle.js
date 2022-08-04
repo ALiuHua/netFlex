@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 // This is the icon button for add/remove from mylist
 export const ToggleListButton = styled.button`
   width: 2.4rem;
@@ -149,4 +149,24 @@ export const StyledCirclePlayButton = styled.button`
     padding: 0.2rem;
     display: inline-block;
   }
+`;
+export const ButtonBox = styled.div`
+  /* width: 2.4rem;
+  height: 2.4rem; */
+  /* margin-right: auto; */
+  ${({ scaled }) =>
+    scaled &&
+    css`
+      transform: scale(${scaled});
+      /* transform-origin: 50% 100%; */
+      @media (max-width: 68.75em) {
+        transform: scale(${scaled / 1.2});
+      }
+      @media (max-width: 50em) {
+        transform: scale(${scaled / 1.25});
+      }
+      @media (max-width: 30em) {
+        transform: scale(${scaled / 1.3});
+      }
+    `}
 `;

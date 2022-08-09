@@ -88,6 +88,16 @@ const LolomoSlider = ({ item, children }) => {
           // initialSlide: 0,
         },
       },
+      {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 2,
+          slideToScroll: 2,
+          infinite: true,
+          dots: true,
+          // initialSlide: 0,
+        },
+      },
     ],
   };
 

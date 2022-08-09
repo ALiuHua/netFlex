@@ -7,7 +7,12 @@ const LoadingOverlay = ({ profileSrc }) => {
     <LoadingOverlayWrapper>
       <CenterWrappper>
         <SpinnerWrapper>
-          <Image src={"/images/misc/spinner.png"} width={150} height={150} />
+          <Image
+            src={"/images/misc/spinner.png"}
+            width={150}
+            height={150}
+            priority
+          />
         </SpinnerWrapper>
         <ProfilerWrapper>
           {profileSrc && <Image src={profileSrc} width={100} height={100} />}

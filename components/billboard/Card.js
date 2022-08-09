@@ -4,28 +4,20 @@ import { useDispatch } from "react-redux";
 import { trailerActions } from "../../store/trailer-slice";
 import { playerActions } from "../../store/player-slice";
 import { getTrailer, isNewRelease } from "../../helpers/browseHelper";
-import { withinSliderRange, getItemGenre } from "../../helpers/dataHelper";
-import { useRouter } from "next/router";
 import { detailsActions } from "../../store/detailsSlice";
-import { useSelector } from "react-redux";
-import { useSession } from "next-auth/react";
 import CardDetail from "./CardDetail";
 import {
   MediaInfo,
   MiniTile,
   IsNew,
-  GenreTag,
   MediaContent,
   ImgWrapper,
   CardWrapper,
-  // ActionWrapper,
   GradientLayer,
 } from "./CardStyle";
 import EmbedButtonBox, { MuteButton } from "../ui/Buttons";
-// import { CirclePlayButton, PlayIcon } from "./BillboardHeroStyle";
 
 import Player from "./Player";
-import { GenreContext } from "../../pages/browse";
 import styled from "styled-components";
 
 const Card = ({ item, onShowMore, onUpdateList }) => {
@@ -35,9 +27,6 @@ const Card = ({ item, onShowMore, onUpdateList }) => {
   console.log("card running");
   const [playerLoaded, setPlayerLoaded] = useState(false);
   const [trailerShow, setTrailerShow] = useState(false);
-  // const genreCtx = useContext(GenreContext);
-  // const genreCtx = useSelector((state) => state.genre.genres);
-
   const [timer, setTimer] = useState(null);
   const vPlayer = useRef();
   const cardRef = useRef();
@@ -49,6 +38,12 @@ const Card = ({ item, onShowMore, onUpdateList }) => {
   // const currentUser = useSelector((state) => state.users.email);
   // const currentProfile = useSelector((state) => state.users.selectedProfile);
   const playHandler = () => {
+    dispatch(
+      detailsActions.setItemDetails({
+        posterPath: item.backdrop_path,
+        // itemCategory: item.category,
+      })
+    );
     onShowMore(`/play/${item.id}?cat=${item.category}`);
     console.log("handler running");
     // onShowMore(`/browse?jbv=${item.id}`, item.backdrop_path, item.id);
@@ -254,51 +249,6 @@ const Card = ({ item, onShowMore, onUpdateList }) => {
             onUpdateList={onUpdateList}
           />
         )}
-        {/* {mouseOnCard && (
-          <ActionWrapper>
-            <CirclePlayButton
-              onClick={() => {
-                console.log("media play");
-                playHandler();
-              }}
-            >
-              <PlayIcon />
-            </CirclePlayButton>
-            <button
-              onClick={(e) => {
-                addToListHandler(), e.stopPropagation();
-              }}
-            >
-              1
-            </button>
-            <DetailButton
-              onClick={() => {
-                console.log("media info");
-                moreInfoHandler();
-              }}
-            >
-              <DetailIcon />
-            </DetailButton>
-          </ActionWrapper>
-        )}
-        {mouseOnCard && (
-          <GenreTag>
-            {getItemGenre(item?.genre_ids, genreCtx, 3, item.category).map(
-              (data, i) => {
-                return (
-                  data && (
-                    <React.Fragment key={i}>
-                      {i !== 0 && <span className="dot">&bull;</span>}
-                      <span className="genreName">
-                        {data?.name.split("&")[0]}
-                      </span>
-                    </React.Fragment>
-                  )
-                );
-              }
-            )}
-          </GenreTag>
-        )} */}
       </MediaInfo>
     </CardWrapper>
   );

@@ -4,7 +4,9 @@ import { useRouter } from "next/router";
 import styled, { createGlobalStyle } from "styled-components";
 import Player from "../billboard/Player";
 import ActionBox from "./ActionBox";
+
 import { CloseButton } from "../ui/Buttons";
+import { detailsActions } from "../../store/detailsSlice";
 import { GradientLayerAdd } from "../billboard/BillboardHeroStyle";
 import Description from "./Description";
 import { getDetails } from "../../helpers/browseHelper";
@@ -31,6 +33,12 @@ const Details = ({ category, urlOriginal, genreContext }) => {
     console.log(scrollbar);
   }, []);
   const playHandler = () => {
+    dispatch(
+      detailsActions.setItemDetails({
+        posterPath: detailsPoster,
+        // itemCategory: banner.category,
+      })
+    );
     router.push(`/play/${item.id}?cat=${itemCategory}`);
   };
   console.log("details running");

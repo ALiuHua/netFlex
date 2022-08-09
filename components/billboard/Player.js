@@ -36,6 +36,7 @@ const Player = React.forwardRef((props, ref) => {
         controls={props.control}
         onEnded={onEnded}
         onReady={props?.onReady}
+        onPlay={props.onPlay}
         config={{
           youtube: {
             playerVars: {

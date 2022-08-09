@@ -47,6 +47,12 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
   const vPlayer = useRef();
   const router = useRouter();
   const playHandler = () => {
+    dispatch(
+      detailsActions.setItemDetails({
+        posterPath: banner.backdrop_path,
+        // itemCategory: banner.category,
+      })
+    );
     onShowMore(`/play/${banner.id}?cat=${banner.category}`);
   };
   const moreInfoHandler = () => {

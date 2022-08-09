@@ -14,6 +14,7 @@ const Search = ({ pathname, router }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [urlState, setUrlState] = useState("/browse");
   const searchRef = useRef();
+  const inputRef = useRef();
   // const router = useRouter();
   // const { pathname } = router;
   console.log("search runninh");
@@ -43,6 +44,7 @@ const Search = ({ pathname, router }) => {
       router.push(urlState); // this is to avoid redirect to browse when i paste details url.
       console.log("search router push");
     }
+    if (showSearchBar) inputRef.current.focus(); // focus when search input open
   }, [searchQuery, showSearchBar, urlState]);
 
   //new to resolve the problem when we router from search page without close search bar
@@ -59,13 +61,15 @@ const Search = ({ pathname, router }) => {
         type="text"
         placeholder="Titles, people, genres"
         showSearchBar={showSearchBar}
-        focused
+        ref={inputRef}
+        // focused
+        // autoFocus
         onChange={(e) => {
           setSearchQuery(e.target.value);
         }}
       />
       <SearchButton
-        onClick={() => {
+        onClick={(e) => {
           console.log(router.pathname, !router.pathname.includes("/search"));
           if (!router.pathname.includes("/search"))
             setUrlState(router.pathname);

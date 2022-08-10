@@ -4,15 +4,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
 export const CarouselWrapper = styled.div`
-  /* width: 85vw;
-  /* margin: 25px auto; */
-  /* width: 100%; */
-  /* width: 100vw; */
-  // this make scroll bar width added in. why?
-
   margin: 3vw 0;
   padding: 0 4%; // for prev and next button
-
   h2 {
     font-size: 1.4vw;
     font-weight: 700;
@@ -22,15 +15,9 @@ export const CarouselWrapper = styled.div`
   &:hover {
     position: relative;
     z-index: 10;
-    .slick-prev {
-      opacity: 1;
-      /* z-index: 1; */
-      /* background-color: green; */
-    }
+    .slick-prev,
     .slick-next {
       opacity: 1;
-      /* z-index: 1; */
-      /* background-color: green; */
     }
   }
   .slick-prev {
@@ -38,21 +25,57 @@ export const CarouselWrapper = styled.div`
     transform: translate(-100%, -50%);
     opacity: 0;
     z-index: 1;
-
+    width: 4vw;
     &::before {
-      /* content: "1"; */
-      /* color: transparent; */
-      font-size: 40px;
+      content: "〈";
+      width: 100%;
       position: relative;
-      z-index: 2;
+      right: 25%;
+      /* transform: translateX(-25%); */
+      font-size: 5rem;
+      /* z-index: 2; */
+      @media only screen and (max-width: 87.5em) {
+        font-size: 4.5rem;
+      }
+      @media (max-width: 50em) {
+        font-size: 3.5rem;
+      }
     }
   }
   .slick-next {
+    /* position: relative; */
     left: 100%;
     /* transform: translate(50%, -50%); */
     opacity: 0;
+
+    width: 4vw;
+    /* max-width: 60px; */
+    /* background-color: red; */
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
     &::before {
-      font-size: 40px;
+      content: "〉";
+      width: 100%;
+      position: relative;
+      left: 25%;
+      /* transform: translateX(-25%); */
+      font-size: 5rem;
+      @media only screen and (max-width: 87.5em) {
+        font-size: 4.5rem;
+      }
+      @media (max-width: 50em) {
+        font-size: 3.5rem;
+      }
+    }
+  }
+  .slick-next:hover,
+  .slick-prev:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    ::before {
+      font-weight: 700;
+      color: #fff;
     }
   }
 `;

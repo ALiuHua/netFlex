@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 // import { db } from "../../lib/db";
-import styled, { css } from "styled-components";
+import styled, { css, createGlobalStyle } from "styled-components";
 import { useSession } from "next-auth/react";
 import ProfileCard from "./ProfileCard";
 import Image from "next/image";
@@ -181,7 +181,6 @@ const Profile = () => {
   return (
     <ProfileWrapper>
       <ProfileContent>
-        {" "}
         {!editProfile.isEdit && (
           <>
             <p>{isManaging ? "Manage profiles" : "Who's watching?"}</p>
@@ -296,6 +295,7 @@ const Profile = () => {
           </>
         )}
       </ProfileContent>
+      {/* <OverflowVisiable /> */}
     </ProfileWrapper>
   );
 };
@@ -463,3 +463,8 @@ export const PlusIcon = () => {
     </svg>
   );
 };
+// export const OverflowVisiable = createGlobalStyle`
+//   body {
+//     overflow-x: visible;
+//   }
+// `;

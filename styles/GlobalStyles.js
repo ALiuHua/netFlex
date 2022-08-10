@@ -38,7 +38,7 @@ html{
     @media only screen and (max-width:50em) {
         font-size: 50%;
     }
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     /* overflow-y:hidden */
 }
 body{

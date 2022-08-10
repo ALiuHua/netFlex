@@ -5,7 +5,7 @@ export const BillboardWrapper = styled.div`
   margin-top: -100px;
   /* padding-bottom: 40%; */
   /* height: 40vw; */
-  height: 45vw;
+  height: 40vw;
   margin-bottom: 20px;
   z-index: 1;
 `;
@@ -50,7 +50,7 @@ export const GradientLayerAdd = styled.div`
 `;
 export const BillboardDetail = styled.div`
   position: absolute;
-  bottom: 8%;
+  bottom: 2%;
   width: 100%;
   height: 55%;
   padding: 0 4%;

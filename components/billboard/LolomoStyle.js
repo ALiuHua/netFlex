@@ -6,6 +6,7 @@ import Slider from "react-slick";
 export const CarouselWrapper = styled.div`
   margin: 3vw 0;
   padding: 0 4%; // for prev and next button
+  /* overflow-x: hidden; */
   h2 {
     font-size: 1.4vw;
     font-weight: 700;

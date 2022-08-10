@@ -42,7 +42,8 @@ export default Lolomo;
 const SliderWrapper = styled.div`
   position: relative;
   z-index: 2;
-  /* overflow-x: hidden; */
+  padding-top: 3rem;
+  overflow-x: hidden;
   /* overflow-y: auto; */
 `;
 

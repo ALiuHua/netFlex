@@ -3,12 +3,10 @@ const detailsSlice = createSlice({
   name: "details",
   initialState: {
     posterPath: null,
-    // itemCategory: null,
   },
   reducers: {
     setItemDetails(state, action) {
       state.posterPath = action.payload.posterPath;
-      //   state.itemCategory = action.payload.itemCategory;
     },
   },
 });

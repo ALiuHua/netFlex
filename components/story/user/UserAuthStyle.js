@@ -9,23 +9,16 @@ export const SignInWrapper = styled.div`
   @media screen and (max-width: 30em) {
     width: 100%;
     max-width: 60rem;
-    /* background-color: #141414; */
-    /* min-height: 100%; */
   }
-
-  // 负margin造成的元素意味可能会导致窗口拖动时元素重叠。
 `;
 export const SignInContent = styled.div`
-  /* min-height: 660px; */
   padding: 60px 68px 40px;
   border-radius: 5px;
-  /* margin-bottom: 90px; */
   background-color: rgba(0, 0, 0, 0.75);
   h2 {
     font-size: 3.4rem;
   }
   @media screen and (max-width: 30em) {
-    /* background-color: #141414; */
     background-color: transparent;
     height: 100%;
     padding: 60px 4% 40px;
@@ -39,10 +32,8 @@ export const Form = styled.form`
 
 export const InputFiled = styled.div`
   width: 100%;
-  /* max-width: 50rem; */
   height: 5.5rem;
   position: relative;
-
   border-radius: 5px;
   overflow: hidden;
   &:not(:first-child) {
@@ -64,10 +55,6 @@ export const InputFiled = styled.div`
     transform: translateY(0);
     font-weight: 700;
   }
-  /* bug   when it's not focused, the label will fall down;
-  hotFlix solution: when input has value, we still need transition.
-  */
-  // still need to add transition and transform in small screen.
 `;
 export const Notification = styled.p`
   font-size: 1.3rem;
@@ -79,18 +66,11 @@ export const Input = styled.input`
   width: 100%;
   height: 100%;
   border: none;
-  /* background: none; */
   color: #eee;
   background-color: #333;
   padding: 10px 10px 0 20px;
   outline: none;
-  font-size: 1.6rem; /*this will decide what font size of input text */
-  /* &:focus {
-    border-color: #0071eb;
-  } */
-  /* @media only screen and (max-width: ${({ theme }) => theme.mediaLarge}) {
-    padding: 0;
-  } */
+  font-size: 1.6rem;
   border-bottom: 2px solid transparent;
   border-radius: 5px;
   ${({ errorBorder }) =>
@@ -108,8 +88,7 @@ export const Input = styled.input`
         transform: translateY(0);
         font-weight: 700;
       }
-    `} // styled props only works with styled component. even if inside of styled component won't 
-    //work as well.
+    `}
 `;
 export const FormButton = styled.button`
   position: relative;

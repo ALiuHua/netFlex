@@ -21,14 +21,7 @@ export const getBanner = async (category) => {
   const resultsPool = [...results1, ...results2];
 
   const filteredResults = resultsPool.filter(
-    ({ original_language, original_name, original_title }) =>
-      original_language === "en" &&
-      // get rid of items that its video can't be played
-      (original_name || original_title) !== "Mortal Kombat" &&
-      (original_name || original_title) !== "The Walking Dead" &&
-      (original_name || original_title) !== "Superman & Lois" &&
-      (original_name || original_title) !== "Fear the Walking Dead" &&
-      (original_name || original_title) !== "Master of None"
+    ({ original_language }) => original_language === "en"
   );
   const banner = filteredResults[chooseRandomBanner(filteredResults.length)];
   console.log(banner);
@@ -40,10 +33,7 @@ export const getRow = async (category, row) => {
   );
   const { results: sliderItems } = data;
   const filteredSliderItems = sliderItems
-    .filter(
-      ({ backdrop_path, poster_path }) => backdrop_path && poster_path
-      // original_language === "en" && backdrop_path && poster_path
-    )
+    .filter(({ backdrop_path, poster_path }) => backdrop_path && poster_path)
     .map((item) => {
       return category === "browse"
         ? { ...item, category: row.type }
@@ -78,7 +68,7 @@ export const getTrailer = async (category, itemId) => {
       trailer = trailerDetail.key;
     }
   } else {
-    throw new Error("no trailer result"); // 如果没有获取到trailer， throw an error
+    throw new Error("no trailer result"); // throw an error when there is no trailer
   }
   return trailer;
 };
@@ -89,11 +79,8 @@ export const getGenres = async (category) => {
 
   return genres;
 };
-// this return a list which should be available initially.
-// can be get at build stage. at get static props.
-export const getDetails = async (category, itemId) => {
-  // genery  trailer
 
+export const getDetails = async (category, itemId) => {
   const { data: details } = await tmdb.get(
     TMDB[category].helpers.fetchDetails.replace("_id", itemId)
   );
@@ -122,8 +109,7 @@ export const getDetails = async (category, itemId) => {
       trailer = trailerDetail.key;
     }
   } else {
-    throw new Error("no trailer result"); // 如果没有获取到trailer， throw an error
-    // 此种情况下应该set trailer 为null
+    throw new Error("no trailer result");
   }
 
   return { details, castData, trailer };

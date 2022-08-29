@@ -9,21 +9,15 @@ import LoadingOverlay from "../ui/LoadingOverlay";
 const BrowseContent = ({ category, profilesManaging, userEmail }) => {
   const [urlOriginal, setUrlOriginal] = useState("/browse");
   const selectedProfile = useSelector((state) => state.users.selectedProfile);
-  // only init isLoading as true when the page is refresh. otherwise if it's come from router.push we need to set it's init value as false
   const [showLoadingSpinner, setShowLoadingSpinner] = useState(
     selectedProfile ? false : true
   );
 
   const router = useRouter();
-  console.log(router);
-  console.log(userEmail);
   const onShowDetailsHandler = useCallback((url, urlOriginal) => {
     setUrlOriginal(urlOriginal);
     router.push(url, undefined, { shallow: true });
   }, []);
-  // const currentProfile = useSelector((state) => state.users.selectedProfile);
-  // how to let page rerender when chang profile???????
-  // console.log(isLoading);
   return (
     <>
       {profilesManaging && <Profile userEmail={userEmail} />}

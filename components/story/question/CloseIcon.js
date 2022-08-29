@@ -25,4 +25,3 @@ export const StyledCloseIcon = styled(CloseIcon)`
   }
   ${({ qState }) => qState && "transform:rotate(45deg)"}
 `;
-// 我们使用svg创建components时，需要把svg中de变量名更该为camel case。

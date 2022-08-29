@@ -9,9 +9,6 @@ export const BackgroundImage = styled.div`
   background: rgba(0, 0, 0, 0.4);
   overflow: hidden;
   z-index: 1;
-  /* @media screen and (max-width: 50em) {
-    display: none;
-  } */
 `;
 export const GradientLayer = styled.div`
   position: absolute;
@@ -104,7 +101,6 @@ export const CTAForm = styled.form`
 export const FormContent = styled.div`
   display: flex;
   justify-content: center;
-  /* align-items: stretch; */
   @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
     flex-direction: column;
     align-items: center;
@@ -145,10 +141,6 @@ export const InputFiled = styled.div`
     transform: translateY(0);
     font-weight: 700;
   }
-  /* bug   when it's not focused, the label will fall down;
-  hotFlix solution: when input has value, we still need transition.
-  */
-  // still need to add transition and transform in small screen.
 `;
 
 export const Input = styled.input`
@@ -157,13 +149,11 @@ export const Input = styled.input`
   border: 1px solid #8c8c8c;
   padding: 10px 10px 0 10px;
   outline: none;
-  font-size: 1.6rem; /*this will decide what font size of input text */
+  font-size: 1.6rem;
   &:focus {
     border-color: #0071eb;
   }
-  /* @media only screen and (max-width: ${({ theme }) => theme.mediaLarge}) {
-    padding: 0;
-  } */
+
   ${({ value }) =>
     value &&
     css`
@@ -174,16 +164,12 @@ export const Input = styled.input`
         transform: translateY(0);
         font-weight: 700;
       }
-    `}// styled props only works with styled component. even if inside of styled component won't 
-    //work as well.
+    `}
 `;
 export const FormButton = styled.button`
-  /* background: none; */
-  /* outline: none; */
   border-left: 0.1rem solid #333;
   background-color: ${({ theme }) => theme.accentColor};
   font-size: 3rem;
-  /* height: 100%; */
   padding: 0 2.6rem;
   border-radius: 0 1px 1px 0;
   display: block;

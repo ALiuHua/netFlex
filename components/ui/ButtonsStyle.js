@@ -11,7 +11,6 @@ export const ToggleListButton = styled.button`
   align-items: center;
   justify-content: center;
   svg {
-    // this is also a good way to align the svg in the center of button , because we can not use display:flex here cause of dispaly:none
     width: 100%;
     height: 100%;
     padding: 0.2rem;
@@ -27,7 +26,6 @@ export const StyledCloseButton = styled.button`
   padding: 5px;
   border-radius: 50%;
   background-color: #181818;
-  /* cursor: pointer; */
 `;
 export const StyledMuteButton = styled.button`
   width: 5.3rem;
@@ -57,7 +55,6 @@ export const StyledPlayButton = styled.button`
   background-color: white;
   border: 0;
   border-radius: 4px;
-  /* font-size:6.4rem */
   transition: background-color 0.2s;
   @media (max-width: 68.75em) {
     padding: 0.85rem 2rem 0.85rem 1.8rem;
@@ -122,7 +119,6 @@ export const StyledDetailButton = styled.button`
   :hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
-  /* transform: scale(0.35); */
   svg {
     width: 100%;
     height: 100%;
@@ -141,7 +137,6 @@ export const StyledCirclePlayButton = styled.button`
   :hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
-  /* transform: scale(0.35); */
   svg {
     width: 100%;
     height: 100%;
@@ -151,14 +146,10 @@ export const StyledCirclePlayButton = styled.button`
   }
 `;
 export const ButtonBox = styled.div`
-  /* width: 2.4rem;
-  height: 2.4rem; */
-  /* margin-right: auto; */
   ${({ scaled }) =>
     scaled &&
     css`
       transform: scale(${scaled});
-      /* transform-origin: 50% 100%; */
       @media (max-width: 68.75em) {
         transform: scale(${scaled / 1.2});
       }

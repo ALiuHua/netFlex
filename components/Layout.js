@@ -1,7 +1,7 @@
 import { ThemeProvider } from "styled-components";
 import { theme } from "../styles/Theme";
 import { GlobalStyles } from "../styles/GlobalStyles";
-import Header from "../components/story/Header";
+import Header from "../components/story/header/Header";
 import Footer from "../components/story/footer/Footer";
 import { useRouter } from "next/router";
 import { Provider } from "react-redux";

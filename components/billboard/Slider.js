@@ -15,14 +15,12 @@ const Slider = ({ category, item, onShowMore }) => {
   return (
     <LolomoSlider item={item}>
       {contentItems.map((data, index) => (
-        // <CardContextProvider>
         <Card
           category={category}
           key={data.id}
           item={data}
           onShowMore={onShowMore}
         />
-        // </CardContextProvider>
       ))}
     </LolomoSlider>
   );

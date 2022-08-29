@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
-import QuestionAccordion from "./QuestionAccordion";
-import { theme } from "../../../styles/Theme";
-// import {QuestionSection} from
+import React from "react";
 import CTAFormComponent from "../hero/CTAFormComponent";
 import Questions from "./Questions";
 const QuestionSection = styled.section`
@@ -24,7 +21,6 @@ const QuestionWrapper = styled.div`
     width: 100%;
   }
   h2 {
-    /* font-family: "Netflix Sans"; */
     font-size: 5rem;
     font-weight: 700;
     text-align: center;
@@ -61,5 +57,4 @@ const Question = () => {
     </QuestionSection>
   );
 };
-// why the title is bliking and content start from empty to normall every time i refresh.
 export default Question;

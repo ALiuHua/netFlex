@@ -1,7 +1,6 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Image from "next/image";
-import { Profiler } from "react";
 const LoadingOverlay = ({ profileSrc }) => {
   return (
     <LoadingOverlayWrapper>

@@ -1,16 +1,9 @@
 import styled, { css } from "styled-components";
-const gap = 0; //unit "rem"
+const gap = 0;
 export const SectionContainer = styled.section`
-  /* padding: 7rem 4.5rem; */
   padding: 7rem 4%;
   border-bottom: 0.8rem solid ${({ theme }) => theme.borderBottomColor};
   background-color: #000;
-  /* @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
-    padding: 7.5rem 5rem;
-  }
-  @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
-    padding: 6.25rem 5%;
-  } */
 `;
 export const ContentContainer = styled.div`
   max-width: 110rem;
@@ -45,7 +38,7 @@ export const DeviceImgContainer = styled.div`
       ? "-10% -5% -5% 0"
       : id === "2"
       ? "-8% 0 -4% -15%"
-      : "-5% -10% 0 0"}; // i don't understand why this can have this effect on image.
+      : "-5% -10% 0 0"};
 
   @media only screen and (max-width: ${({ theme }) => theme.mediaMedium}) {
     width: 100%;
@@ -111,7 +104,7 @@ export const AnimationContainer = styled.div`
       }
     `};
 `;
-// 判断是否用short circuting operator， 判断多种情况用ternetary expression
+
 export const AnimationImg = styled.div`
   margin-right: 1.6rem;
   img {
@@ -139,7 +132,7 @@ export const DescriptionContainer = styled.div`
   width: 52%;
   padding: ${({ id }) =>
     id === "2" ? "0 0 0 3rem" : id === "4" ? "0 0 0 4.8rem" : "0 4.8rem 0 0"};
-  /* display: flex; */
+
   h2 {
     font-size: 5rem;
     line-height: 1.1;

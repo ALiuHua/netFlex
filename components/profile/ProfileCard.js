@@ -25,7 +25,6 @@ const ProfileCard = ({
 
 export default ProfileCard;
 export const CardWrapper = styled.div`
-  /* padding: 0 1rem; */
   position: relative;
   cursor: pointer;
   font-size: 1.6rem;
@@ -42,21 +41,13 @@ export const CardWrapper = styled.div`
     border: 2px solid #fff;
     display: none;
   }
-  /* div {
-    border: 2px solid transparent;
-    // 解决border出现时的flicking问题，也可以通过伪元素来实现，如netflix
-  } */
+
   &:hover div::after {
     color: #eee;
     display: block;
-    /* div::after {
-      border: 2px solid #eee;
-    } */
   }
 `;
 export const AvatarWrapper = styled.div`
-  /* width: 12rem;
-  height: 12rem; */
   width: 10vw;
   height: 10vw;
   min-height: 84px;
@@ -99,7 +90,6 @@ export const EditOverlay = () => {
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        // class="svg-icon svg-icon-edit"
       >
         <path
           fillRule="evenodd"

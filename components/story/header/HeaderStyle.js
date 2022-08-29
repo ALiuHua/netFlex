@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
-import { CloseButton } from "../ui/Buttons";
+import { CloseButton } from "../../ui/Buttons";
 import Link from "next/link";
-// import { StyledCloseButton } from "../ui/ButtonsStyle";
 export const HeaderWrapper = styled.header`
   max-width: 192rem;
   padding-top: 2rem;
@@ -31,15 +30,12 @@ export const HeaderWrapper = styled.header`
       background-color: rgba(20, 20, 20);
     `}
   z-index: 10;
-  /* background-color: transparent; */
 `;
 export const HeaderContent = styled.div`
   margin: 0 4%;
-  /* position: fixed; */
   ${({ isNavShown }) =>
     isNavShown &&
     css`
-      /* position: fixed; */
       height: 100%;
     `}
   display: flex;
@@ -49,9 +45,6 @@ export const HeaderContent = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* ${({ pathname }) => console.log(pathname)} */
-    //in this case we can get access to the pathname. but we can't get
-    //access to this variant in LogoWrapper if we dont't pass in.
     ${({ isNavShown }) =>
       isNavShown &&
       css`
@@ -60,13 +53,11 @@ export const HeaderContent = styled.div`
   }
 `;
 export const LogoWrapper = styled.div`
-  /* padding-top: 0.8rem; */
   height: 4.5rem;
   width: 16.7rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-right: auto; */
   ${({ isNavShown }) =>
     isNavShown &&
     css`
@@ -105,7 +96,6 @@ export const ButtonLink = styled(LinkN)`
   background-color: ${({ theme }) => theme.accentColor};
   padding: 0.7rem 1.7rem;
   border-radius: 0.3rem;
-  /* cursor: pointer; */
 `;
 
 export const MenuList = styled.div`
@@ -141,7 +131,6 @@ export const SearchIcon = () => {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      // class="search-icon"
     >
       <path
         fillRule="evenodd"
@@ -160,7 +149,6 @@ export const BellIcon = () => {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      // class="Hawkins-Icon Hawkins-Icon-Standard"
     >
       <path
         fillRule="evenodd"
@@ -187,7 +175,6 @@ export const SearchInput = styled.input`
   height: 32px;
   border: none;
   outline: none;
-  /* background-color: rgba(0, 0, 0, 0.2); */
   background-color: transparent;
   transition: all 0.4s ease-out;
   color: #eee;
@@ -217,15 +204,7 @@ export const SearchBox = styled.div`
       background-clip: border-box;
     `}
 `;
-// export const CloseButton = styled.StyledCloseButton`
-//   width: 27px;
-//   height: 27px;
-//   position: absolute;
-//   top: 50%;
-//   transform: translate(-100%, -50%);
-// `;
 export const ProfilesBox = styled.div`
-  /* display: none; */
   opacity: 0;
   height: 0;
   overflow: hidden;
@@ -267,7 +246,6 @@ export const ProfilesBox = styled.div`
     span {
       margin-left: 10px;
       font-size: 0.1rem;
-      /* text-decoration: underline; */
     }
   }
   button:hover {
@@ -276,53 +254,11 @@ export const ProfilesBox = styled.div`
     }
   }
   button:last-child {
-    /* box-sizing: border-box; */
-
     border-top: 1px solid #888;
-
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
-  /* margin-top: 20px; */
-  /* &:hover {
-    position: absolute;
-    width: 160px;
-    height: 300px;
-    background-color: rgba(20, 20, 20, 0.9);
-    top: 50px;
-    left: -110px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
-    border: 1px solid #333;
-    button {
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      img {
-        border-radius: 3px;
-        overflow: hidden;
-      }
-      span {
-        margin-left: 20px;
-      }
-    }
-    /* &::before {
-      content: "";
-      width: 0;
-      height: 0;
-      border-bottom: 8px solid #eee;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      position: absolute;
-      top: 0;
-      left: 75%;
-      transform: translateY(-105%);
-    } 
-  } */
 `;
 export const SearchCloseButton = styled(CloseButton)`
   background-color: transparent;
@@ -334,7 +270,6 @@ export const SelectedProfile = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
-  /* padding-bottom: 10px; */
   ::after {
     content: "";
     display: inline-block;
@@ -347,7 +282,6 @@ export const SelectedProfile = styled.div`
   }
   ::before {
     position: absolute;
-    /* display: none; */
     bottom: -10px;
     left: 25%;
     content: "";
@@ -356,42 +290,10 @@ export const SelectedProfile = styled.div`
     border: 0 solid transparent;
     opacity: 0;
   }
-  /* &:hover {
-    &::after {
-      transform: rotate(180deg);
-    }
-    &::before {
-      display: block;
-    }
-  } */
 
   img {
     border-radius: 3px;
   }
-  /* &:hover + ${ProfilesBox} {
-    position: absolute;
-    width: 160px;
-    height: 300px;
-    background-color: rgba(20, 20, 20, 0.9);
-    top: 25px;
-    left: -110px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    border: 1px solid #333;
-    button {
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      img {
-        border-radius: 3px;
-        overflow: hidden;
-      }
-      span {
-        margin-left: 20px;
-      }
-    }
-  } */
 `;
 export const ProfileWrapper = styled.div`
   cursor: pointer;
@@ -402,41 +304,15 @@ export const ProfileWrapper = styled.div`
       transform: rotate(180deg);
     }
     &::before {
-      /* display: block; */
       opacity: 1;
       border-left: 7px solid transparent;
       border-right: 7px solid transparent;
       border-bottom: 7px solid #ddd;
       transition: opacity 0.2s ease-in-out 200ms;
-      /* border: none; */
     }
   }
 
   &:hover ${ProfilesBox} {
-    /* position: absolute;
-    width: 180px;
-    height: 300px;
-    background-color: rgba(20, 20, 20, 0.9);
-    top: 50px;
-    left: -110px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    border: 1px solid #333;
-    button {
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      img {
-        border-radius: 3px;
-        overflow: hidden;
-      }
-      span {
-        margin-left: 20px;
-        
-      }
-    } */
-    /* height: 250px; */
     height: ${({ profilesNum }) => {
       console.log(profilesNum);
       return `${(profilesNum + 1) * 40 + 10}px`;
@@ -444,8 +320,6 @@ export const ProfileWrapper = styled.div`
     max-height: 250px;
     opacity: 1;
     transition: opacity 0.2s cubic-bezier(1, 0, 1, 0.3) 200ms;
-    /* transition: height 0.2s ease-in-out 100ms; */
-    /* padding: 15px; */
     border: 1px solid #888;
   }
 `;

@@ -180,12 +180,6 @@ export const TMDB = {
       fetchRecommendations: `/movie/_id/recommendations?api_key=${API_KEY}`,
       fetchCredits: `/movie/_id/credits?api_key=${API_KEY}`,
       fetchSimilar: `/movie/_id/similar?api_key=${API_KEY}&language=en-US&page=1`,
-      // searchMovie: `/search/movie?api_key=${API_KEY}&query=_query`,
-      // fetchMovieGenres: `genre/movie/list?api_key=${API_KEY}`,
-      // fetchMovieTrailers: `/movie/_id/videos?api_key=${API_KEY}`,
-      // fetchMovieDetails: `/movie/_id?api_key=${API_KEY}`,
-      // fetchMovieRecommendations: `/movie/_id/recommendations?api_key=${API_KEY}`,
-      // fetchMovieCredits: `/movie/_id/credits?api_key=${API_KEY}`,
     },
   },
   browse: {

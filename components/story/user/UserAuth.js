@@ -91,7 +91,6 @@ const UserAuth = () => {
       dispatchPassword({ type: "ON_BLUR" });
       return;
     }
-    // optional :add validation
     if (!emailState.isEmailValid || !passwordState.isPasswordValid)
       return console.log(
         emailState.isEmailValid,
@@ -106,12 +105,9 @@ const UserAuth = () => {
         email: emailState.enteredEmail,
         password: passwordState.enteredPassword,
       });
-      // setIsLoading(false);
       if (!result.error) {
-        // setIsLoading(false);
         router.replace(`/browse`);
       } else {
-        // console.log(JSON.stringify(result.error));
         setMessage(
           "Sorry, we can not log this account in. Please input correct email and password."
         );
@@ -119,8 +115,6 @@ const UserAuth = () => {
       }
     } else {
       //sign up
-      console.log("sign up");
-
       try {
         setIsLoading(true);
         const result = await createUser(
@@ -138,8 +132,6 @@ const UserAuth = () => {
       }
     }
   }
-  // errorBorder only want it change after blur; so we need to let isTouched as an condition
-  // becasue this value only change after blur
 
   return (
     <>

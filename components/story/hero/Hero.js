@@ -14,10 +14,6 @@ const Hero = () => {
   return (
     <HeroSection>
       <Background src={heroImage} altInfo="film poster collections" />
-      {/* <BackgroundImage>
-        <GradientLayer />
-        <Image src={heroImage} layout="fill" objectFit="cover" />
-      </BackgroundImage> */}
       <HeroWrapper>
         <HeroText>
           <h1>Unlimited movies, TV shows and more.</h1>

@@ -28,7 +28,6 @@ export const getServerSideProps = async (context) => {
   const { email: userEmail, profiles: userProfiles } = session.user;
   return {
     props: {
-      // data,
       userEmail,
       userProfiles: userProfiles || null,
     },

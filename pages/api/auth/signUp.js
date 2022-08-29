@@ -7,13 +7,9 @@ async function handler(req, res) {
   const { email, password } = data;
   try {
     const client = await connectToDatabase();
-    console.log(client);
     const db = client.db();
-    console.log(client, db);
     //Check if User is already exsit
-
     const existingUser = await db.collection("users").findOne({ email: email });
-    console.log(existingUser);
     if (existingUser) {
       res
         .status(422)

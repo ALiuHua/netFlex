@@ -14,13 +14,11 @@ const Lolomo = React.memo(({ category, onShowMore }) => {
             : prevRowNumber
         );
     };
-    window.addEventListener("scroll", onScrollHandler); //添加一次，转动可用
+    window.addEventListener("scroll", onScrollHandler);
     return () => {
       removeEventListener("scroll", onScrollHandler);
     };
   }, [category]);
-  console.log("lolomo running");
-  console.log(rowNumber);
   return (
     <SliderWrapper>
       {TMDB[category].sections.map(
@@ -44,15 +42,4 @@ const SliderWrapper = styled.div`
   z-index: 2;
   padding-top: 3rem;
   overflow-x: hidden;
-  /* overflow-y: auto; */
 `;
-
-//   console.log(window.scrollY);
-//   console.log(window.pageYOffset);
-//above are same value, ie scroll bar scrolling distance;
-//   console.log(window.innerHeight);
-//the value of the content visibel window height
-//   console.log(document.body.offsetHeight);
-// kind of document height, if i add another div with height= 50px in the footer, this will increase 50px.
-//   window.scrollY + window.innerHeight === document.body.offsetHeight;
-// mean the document just hit the bottom of window.

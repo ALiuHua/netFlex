@@ -1,12 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { FooterLink } from "../HeaderStyle";
+import { FooterLink } from "../header/HeaderStyle";
 import { useRouter } from "next/router";
 const FooterWrapper = styled.footer`
   position: relative;
   padding: 7rem 4.5rem;
   font-size: 13px;
-  /* background-color: #000; */
   background-color: #141414;
   z-index: 2;
   @media only screen and (max-width: ${({ theme }) => theme.mediaXsmall}) {
@@ -27,8 +26,6 @@ const FooterContent = styled.div`
   max-width: 100rem;
   margin: 0 auto;
   padding: 0rem 3.5rem;
-  /* font-size: 1.6rem; */
-
   color: #757575;
 `;
 const FooterTop = styled.p`
@@ -37,11 +34,6 @@ const FooterTop = styled.p`
 `;
 const FooterLinksWrapper = styled.div`
   ul {
-    /* li { */
-    /* list-style: none;
-      display: inline-block;
-      width: 21.3rem; */
-    /* } */
     display: grid;
     grid-template-columns: repeat(4, minmax(18.5rem, 1fr));
 
@@ -55,18 +47,11 @@ const FooterLinksWrapper = styled.div`
       list-style: none;
       padding-right: 1.2rem;
       margin-bottom: 1.6rem;
-      /* font-size: 13px; */
       a {
-        /* &:link,
-        &:visited {
-        } */
         &:hover,
         &:active {
-          /* border-bottom: 1px soild red; */
-
           border-bottom: 1px solid #757575;
         }
-        /* why not work,because solid typo */
       }
     }
   }

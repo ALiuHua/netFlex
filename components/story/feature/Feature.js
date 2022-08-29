@@ -12,4 +12,3 @@ const Feature = () => {
 };
 
 export default Feature;
-/////////=====need to remove the padding on text container when it's in flex-direction on column

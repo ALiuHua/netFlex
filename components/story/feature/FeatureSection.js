@@ -20,5 +20,3 @@ export const FeatureSection = (props) => {
     </SectionContainer>
   );
 };
-
-// card is component, container is element

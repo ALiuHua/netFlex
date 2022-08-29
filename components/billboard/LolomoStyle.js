@@ -6,7 +6,6 @@ import Slider from "react-slick";
 export const CarouselWrapper = styled.div`
   margin: 3vw 0;
   padding: 0 4%; // for prev and next button
-  /* overflow-x: hidden; */
   h2 {
     font-size: 1.4vw;
     font-weight: 700;
@@ -32,9 +31,7 @@ export const CarouselWrapper = styled.div`
       width: 100%;
       position: relative;
       right: 25%;
-      /* transform: translateX(-25%); */
       font-size: 5rem;
-      /* z-index: 2; */
       @media only screen and (max-width: 87.5em) {
         font-size: 4.5rem;
       }
@@ -44,24 +41,14 @@ export const CarouselWrapper = styled.div`
     }
   }
   .slick-next {
-    /* position: relative; */
     left: 100%;
-    /* transform: translate(50%, -50%); */
     opacity: 0;
-
     width: 4vw;
-    /* max-width: 60px; */
-    /* background-color: red; */
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-
     &::before {
       content: "〉";
       width: 100%;
       position: relative;
       left: 25%;
-      /* transform: translateX(-25%); */
       font-size: 5rem;
       @media only screen and (max-width: 87.5em) {
         font-size: 4.5rem;
@@ -101,8 +88,6 @@ export const Carousel = styled(Slider)`
     top: -25px;
     right: 0;
     bottom: auto;
-
-    /* background-color: green; */
     width: 200px;
     padding: 2px 5px;
     gap: 2px;
@@ -119,8 +104,6 @@ export const Carousel = styled(Slider)`
       }
     }
     button::before {
-      /* position: absolute;
-      top: -50%; */
       content: "";
       width: 13px;
       height: 2px;
@@ -130,31 +113,19 @@ export const Carousel = styled(Slider)`
   }
   .slick-list {
     overflow: visible;
-    /* position: relative;
-    z-index: 2; */
     ${({ carouselClicked }) =>
       !carouselClicked &&
       css`
-        clip-path: inset(-100vw -100vw -100vw 0); // why this work?????????????
-      `}/* margin-right: -60px; */
-    /* height: 100%; */
+        clip-path: inset(-100vw -100vw -100vw 0);
+      `}
   }
   .slick-track {
     display: flex;
-    /* width: 500% !important; */
     & > div {
       flex: 1;
       padding: 0 3.5px;
-      /* background-color: green; */
-      /* height: 150px; */
-      /* background-color: red; */
-      /* div {
-        width: 100%;
-        height: 100%;
-      } */
     }
     .slick-slide {
-      /* width: 16.666%; */
       position: relative;
       transition: all 1s;
       aspect-ratio: 16/9;

@@ -24,7 +24,6 @@ import {
   DetailIcon,
 } from "./ButtonIcons";
 import { ButtonBox } from "../ui/ButtonsStyle";
-// why i put calssName here is because we can styled this components
 
 const EmbedButtonBox = ({
   showMuteToggling,
@@ -41,7 +40,7 @@ const EmbedButtonBox = ({
           muted={muted}
           onClick={(e) => {
             dispatch(playerActions.toggleMuted());
-            e.stopPropagation(); // to resolve the issue that i click on the detail page still trigger the detail click outside handler, which is a problem because mute icon will change
+            e.stopPropagation();
           }}
         />
       )}
@@ -105,7 +104,6 @@ export const CloseButton = ({ className, onClick }) => {
     <StyledCloseButton className={className} onClick={onClick}>
       <CloseIcon />
     </StyledCloseButton>
-    // why i need to pass into this onclick otherwise i can not triggler it on the StyledCloseButton in details component
   );
 };
 export const CirclePlayButton = ({ onClick }) => {

@@ -5,15 +5,13 @@ import { useSelector } from "react-redux";
 const useInitProfiles = (userEmail, userProfiles) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("index of browsen useeffect running", userProfiles);
     dispatch(
       userActions.setProfiles({
         type: "SET_PROFILE",
         payload: userProfiles || [],
       })
     );
-    console.log(userEmail);
-    dispatch(userActions.setEmail(userEmail)); // we may not need this
+    dispatch(userActions.setEmail(userEmail));
   }, [userProfiles, userEmail]);
   useEffect(() => {
     const localNetflexInfo = JSON.parse(localStorage.getItem("netflex"));
@@ -33,7 +31,6 @@ const useInitProfiles = (userEmail, userProfiles) => {
   const showProfilesManagingPage = userProfiles
     ? showManagingProfile
     : !!hasProfileSelected === showManagingProfile;
-  // const showProfilesManagingPage = !userProfiles || showManagingProfile;
 
   return { showProfilesManagingPage };
 };

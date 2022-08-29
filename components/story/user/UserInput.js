@@ -1,15 +1,7 @@
 import React from "react";
 import { InputFiled, Input } from "./UserAuthStyle";
 
-const UserInput = ({
-  type,
-  id,
-  value,
-  onChange,
-  onBlur,
-  onFocus,
-  errorBorder,
-}) => {
+const UserInput = ({ type, id, value, onChange, onBlur, errorBorder }) => {
   return (
     <InputFiled>
       <Input

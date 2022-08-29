@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import { getGenres } from "../../helpers/browseHelper";
-import { genreActions } from "../../store/genreSlice";
+import { getGenres } from "../../../helpers/browseHelper";
+import { genreActions } from "../../../store/genreSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { EditOverlay } from "../profile/ProfileCard";
+import { EditOverlay } from "../../profile/ProfileCard";
 import {
   HeaderWrapper,
   HeaderContent,
@@ -22,9 +22,8 @@ import {
 } from "./HeaderStyle";
 import Search from "./Search";
 import Image from "next/image";
-import { userActions } from "../../store/userSlice";
+import { userActions } from "../../../store/userSlice";
 const Header = () => {
-  console.log("header running");
   const [stickyHeader, setStickHeader] = useState(false);
   const router = useRouter();
   const { pathname } = router;
@@ -36,12 +35,6 @@ const Header = () => {
   const managingProfilesHandler = () => {
     dispatch(userActions.setShowManagingProfile(true));
     router.push("/browse");
-    // if (pathname === "/browse") {
-    //   console.log("reload the page");
-    //   router.reload();
-    // } else {
-    //   router.push("/browse");
-    // }
   };
   useEffect(() => {
     // sticky header and background-color change
@@ -63,14 +56,10 @@ const Header = () => {
   const allUserProfiles = useSelector((state) => state.users.profiles);
   useEffect(() => {
     //fetch genres data
-    console.log("useEffect header genre");
     const getGenresInfo = async () => {
       const movieGenres = await getGenres("movies");
       const tvGenres = await getGenres("TVShows");
-      console.log("dispatch genres");
-      //it's too late to dispatch generes in the end... at the page we can do this because we fetched genre at backend.
-      //but we can skip use genres when it's not dispatched yet.
-      // the reason why i want it here is thate we can avoid to fetch genres everywhere.
+      // Fetch genres here to avoid fetching genres everywhere and skip use genres data when it's not dispatched yet.
       dispatch(
         genreActions.setGenre({ movies: movieGenres, TVShows: tvGenres })
       );
@@ -111,9 +100,6 @@ const Header = () => {
               </MenuList>
               <AccountTool>
                 <Search pathname={pathname} router={router} />
-                {/* <BellButton>
-                  <BellIcon />
-                </BellButton> */}
                 <ProfileWrapper profilesNum={allUserProfiles.length}>
                   <SelectedProfile>
                     <Image
@@ -141,8 +127,6 @@ const Header = () => {
                             } else {
                               router.push("/browse");
                             }
-                            // router.push("/browse");
-                            // dispatch(userActions.setSelectedProfile(item));
                             localStorage.setItem(
                               "netflex",
                               JSON.stringify(item)

@@ -1,15 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useRouter } from "next/router";
 import Player from "../../components/billboard/Player";
 import { getTrailer } from "../../helpers/browseHelper";
 import { useSelector } from "react-redux";
 import { CoverImage } from "../../components/billboard/BillboardHero";
-export const PlayerPage = ({ onShowMore }) => {
+export const PlayerPage = () => {
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
-  console.log(router);
+
   const [trailer, setTrailer] = useState(null);
   const [isMouseActive, setIsMouseActive] = useState(true);
   const posterPath = useSelector((state) => state.details.posterPath);
@@ -29,8 +29,6 @@ export const PlayerPage = ({ onShowMore }) => {
           router.query.cat,
           router.query.trailerId
         );
-        // "675353"
-        console.log("runniung");
         setTrailer(fetchedTrailer);
       } catch (err) {
         if (err.response) {
@@ -45,13 +43,11 @@ export const PlayerPage = ({ onShowMore }) => {
       setTrailer(null);
     };
   }, [router.query.trailerId, router.query.cat]);
-
-  //x7Krla_UxRg   6sosTNRw_uQ    TWTfhyvzTx0   b9EkMc79ZSU
   return (
     <PlayerBox>
       <PlayerOverlay
         onMouseMove={() => {
-          console.log("mouse move"), setIsMouseActive(true);
+          setIsMouseActive(true);
         }}
         onClick={() => {
           setIsPlaying((prev) => !prev), console.log("clci");
@@ -59,23 +55,16 @@ export const PlayerPage = ({ onShowMore }) => {
         isCompleted={isCompleted}
         isMouseActive={isMouseActive}
       >
-        {isMouseActive && (
+        {(isMouseActive || true) && (
           <BackButton
+            isCompleted={isCompleted}
             onClick={(e) => {
-              console.log("buttno click");
-              // const urlPathOriginal = `${window.location.pathname}${window.location.search}`;
-              // let updatedUrlPath;
-              // if (urlPathOriginal.includes("?")) {
-              //   updatedUrlPath = `${urlPathOriginal}&jbv=${item.id}&cat=${item.category}`;
-              // } else {
-              //   updatedUrlPath = `${urlPathOriginal}?jbv=${item.id}&cat=${item.category}`;
-              // }
-
-              // onShowMore(updatedUrlPath, urlPathOriginal);
               router.push("/browse");
               e.stopPropagation();
             }}
-          />
+          >
+            <span>Back to Browse</span>
+          </BackButton>
         )}
       </PlayerOverlay>
       {isCompleted && (
@@ -137,29 +126,44 @@ export const PlayerOverlay = styled.span`
 `;
 export const BackButton = styled.button`
   position: absolute;
-  top: 30px;
-  left: 50px;
+  top: 4rem;
+  left: 6rem;
   z-index: 1;
-  /* background-color: red; */
-  width: 10rem;
   height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #ccc;
+  font-size: 3rem;
   cursor: pointer;
+
   ::before {
     content: "←";
-    position: absolute;
-    /* width: 100%; */
-    /* width: 5rem;
-    height: 5rem; */
-    /* border: 3px solid #ddd;
-    border-radius: 50%; */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    font-size: 6rem;
-    color: #ddd;
-    /* display: flex;
+    width: 7rem;
+    height: 7rem;
+    font-size: 5.5rem;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center; */
+    border: 3px solid #ccc;
+    border-radius: 50%;
+  }
+  ${({ isCompleted }) =>
+    !isCompleted &&
+    css`
+      span {
+        display: none;
+      }
+      ::before {
+        border: none;
+        border-radius: none;
+      }
+    `}
+  :hover {
+    color: #fff;
+    ::before {
+      border: 3px solid #fff;
+    }
   }
 `;

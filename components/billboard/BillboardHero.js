@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-// import { useRouter } from "next/router";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-// import Router from "next/router";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { getBanner, getTrailer } from "../../helpers/browseHelper";
@@ -36,21 +34,19 @@ export const briefInfo = (infoText, num) => {
 };
 
 const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
-  //category ==movies/Tvshows
   const activePlayer = useSelector((state) => state.player.activePlayer);
   const dispatch = useDispatch();
   const [banner, setBanner] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [playCompleted, setPlayCompleted] = useState(false);
-  const [showPlayer, setShowPlayer] = useState(false); // this playce has a bug
-  const [playing, setPlaying] = useState(true); //only here
+  const [showPlayer, setShowPlayer] = useState(false);
+  const [playing, setPlaying] = useState(true);
   const vPlayer = useRef();
   const router = useRouter();
   const playHandler = () => {
     dispatch(
       detailsActions.setItemDetails({
         posterPath: banner.backdrop_path,
-        // itemCategory: banner.category,
       })
     );
     onShowMore(`/play/${banner.id}?cat=${banner.category}`);
@@ -69,7 +65,6 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
     dispatch(
       detailsActions.setItemDetails({
         posterPath: banner.backdrop_path,
-        // itemCategory: banner.category,
       })
     );
     if (showPlayer)
@@ -84,16 +79,13 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
     setPlayCompleted(true);
     setShowPlayer(false);
   };
-  console.log("billboard running");
-  useEffect(() => {
-    console.log("billboard useEffect running 1");
 
+  useEffect(() => {
     let timeoutId;
     const fetchBillboard = async () => {
-      console.log("fetched");
       try {
         const bannerData = await getBanner(category);
-        console.log(category, bannerData);
+
         setBanner(bannerData);
         const fetchedTrailer = await getTrailer(
           bannerData.category,
@@ -123,7 +115,6 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
     if (activePlayer !== "billboard" && showPlayer) {
       setPlaying(false);
     }
-    console.log("billboard useEffect running 2");
   }, [activePlayer, showPlayer]);
   useEffect(() => {
     if (router.query.jbv)
@@ -133,9 +124,8 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
   const replayHandler = () => {
     setTrailer(trailer);
     setPlayCompleted(false);
-    console.log(trailer, showPlayer);
   };
-  console.log(banner, trailer);
+
   return (
     <BillboardWrapper>
       <BillboardContent>
@@ -154,11 +144,6 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
             }}
           />
         )}
-        {/* {!showPlayer && banner && (
-          <BillboardBackground banner={banner}>
-          </BillboardBackground>
-        )} */}
-
         {!showPlayer && banner && (
           <CoverImage
             coverPath={banner?.backdrop_path}
@@ -175,18 +160,12 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
               <p>{briefInfo(banner.overview, 20)}</p>
             </Description>
             <ActionBox>
-              {/* <PlayButton onClick={playHandler}>
-                <PlayIcon /> <span>Play</span>
-              </PlayButton> */}
               <PlayButton onClick={playHandler}>
                 <span>Play</span>
               </PlayButton>
               <MoreInfoButton onClick={moreInfoHandler}>
                 <span>More Info</span>
               </MoreInfoButton>
-              {/* <MoreInfoButton onClick={moreInfoHandler}>
-                <InfoIcon /> <span>More Info</span>
-              </MoreInfoButton> */}
             </ActionBox>
           </DescriptionContainer>
         )}
@@ -202,7 +181,6 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
     </BillboardWrapper>
   );
 };
-
 export default BillboardHero;
 export const CoverImage = ({ coverPath, size, altInfo, children }) => {
   return (

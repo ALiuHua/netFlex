@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-// import { db } from "../../lib/db";
-import styled, { css, createGlobalStyle } from "styled-components";
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
 import { useSession } from "next-auth/react";
 import ProfileCard from "./ProfileCard";
 import Image from "next/image";
@@ -25,43 +24,33 @@ const Profile = () => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
   const router = useRouter();
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
-  const [isAdd, setIsAdd] = useState(false); // add new avatar
-  const [isManaging, setIsManaging] = useState(true); // switch between choos and manage
-  const [editAvatar, setEditAvatar] = useState(false); // switch to avatar gallery
+  const [isAdd, setIsAdd] = useState(false);
+  const [isManaging, setIsManaging] = useState(true);
+  const [editAvatar, setEditAvatar] = useState(false);
   const [editProfile, setEditProfile] = useState({
     isEdit: false,
     editedProfile: {},
     originalProfile: {},
-  }); //switch to profile editing
+  });
   const profiles = useSelector((state) => state.users.profiles) || [];
-  const userEmail = useSelector((state) => state.users.email);
-  console.log("userEmail  profiles", userEmail, profiles);
+
   const updateProfilesData = async (profiles, user) => {
-    console.log(profiles, user);
     const response = await fetch("/api/auth/profileData", {
       method: "POST",
       body: JSON.stringify({ profiles, user }),
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
-    console.log(data);
     if (!response.ok) throw new Error(data.message || "something goes wrong");
     return data;
   };
   const profileEditHandler = (param) => {
-    console.log("profileHandler");
     if (isManaging) {
-      // 获取并设定选中的编辑目标
+      // set edited profile
       setEditProfile((prev) => {
         return { isEdit: true, editedProfile: param, originalProfile: param };
       });
     } else {
-      // setSelectedAvatar(param);
-
-      // dispatch(userActions.setSelectedProfile(param));
-      // dispatch(userActions.setShowManagingProfile(false));
-      console.log(userEmail);
       if (router.pathname === "/browse") {
         router.reload();
       } else {
@@ -71,36 +60,28 @@ const Profile = () => {
     }
   };
   const cancelButtonHandler = () => {
-    console.log("cancelButtonHandler");
-    // 取消编辑
+    // cancle editing
     setEditProfile((prev) => {
       return { ...prev, isEdit: false };
     });
   };
   const saveButtonHandler = () => {
-    console.log("saveButtonHandler");
-    //确认编辑 回到managing页面
+    //confirm editing and back to managing menu
     setEditProfile((prev) => {
-      // console.log({
-      //   editedProfile: { ...prev.editedProfile, profileName: inputName },
-      // });
       return {
         ...prev,
         isEdit: false,
         editedProfile: { ...prev.editedProfile },
       };
     });
-    console.log(editProfile.editedProfile); // not up to date value
     if (isAdd) {
-      //验证是否有重复，否则返回(也应该在创建页面)
+      //check if already exist
       if (
         profiles.find(
           (profile) => profile.avatarId === editProfile.editedProfile.avatarId
         )
       )
-        // normally would not happen, because we already filter out used avatars.
         return console.error("avatar already exist");
-      //check if its already exist
       if (
         profiles.find(
           (profile) =>
@@ -109,8 +90,7 @@ const Profile = () => {
         editProfile.editedProfile.profileName === ""
       )
         return console.error("name already exist or not blank name");
-      //======add new profile to profiles
-      // setProfiles((prev) => [...prev, { ...editProfile.editedProfile }]);
+      //Add new profile to profiles
       dispatch(
         userActions.setProfiles({
           type: "ADD_PROFILE",
@@ -120,8 +100,7 @@ const Profile = () => {
       setIsAdd(false);
       return;
     }
-    // need to replace the original one
-    console.log("after return");
+    // Replace the original one
     dispatch(
       userActions.setProfiles({
         type: "EDIT_PROFILE",
@@ -130,8 +109,7 @@ const Profile = () => {
     );
   };
   const deleteProfileButtonHandler = () => {
-    console.log("deleteProfileButtonHandler");
-    //确认编辑 回到managing页面
+    //confirm editing
     setEditProfile((prev) => {
       return { ...prev, isEdit: false };
     });
@@ -145,9 +123,6 @@ const Profile = () => {
   const createProfileHandler = () => {
     console.log("createProfileHandler");
     if (profiles.length === 0) setIsManaging(true);
-    // we may not need this;
-    // setInputName("");
-    //设定默认的add选项
     setEditProfile({
       isEdit: true,
       editedProfile: {
@@ -159,11 +134,8 @@ const Profile = () => {
     });
     setIsAdd(true);
   };
-  console.log(profiles);
   const setAvatarHandler = (avatar) => {
-    console.log("setAvatarHandler");
     setEditAvatar(false);
-    //设定选中的目标
     setEditProfile((prev) => {
       return {
         ...prev,
@@ -174,10 +146,6 @@ const Profile = () => {
       };
     });
   };
-  // console.log(inputNameRef);
-  //edite state, selection state.
-  //没有用户信息时，进入设置用户界面，当有用户信息时，默认以第一个用户进入browse界面
-  // useEffect to define if there is no profiles we need to set it into isManaging into true.
   return (
     <ProfileWrapper>
       <ProfileContent>
@@ -208,15 +176,6 @@ const Profile = () => {
             <Button
               styled={isManaging}
               onClick={() => {
-                // const postProfiles = async () => {
-                //   const client = await db();
-                //   const result = await db
-                //     .collections("profiles")
-                //     .insetMany(profiles);
-                //   console.log(result);
-                // };
-                // if (isManaging) postProfiles();
-                console.log("toggle is managing");
                 setIsManaging((prev) => !prev);
                 updateProfilesData(profiles, session.user.email);
               }}
@@ -295,22 +254,15 @@ const Profile = () => {
           </>
         )}
       </ProfileContent>
-      {/* <OverflowVisiable /> */}
     </ProfileWrapper>
   );
 };
 
 export default Profile;
 export const ProfileWrapper = styled.div`
-  /* width: 80%; */
-  /* padding: 0 4.5rem; */
-  /* margin: 20px auto; */
   text-align: center;
   font-size: 3rem;
   font-weight: 700;
-
-  //
-  /* padding-top: 150px; */
   height: 100vh;
   position: absolute;
   background-color: #141414;
@@ -318,9 +270,6 @@ export const ProfileWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 1500;
-  /* top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
 `;
 export const ProfileContent = styled.div`
   width: 90vw;
@@ -338,7 +287,6 @@ export const FlexContainer = styled.div`
   align-items: center;
   gap: 2.4rem;
   flex-wrap: wrap;
-  /* align-items: flex-start; */
 `;
 
 export const ProfileContainer = styled.div`
@@ -351,10 +299,6 @@ export const ProfileContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-// export const Avatar = styled.div`
-//   width: 30rem;
-//   height: 30rem;
-// `;
 export const Input = styled.input`
   width: 12rem;
   margin-top: 2rem;
@@ -390,7 +334,6 @@ export const Button = styled.button`
     css`
       color: #444;
       border: 1px solid #aaa;
-      /* background: none; */
       background-color: #fff;
       font-weight: 700;
       &:hover {
@@ -400,20 +343,7 @@ export const Button = styled.button`
       }
     `}
 `;
-// export const StyledButton = styled(Button)`
-//   color: #444;
-//   border: 1px solid #aaa;
-//   /* background: none; */
-//   background-color: #fff;
-//   font-weight: 700;
-//   &:hover {
-//     color: #fff;
-//     border: 1px solid #c00;
-//     background-color: #c00;
-//   }
-// `;
 export const CreateNewUserButton = styled.button`
-  /* padding: 0 1rem; */
   cursor: pointer;
   font-size: 1.6rem;
   font-weight: 400;
@@ -435,8 +365,6 @@ export const CreateNewUserButton = styled.button`
     max-height: 135px;
     min-width: 84px;
     max-width: 135px;
-    /* width: 120px;
-    height: 120px; */
     fill: #aaa;
     border-radius: 3px;
   }
@@ -451,7 +379,6 @@ export const PlusIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      // class="h-5 w-5"
       viewBox="0 0 20 20"
       fill="currentColor"
     >
@@ -463,8 +390,3 @@ export const PlusIcon = () => {
     </svg>
   );
 };
-// export const OverflowVisiable = createGlobalStyle`
-//   body {
-//     overflow-x: visible;
-//   }
-// `;

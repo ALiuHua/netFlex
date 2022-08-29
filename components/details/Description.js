@@ -1,15 +1,23 @@
 import React from "react";
-import styled from "styled-components";
+import {
+  DetailsWrapper,
+  DescriptionWrapper,
+  SubInfo,
+  Rate,
+} from "./DetailsStyles";
 import { briefInfo } from "../billboard/BillboardHero";
-const Description = ({ category, details, cast }) => {
+const Description = ({ details, cast }) => {
   return (
     <DetailsWrapper>
       {details && (
         <>
           <DescriptionWrapper>
-            <h1>{details?.original_name && details?.name}</h1>
+            <h1>
+              {details?.original_name ||
+                details?.name ||
+                details?.original_title}
+            </h1>
             <div>
-              {console.log(details)}
               <span>
                 {new Date(
                   details.release_date ||
@@ -19,7 +27,7 @@ const Description = ({ category, details, cast }) => {
               </span>
               <span>{details?.number_of_seasons} Seasons</span>
               <Rate rate={details?.vote_average}>
-                Rate: {details?.vote_average}
+                Rate: {details?.vote_average.toFixed(1)}
               </Rate>
             </div>
             <p>{briefInfo(details?.overview, 30)}</p>
@@ -47,7 +55,6 @@ const Description = ({ category, details, cast }) => {
                   </a>
                 );
               })}
-              {/* not only can render node element in array, but also can render node element in nested array */}
             </div>
             {details?.tagline && (
               <div>
@@ -63,58 +70,3 @@ const Description = ({ category, details, cast }) => {
 };
 
 export default Description;
-const DetailsWrapper = styled.div`
-  /* background-color: #141414; */
-  display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-  column-gap: 20px;
-  /* padding: 0 4.5rem; */
-  min-height: 15rem;
-`;
-const DescriptionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* gap: 16px; */
-  h1 {
-    font-size: 2.2rem;
-    margin-bottom: 16px;
-  }
-  div {
-    margin-bottom: 16px;
-    span:not(:last-child) {
-      margin-right: 15px;
-    }
-    span:last-child {
-      padding: 2px 4px;
-    }
-  }
-  p {
-    margin-bottom: 16px;
-    font-size: 1.6rem;
-    margin-top: auto;
-  }
-`;
-const SubInfo = styled.div`
-  .actors,
-  .genre,
-  .tag {
-    color: #777;
-  }
-  div:not(:last-child) {
-    margin-bottom: 16px;
-  }
-  display: flex;
-  flex-direction: column;
-`;
-const Rate = styled.span`
-  background-color: ${({ rate, theme }) => rate > 8 && theme.accentColor};
-  border-radius: 2px;
-`;
-/*
-title:details.name / ~original_name
-rate:details.vote_average
-seasons: details.number_of_seasons
-overview:~.overview
-
-
-*/

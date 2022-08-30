@@ -82,6 +82,7 @@ const BillboardHero = ({ category, onShowMore, setShowLoadingSpinner }) => {
 
   useEffect(() => {
     let timeoutId;
+    dispatch(playerActions.toggleActivePlayer("billboard"));
     const fetchBillboard = async () => {
       try {
         const bannerData = await getBanner(category);

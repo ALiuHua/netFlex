@@ -9,7 +9,6 @@ export const PlayerPage = () => {
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
-
   const [trailer, setTrailer] = useState(null);
   const [isMouseActive, setIsMouseActive] = useState(true);
   const posterPath = useSelector((state) => state.details.posterPath);
@@ -60,6 +59,7 @@ export const PlayerPage = () => {
             isCompleted={isCompleted}
             onClick={(e) => {
               router.push("/browse");
+
               e.stopPropagation();
             }}
           >

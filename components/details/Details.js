@@ -42,6 +42,7 @@ const Details = ({ urlOriginal }) => {
         posterPath: detailsPoster,
       })
     );
+    dispatch(playerActions.toggleActivePlayer("main"));
     router.push(`/play/${item.id}?cat=${itemCategory}`);
   };
 

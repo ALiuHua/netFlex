@@ -56,7 +56,6 @@ const Search = ({ pathname, router }) => {
       />
       <SearchButton
         onClick={(e) => {
-          console.log(router.pathname, !router.pathname.includes("/search"));
           if (!router.pathname.includes("/search"))
             setUrlState(router.pathname);
           if (!searchQuery) setShowSearchBar((prev) => !prev);

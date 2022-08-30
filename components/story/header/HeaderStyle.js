@@ -314,7 +314,6 @@ export const ProfileWrapper = styled.div`
 
   &:hover ${ProfilesBox} {
     height: ${({ profilesNum }) => {
-      console.log(profilesNum);
       return `${(profilesNum + 1) * 40 + 10}px`;
     }};
     max-height: 250px;

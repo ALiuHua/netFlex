@@ -1,9 +1,17 @@
 import React from "react";
+import Head from "next/head";
 import styled from "styled-components";
 import UserAuth from "../components/story/user/UserAuth";
 import { getSession } from "next-auth/react";
 const Login = () => {
-  return <UserAuth />;
+  return (
+    <>
+      <Head>
+        <title>Netflex | Create or sign in your account</title>
+      </Head>
+      <UserAuth />
+    </>
+  );
 };
 
 export default Login;

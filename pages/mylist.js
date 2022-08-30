@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import Card from "../components/billboard/Card";
@@ -36,30 +37,35 @@ const Mylist = ({ userEmail, userProfiles }) => {
     if (currentProfile?.profileName) getList();
   }, [currentUser, currentProfile?.profileName]);
   return (
-    <GalleryWrapper>
-      {myList.length > 0 && (
-        <SearchContainer>
-          {myList.map((result) => (
-            <CellWrapper key={result.id}>
-              <Wrapper>
-                <Card
-                  key={result.id}
-                  item={result}
-                  onShowMore={onShowMore}
-                  onUpdateList={updateListHandler}
-                />
-              </Wrapper>
-            </CellWrapper>
-          ))}
-        </SearchContainer>
-      )}
-      {router.query.jbv && <Details urlOriginal={urlOriginal} />}
-      {notification && (
-        <Notification>
-          <p>{notification}</p>
-        </Notification>
-      )}
-    </GalleryWrapper>
+    <>
+      <Head>
+        <title>Netflex - my list</title>
+      </Head>
+      <GalleryWrapper>
+        {myList.length > 0 && (
+          <SearchContainer>
+            {myList.map((result) => (
+              <CellWrapper key={result.id}>
+                <Wrapper>
+                  <Card
+                    key={result.id}
+                    item={result}
+                    onShowMore={onShowMore}
+                    onUpdateList={updateListHandler}
+                  />
+                </Wrapper>
+              </CellWrapper>
+            ))}
+          </SearchContainer>
+        )}
+        {router.query.jbv && <Details urlOriginal={urlOriginal} />}
+        {notification && (
+          <Notification>
+            <p>{notification}</p>
+          </Notification>
+        )}
+      </GalleryWrapper>
+    </>
   );
 };
 

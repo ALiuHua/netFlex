@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import BrowseContent from "../../components/billboard/BrowseContent";
 import { getSession } from "next-auth/react";
 import useInitProfiles from "../../components/hooks/useInitProfiles";
@@ -6,11 +7,16 @@ import useInitProfiles from "../../components/hooks/useInitProfiles";
 const Browse = ({ userEmail, userProfiles }) => {
   const { showProfilesManagingPage } = useInitProfiles(userEmail, userProfiles);
   return (
-    <BrowseContent
-      category="browse"
-      profilesManaging={showProfilesManagingPage}
-      userEmail={userEmail}
-    />
+    <>
+      <Head>
+        <title>Netflex - Media straming...</title>
+      </Head>
+      <BrowseContent
+        category="browse"
+        profilesManaging={showProfilesManagingPage}
+        userEmail={userEmail}
+      />
+    </>
   );
 };
 export default Browse;

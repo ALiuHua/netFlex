@@ -1,5 +1,4 @@
 export const getItemGenre = (itemGenresArray, genreCtx, genreNum, category) => {
-  console.log(itemGenresArray);
   const ItemGenre = itemGenresArray.map((id, index) => {
     if (index > genreNum - 1) return null;
     return genreCtx[category].find((genre) => genre.id === id);

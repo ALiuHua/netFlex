@@ -50,7 +50,7 @@ export const PlayerPage = () => {
           setIsMouseActive(true);
         }}
         onClick={() => {
-          setIsPlaying((prev) => !prev), console.log("clci");
+          setIsPlaying((prev) => !prev);
         }}
         isCompleted={isCompleted}
         isMouseActive={isMouseActive}
@@ -77,7 +77,6 @@ export const PlayerPage = () => {
         control={true}
         onEnded={() => setIsCompleted(true)}
         onPlay={() => {
-          console.log("onPlay");
           setIsPlaying(true);
           setIsCompleted(false);
         }}

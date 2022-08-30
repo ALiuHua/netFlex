@@ -121,7 +121,6 @@ const Profile = () => {
     );
   };
   const createProfileHandler = () => {
-    console.log("createProfileHandler");
     if (profiles.length === 0) setIsManaging(true);
     setEditProfile({
       isEdit: true,

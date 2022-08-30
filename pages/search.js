@@ -11,16 +11,11 @@ const Search = ({ userEmail, userProfiles }) => {
   const [notification, setNotification] = useState(null);
   const router = useRouter();
   const searchQuery = router.query.q;
-  console.log(searchQuery);
-  console.log("search", router);
   useEffect(() => {
-    console.log("search useEffect running");
     let currentRender = true;
     setTimeout(() => {
       const fetchSeasonsInfo = async () => {
-        console.log("start fetching");
         const results = await getSearchResult(searchQuery);
-        console.log(results);
         if (results.length > 0) {
           return setSearchResult(results);
         }
@@ -36,7 +31,6 @@ const Search = ({ userEmail, userProfiles }) => {
       };
 
       if (currentRender) fetchSeasonsInfo();
-      console.log(currentRender);
     }, 500);
     return () => (currentRender = false);
   }, [searchQuery]);

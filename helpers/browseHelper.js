@@ -24,7 +24,6 @@ export const getBanner = async (category) => {
     ({ original_language }) => original_language === "en"
   );
   const banner = filteredResults[chooseRandomBanner(filteredResults.length)];
-  console.log(banner);
   return banner;
 };
 export const getRow = async (category, row) => {
@@ -129,7 +128,6 @@ export const getSeasons = async (id, seasonNum) => {
       .replace("_id", id)
       .replace("_seasonNumber", seasonNum)
   );
-  console.log(episodes);
   return episodes;
 };
 
@@ -147,7 +145,6 @@ export const getRecommendation = async (category, id) => {
     data: { results: similarResults },
   } = await tmdb.get(TMDB[category].helpers.fetchSimilar.replace("_id", id));
   filteredResults = [...results, ...similarResults].filter(contentCheck);
-  console.log(filteredResults);
   return filteredResults;
 };
 export const getSearchResult = async (query) => {

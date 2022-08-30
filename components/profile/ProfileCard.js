@@ -11,7 +11,6 @@ const ProfileCard = ({
   height,
   onClick,
 }) => {
-  console.log(avatarId);
   return (
     <CardWrapper onClick={onClick}>
       <AvatarWrapper>

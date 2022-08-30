@@ -1,5 +1,4 @@
-// const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-const API_KEY = "75d815a7423ee9ff009585239a370212";
+const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
 export const TMDB = {
   TVShows: {

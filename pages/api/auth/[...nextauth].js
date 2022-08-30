@@ -12,7 +12,6 @@ export default NextAuth({
         const user = await usersCollection.findOne({
           email: credentials.email,
         });
-        console.log("user-----", user);
         if (!user) {
           client.close();
           throw new Error("No user found");
@@ -39,7 +38,6 @@ export default NextAuth({
       const userData = await usersCollection.findOne({
         email: session.user.email,
       });
-      console.log("userdata55", userData);
       return {
         user: { email: userData.email, profiles: userData.profiles },
       };

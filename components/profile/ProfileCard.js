@@ -14,7 +14,12 @@ const ProfileCard = ({
   return (
     <CardWrapper onClick={onClick}>
       <AvatarWrapper>
-        <Image src={avatarSrc} width={width} height={height} />
+        <Image
+          src={avatarSrc}
+          alt="profile image"
+          width={width}
+          height={height}
+        />
         {isManaging && <EditOverlay />}
       </AvatarWrapper>
       <ProfileName>{profileId}</ProfileName>

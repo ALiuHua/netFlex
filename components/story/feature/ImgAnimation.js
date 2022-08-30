@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import {
   ImgContainer,
   DeviceImgContainer,
@@ -18,7 +19,12 @@ const ImgAnimation = (props) => {
           {id === "2" ? (
             <>
               <AnimationImg>
-                <img src={post} />
+                <Image
+                  src={post}
+                  alt="iphone screen"
+                  width={640}
+                  height={480}
+                />
               </AnimationImg>
               <AnimationDescription>
                 <span>Stranger Things</span>

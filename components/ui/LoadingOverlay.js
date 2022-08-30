@@ -8,6 +8,7 @@ const LoadingOverlay = ({ profileSrc }) => {
         <SpinnerWrapper>
           <Image
             src={"/images/misc/spinner.png"}
+            alt="loading spinner"
             width={150}
             height={150}
             priority

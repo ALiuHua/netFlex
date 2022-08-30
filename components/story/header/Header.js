@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { getGenres } from "../../../helpers/browseHelper";
@@ -6,6 +7,7 @@ import { genreActions } from "../../../store/genreSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { EditOverlay } from "../../profile/ProfileCard";
+import logoImg from "../../../public/images/misc/logo.png";
 import {
   HeaderWrapper,
   HeaderContent,
@@ -21,7 +23,6 @@ import {
   ProfilesBox,
 } from "./HeaderStyle";
 import Search from "./Search";
-import Image from "next/image";
 import { userActions } from "../../../store/userSlice";
 const Header = () => {
   const [stickyHeader, setStickHeader] = useState(false);
@@ -72,10 +73,10 @@ const Header = () => {
       <HeaderContent isNavShown={isNavShown}>
         <LogoWrapper isNavShown={isNavShown}>
           {pathname === "/" ? (
-            <img src="/images/misc/logo.png" />
+            <Image src={logoImg} alt="netflex logo" />
           ) : (
             <StyledLink href="/">
-              <img src="/images/misc/logo.png" />
+              <Image src={logoImg} alt="netflex logo" />
             </StyledLink>
           )}
         </LogoWrapper>

@@ -197,6 +197,7 @@ const Profile = () => {
                     >
                       <Image
                         src={editProfile.editedProfile.src}
+                        alt="profile image"
                         width={200}
                         height={200}
                       />
@@ -243,7 +244,12 @@ const Profile = () => {
                         key={avatar.avatarId}
                         onClick={setAvatarHandler.bind(undefined, avatar)}
                       >
-                        <Image src={avatar.src} width={200} height={200} />
+                        <Image
+                          src={avatar.src}
+                          alt="profile image"
+                          width={200}
+                          height={200}
+                        />
                       </AvatarWrapper>
                     );
                   })}

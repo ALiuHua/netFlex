@@ -14,13 +14,13 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         />
         <meta
           property="og:image"
-          content="https://netflex.vercel.app/images/misc/background.jpg"
+          content="https://net-media.vercel.app/images/misc/background.jpg"
         />
         <meta
           property="og:description"
           content="Netflex is a Netflix clone that comes with all the basic functionalities Netflix offers"
         />
-        <meta property="og:url" content="https://netflex.vercel.app/" />
+        <meta property="og:url" content="https://net-media.vercel.app/" />
       </Head>
 
       <Layout>

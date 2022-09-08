@@ -73,7 +73,11 @@ Install latest version of npm
    ```sh
    MONGODB_DATABASE=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    ```
-6. Start the application
+6. Add a next-auth host to .env.local file
+   ```sh
+   NEXTAUTH_URL=http://localhost:3000
+   ```
+7. Start the application
    ```sh
    npm next start
    ```

@@ -22,6 +22,7 @@ const getAvatars = () => {
 
 const Profile = () => {
   const { data: session } = useSession();
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
   const [isAdd, setIsAdd] = useState(false);
@@ -35,16 +36,21 @@ const Profile = () => {
   const profiles = useSelector((state) => state.users.profiles) || [];
 
   const updateProfilesData = async (profiles, user) => {
-    const response = await fetch("/api/auth/profileData", {
-      method: "POST",
-      body: JSON.stringify({ profiles, user }),
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || "something goes wrong");
-    return data;
+    try {
+      const response = await fetch("/api/auth/profileData", {
+        method: "POST",
+        body: JSON.stringify({ profiles, user }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Something goes wrong");
+      return data;
+    } catch (err) {
+      setError(data.message || "Something goes wrong");
+    }
   };
   const profileEditHandler = (param) => {
+    setError("");
     if (isManaging) {
       // set edited profile
       setEditProfile((prev) => {
@@ -64,8 +70,35 @@ const Profile = () => {
     setEditProfile((prev) => {
       return { ...prev, isEdit: false };
     });
+    setIsAdd(false);
   };
   const saveButtonHandler = () => {
+    //check if avatar already exist;
+    //This will not happen here, cause exist avatar already been filtered out here.
+    if (
+      editProfile.originalProfile.avatarId !==
+        editProfile.editedProfile.avatarId &&
+      profiles.find(
+        (profile) => profile.avatarId === editProfile.editedProfile.avatarId
+      )
+    )
+      return setError("Avatar already exist");
+
+    //check if profile name already exist;
+    if (
+      editProfile.originalProfile.profileName !==
+        editProfile.editedProfile.profileName &&
+      profiles.find(
+        (profile) =>
+          profile.profileName === editProfile.editedProfile.profileName
+      )
+    )
+      return setError("Name already exist");
+
+    //check if profile name is blank or not;
+    if (editProfile.editedProfile.profileName === "")
+      return setError("Name can not be blank");
+
     //confirm editing and back to managing menu
     setEditProfile((prev) => {
       return {
@@ -75,21 +108,6 @@ const Profile = () => {
       };
     });
     if (isAdd) {
-      //check if already exist
-      if (
-        profiles.find(
-          (profile) => profile.avatarId === editProfile.editedProfile.avatarId
-        )
-      )
-        return console.error("avatar already exist");
-      if (
-        profiles.find(
-          (profile) =>
-            profile.profileName === editProfile.editedProfile.profileName
-        ) ||
-        editProfile.editedProfile.profileName === ""
-      )
-        return console.error("name already exist or not blank name");
       //Add new profile to profiles
       dispatch(
         userActions.setProfiles({
@@ -119,8 +137,10 @@ const Profile = () => {
         payload: editProfile.originalProfile.avatarId,
       })
     );
+    setIsAdd(false);
   };
   const createProfileHandler = () => {
+    setError("");
     if (profiles.length === 0) setIsManaging(true);
     setEditProfile({
       isEdit: true,
@@ -207,7 +227,7 @@ const Profile = () => {
                       type="text"
                       placeholder="Name"
                       value={editProfile.editedProfile.profileName}
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setEditProfile((prev) => {
                           return {
                             ...prev,
@@ -216,9 +236,10 @@ const Profile = () => {
                               profileName: e.target.value,
                             },
                           };
-                        })
-                      }
+                        });
+                      }}
                     />
+                    {error && <Error>{error}</Error>}
                   </ProfileContainer>
                   <ButtonBox>
                     <Button styled={true} onClick={saveButtonHandler}>
@@ -395,3 +416,8 @@ export const PlusIcon = () => {
     </svg>
   );
 };
+export const Error = styled.p`
+  font-size: 1.6rem;
+  padding: 2rem 4rem 0rem;
+  color: ${({ theme }) => theme.accentColor};
+`;

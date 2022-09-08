@@ -107,6 +107,7 @@ Install latest version of npm
 
 **Exploring Functionalities**
 ![](https://github.com/ALiuHua/andy-portfolio/blob/main/public/images/netflex/card.gif)
+
 1. Hover any card to preview media trailer and brief infomation.
 2. Click ＋ to add media into your list.
 3. Click downarrow to check out the media's details.
@@ -115,3 +116,9 @@ Install latest version of npm
 ## Contact
 
 Andy Liu - [LinkedIn](https://www.linkedin.com/in/andyliu-dev/) - liuhua6606@gmail.com
+
+<!-- NEXT_PUBLIC_TMDB_API_KEY=75d815a7423ee9ff009585239a370212
+MONGODB_DATABASE=mongodb+srv://andyleo:liuhua6606@netflexcluster.cip9u.mongodb.net/netflex?retryWrites=true&w=majority
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=ef394c2e5d14b68e30bf4af41fb37986
+NEXT_PUBLIC_TRIAL_ACCOUNT_PASSWORD=lh2606 -->
